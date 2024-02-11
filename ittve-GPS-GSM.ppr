@@ -74,10 +74,10 @@ ittve-GPS-GSM
 1=Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoHand\uno_uart_unoHand.ino
 [Selected Project Files]
 Main=
-Selected=Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoHand\uno_uart_unoHand.ino
+Selected=Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoMain\uno_uart_unoMain.ino
 [Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoMain\uno_uart_unoMain.ino]
-TopLine=1
-Caret=70,2
+TopLine=35
+Caret=146,46
 [Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoHand\uno_uart_unoHand.ino]
 TopLine=1
-Caret=64,14
+Caret=4,26
