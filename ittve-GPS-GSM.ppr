@@ -1,0 +1,83 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.CompileOnBackground=0
+Compilator.ProgSaveAll=0
+Compilator.ProgRunSelection=0
+Compilator.LogType=0
+Compilator.LogEncoding=0
+DefaultDir=C:\ittve-GPS-GSM
+DefaultCP=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+HTServer=localhost
+Extensions=*.*
+[Project tree]
+ittve-GPS-GSM
+	+ittve-GPS-GSM
+		+Detail
+			+modul-fm-radiopriemnika-dsp-pll-87-108-mgc
+				-AT-comands_FM_module
+					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\AT-comands_FM_module\AT-comands_FM_module.doc
+					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\AT-comands_FM_module\sscom.ini
+					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\AT-comands_FM_module\sscom32E.exe
+				-Obmen3
+					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Obmen3\Obmen3.ino
+				-Obmen8
+					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Obmen8\Obmen8.ino
+				-Otpravka
+					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Otpravka\Otpravka.ino
+				-Otpravka1
+					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Otpravka1\Otpravka1.ino
+				-Prijom
+					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Prijom\Prijom.ino
+				-Prijom1
+					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Prijom1\Prijom1.ino
+				-Trans8
+					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Trans8\Trans8.ino
+				+Uno_uart_Uno
+					+uno_uart_unoHand
+						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoHand\uno_uart_unoHand.ino
+					+uno_uart_unoMain
+						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoMain\uno_uart_unoMain.ino
+				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\AT-comands_FM_module.html
+				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\fili.jpg
+				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\fm_china_at.pdf
+				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\modul-fm-radiopriemnika-dsp-pll-87-108-mgc.md
+				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\modul-fm-radiopriemnika-dsp-pll-87-108-mgc.md.backup
+				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\modul-fm-radiopriemnika-dsp-pll-87-108-mgc.webp
+				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\o-producte.webp
+				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\pins.jpg
+				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\sk1.jpg
+				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\sk2.jpg
+				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\sk3.jpg
+				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\sk4.webp
+				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\spisok-komand.jpg
+				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno1-Uno2.jpg
+				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Как установить.jpg
+				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Настраиваем связь по SoftwareSerial.mp4
+		-Tinkercad
+			Tinkercad\Tinkercad.lnk
+			Tinkercad\Tinkercad.md
+			Tinkercad\Tinkercad.md.backup
+		ittve-GPS-GSM Реестр купленных деталей.doc
+		ittve-GPS-GSM.ppr
+		LICENSE
+		NEO-6_DataSheet_(GPS.G6-HW-09005).pdf
+		README.md
+		README.md.backup
+[Open project files]
+0=Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoMain\uno_uart_unoMain.ino
+1=Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoHand\uno_uart_unoHand.ino
+[Selected Project Files]
+Main=
+Selected=Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoHand\uno_uart_unoHand.ino
+[Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoMain\uno_uart_unoMain.ino]
+TopLine=1
+Caret=70,2
+[Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoHand\uno_uart_unoHand.ino]
+TopLine=1
+Caret=64,14
