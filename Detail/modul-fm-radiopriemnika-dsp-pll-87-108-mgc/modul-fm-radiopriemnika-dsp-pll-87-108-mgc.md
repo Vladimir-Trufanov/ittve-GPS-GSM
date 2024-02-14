@@ -1,7 +1,9 @@
 ### [Модуль FM радиоприемника DSP PLL 87-108 МГц](https://dzen.ru/a/ZDef2RUfcHalN5CO)
 
 ![](DSP-PLL-verh.jpg)
-![](DSP-PLL-niz.jpg)
+
+![](testirovanie/malenkaja-plata.jpg)
+
 ![](pins-LCD-FM-RX-v2_0.jpg)
 
 Открытия:

@@ -1,373 +1,583 @@
-<!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-	<title></title>
-	<meta name="generator" content="LibreOffice 7.5.0.3 (Windows)"/>
-	<meta name="author" content="Копалин Илья"/>
-	<meta name="created" content="2017-11-27T10:29:00"/>
-	<meta name="changedby" content="Копалин Илья"/>
-	<meta name="changed" content="2017-11-27T12:34:00"/>
-	<meta name="AppVersion" content="14.0000"/>
-	<style type="text/css">
-		@page { size: 21cm 29.7cm; margin-left: 3cm; margin-right: 1.5cm; margin-top: 2cm; margin-bottom: 2cm }
-		p { line-height: 115%; text-align: left; orphans: 2; widows: 2; margin-bottom: 0.25cm; direction: ltr; background: transparent }
-	</style>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<meta name=Generator content="Microsoft Word 11 (filtered)">
+<title>Описание команд LCD-FM-RX-V2.0</title>
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Microsoft YaHei";
+	panose-1:2 11 5 3 2 2 4 2 2 4;}
+@font-face
+	{font-family:"\@Microsoft YaHei";
+	panose-1:2 11 5 3 2 2 4 2 2 4;}
+@font-face
+	{font-family:"Lucida Sans";
+	panose-1:2 11 6 2 3 5 4 2 2 4;}
+@font-face
+	{font-family:"Liberation Sans";
+	panose-1:2 11 6 4 2 2 2 2 2 4;}
+@font-face
+	{font-family:"";}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:0cm;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:Calibri;}
+p.MsoCaption, li.MsoCaption, div.MsoCaption
+	{margin-top:6.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:0cm;
+	line-height:115%;
+	font-size:12.0pt;
+	font-family:Calibri;
+	font-style:italic;}
+p.MsoList, li.MsoList, div.MsoList
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:7.0pt;
+	margin-left:0cm;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:Calibri;}
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:7.0pt;
+	margin-left:0cm;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:Calibri;}
+p
+	{margin-right:0cm;
+	margin-left:0cm;
+	font-size:12.0pt;
+	font-family:"Times New Roman";}
+p.a, li.a, div.a
+	{margin-top:12.0pt;
+	margin-right:0cm;
+	margin-bottom:6.0pt;
+	margin-left:0cm;
+	line-height:115%;
+	page-break-after:avoid;
+	font-size:14.0pt;
+	font-family:"Liberation Sans";}
+p.1, li.1, div.1
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:0cm;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:Calibri;}
+p.NoSpacing, li.NoSpacing, div.NoSpacing
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:Calibri;}
+p.a0, li.a0, div.a0
+	{margin-top:0cm;
+	margin-right:0cm;
+	margin-bottom:10.0pt;
+	margin-left:1.0cm;
+	line-height:115%;
+	font-size:11.0pt;
+	font-family:Calibri;}
+@page Section1
+	{size:595.3pt 841.9pt;
+	margin:2.0cm 42.5pt 2.0cm 3.0cm;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
 </head>
-<body lang="ru-RU" link="#000080" vlink="#800000" dir="ltr">
-<table width="798" cellpadding="9" cellspacing="0">
-	<col width="143"/>
-
-	<col width="104"/>
-
-	<col width="128"/>
-
-	<col width="95"/>
-
-	<col width="236"/>
-
-	<tr valign="top">
-		<td width="143" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><b>Описание
-			команды</b></font></font></p>
-		</td>
-		<td width="104" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><b>Пример</b></font></font></p>
-		</td>
-		<td width="128" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><b>Описание</b></font></font></p>
-		</td>
-		<td width="95" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><b>Диапазон</b></font></font></p>
-		</td>
-		<td width="236" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><b>Ответ
-			модуля</b></font></font></p>
-		</td>
-	</tr>
-	<tr valign="top">
-		<td width="143" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt">Установить
-			частоту приема</font></font></p>
-		</td>
-		<td width="104" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">AT+FRE=875</span></font></font></p>
-		</td>
-		<td width="128" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt">Устанавливается
-			частота 87,5 МГц</font></font></p>
-		</td>
-		<td width="95" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="ru-RU">760-1080
-			</span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">(CAMPUS=1)</span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="ru-RU"><br/>
-870-1080</span></font></font></p>
-			<p align="left" style="orphans: 2; widows: 2"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">(CAMPUS=0)</span></font></font></p>
-		</td>
-		<td width="236" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">FRE=875</span></font></font></p>
-		</td>
-	</tr>
-	<tr valign="top">
-		<td width="143" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="ru-RU">Уменьшить
-			частоту на </span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">0,1
-			</span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="ru-RU">Мгц</span></font></font></p>
-		</td>
-		<td width="104" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">AT+FRED</span></font></font></p>
-		</td>
-		<td width="128" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<br/>
-
-			</p>
-		</td>
-		<td width="95" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<br/>
-
-			</p>
-		</td>
-		<td width="236" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">FRE=</span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="ru-RU">новое
-			значение частоты</span></font></font></p>
-		</td>
-	</tr>
-	<tr valign="top">
-		<td width="143" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="ru-RU">Увеличить
-			 частоту на </span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">0,1
-			</span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="ru-RU">Мгц</span></font></font></p>
-		</td>
-		<td width="104" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">AT+FREU</span></font></font></p>
-		</td>
-		<td width="128" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<br/>
-
-			</p>
-		</td>
-		<td width="95" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<br/>
-
-			</p>
-		</td>
-		<td width="236" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">FRE=</span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="ru-RU">новое
-			значение частоты</span></font></font></p>
-		</td>
-	</tr>
-	<tr valign="top">
-		<td width="143" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt">Временная
-			остановить работы приемника</font></font></p>
-		</td>
-		<td width="104" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">AT+PAUS</span></font></font></p>
-		</td>
-		<td width="128" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt">При
-			повторной передаче команды работа
-			приемника возобновляется</font></font></p>
-		</td>
-		<td width="95" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<br/>
-
-			</p>
-		</td>
-		<td width="236" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">PAUS,
-			PLAY, ERR</span></font></font></p>
-		</td>
-	</tr>
-	<tr valign="top">
-		<td width="143" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt">Установить
-			громкость</font></font></p>
-		</td>
-		<td width="104" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">AT+VOL=15</span></font></font></p>
-		</td>
-		<td width="128" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt">Установить
-			громкость (обязательно две цифры)</font></font></p>
-		</td>
-		<td width="95" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt">00…30</font></font></p>
-		</td>
-		<td width="236" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">VOL=30,
-			ERR</span></font></font></p>
-		</td>
-	</tr>
-	<tr valign="top">
-		<td width="143" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt">Уменьшить
-			громкость на 1</font></font></p>
-		</td>
-		<td width="104" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">AT+VOLD</span></font></font></p>
-		</td>
-		<td width="128" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<br/>
-
-			</p>
-		</td>
-		<td width="95" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<br/>
-
-			</p>
-		</td>
-		<td width="236" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">VOL</span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="ru-RU">=новое
-			значение громкости, </span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">ERR</span></font></font></p>
-		</td>
-	</tr>
-	<tr valign="top">
-		<td width="143" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt">Увеличить
-			громкость на 1</font></font></p>
-		</td>
-		<td width="104" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">AT+VOLU</span></font></font></p>
-		</td>
-		<td width="128" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<br/>
-
-			</p>
-		</td>
-		<td width="95" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<br/>
-
-			</p>
-		</td>
-		<td width="236" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">VOL</span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="ru-RU">=новое
-			значение громкости, </span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">ERR</span></font></font></p>
-		</td>
-	</tr>
-	<tr valign="top">
-		<td width="143" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt">Установить
-			время работы подсветки индикатора</font></font></p>
-		</td>
-		<td width="104" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">AT+BANK=10</span></font></font></p>
-		</td>
-		<td width="128" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt">Устанавливается
-			время работы подсветки ЖК-индикатора
-			в секундах после ее включения</font></font></p>
-		</td>
-		<td width="95" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt">00…99</font></font></p>
-		</td>
-		<td width="236" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">BANK</span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="ru-RU">=новое
-			время работы подсветки, </span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">ERR</span></font></font></p>
-		</td>
-	</tr>
-	<tr valign="top">
-		<td width="143" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt">Включить/выключить
-			режим расширенного частотного диапазона</font></font></p>
-		</td>
-		<td width="104" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">AT+CAMPUS=1</span></font></font></p>
-		</td>
-		<td width="128" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="ru-RU">760-1080
-			Мгц </span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">(CAMPUS=1)</span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="ru-RU"><br/>
-870-1080
-			МГц</span></font></font></p>
-			<p align="left" style="orphans: 2; widows: 2"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">(CAMPUS=0)</span></font></font></p>
-		</td>
-		<td width="95" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt">1
-			– включить</font></font></p>
-			<p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0
-			– выключить</font></font></p>
-			<p align="left" style="orphans: 2; widows: 2"><br/>
-
-			</p>
-		</td>
-		<td width="236" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">CAMPUS_ON</span></font></font></p>
-			<p align="left" style="orphans: 2; widows: 2"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">CAMPUS_OFF</span></font></font></p>
-		</td>
-	</tr>
-	<tr valign="top">
-		<td width="143" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="ru-RU">Включить/выключить</span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">
-			</span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="ru-RU">шумоподавитель</span></font></font></p>
-		</td>
-		<td width="104" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">AT+SN=1</span></font></font></p>
-		</td>
-		<td width="128" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<br/>
-
-			</p>
-		</td>
-		<td width="95" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt">1
-			– включить</font></font></p>
-			<p align="left" style="orphans: 2; widows: 2"><font face="Arial, serif"><font size="1" style="font-size: 8pt">0
-			– выключить</font></font></p>
-		</td>
-		<td width="236" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">SN_ON</span></font></font></p>
-			<p align="left" style="orphans: 2; widows: 2"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">SN_OFF</span></font></font></p>
-		</td>
-	</tr>
-	<tr valign="top">
-		<td width="143" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt">Установить
-			порог срабатывания шумоподавителя</font></font></p>
-		</td>
-		<td width="104" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">AT+SN_THR=10</span></font></font></p>
-		</td>
-		<td width="128" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<br/>
-
-			</p>
-		</td>
-		<td width="95" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt">00…20</font></font></p>
-		</td>
-		<td width="236" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">SN</span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="ru-RU">_</span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">THR</span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="ru-RU">=новое
-			значение порога, </span></font></font><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">ERR</span></font></font></p>
-		</td>
-	</tr>
-	<tr valign="top">
-		<td width="143" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt">Сброс
-			на начальные установки</font></font></p>
-		</td>
-		<td width="104" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">AT+CR</span></font></font></p>
-		</td>
-		<td width="128" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">VOL=30</span></font></font></p>
-			<p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">SN_OFF</span></font></font></p>
-			<p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">SN_THR=10</span></font></font></p>
-			<p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">FRE=875</span></font></font></p>
-			<p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">BANK=20</span></font></font></p>
-			<p align="left" style="orphans: 2; widows: 2"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">CAMPUS_OFF</span></font></font></p>
-		</td>
-		<td width="95" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p lang="en-US" align="left" style="orphans: 2; widows: 2">
-			<br/>
-
-			</p>
-		</td>
-		<td width="236" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">OK</span></font></font></p>
-		</td>
-	</tr>
-	<tr valign="top">
-		<td width="143" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt">Отобразить
-			текущие параметры</font></font></p>
-		</td>
-		<td width="104" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">AT+RET</span></font></font></p>
-		</td>
-		<td width="128" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<br/>
-
-			</p>
-		</td>
-		<td width="95" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2">
-			<br/>
-
-			</p>
-		</td>
-		<td width="236" style="border: 1px solid #000000; padding: 0cm 0.19cm"><p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm">
-			<font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">/***********************************/</span></font></font></p>
-			<p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">VOL=09</span></font></font></p>
-			<p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">FRE=895</span></font></font></p>
-			<p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">SN_ON</span></font></font></p>
-			<p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">SN_THR=10</span></font></font></p>
-			<p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">PLAY</span></font></font></p>
-			<p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">BANK=20s</span></font></font></p>
-			<p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">CAMPOS_OFF</span></font></font></p>
-			<p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm"><font face="Arial, serif"><font size="1" style="font-size: 8pt"><span lang="en-US">PCB_NUMBE:LCD_FM_RX_ENC_V1.9</span></font></font></p>
-			<p align="left" style="orphans: 2; widows: 2; margin-bottom: 0cm"><font face="Arial, serif"><font size="1" style="font-size: 8pt">Thank
-			you for using!</font></font></p>
-			<p align="left" style="orphans: 2; widows: 2"><font face="Arial, serif"><font size="1" style="font-size: 8pt">/***********************************/</font></font></p>
-		</td>
-	</tr>
+<body lang=RU style='line-break:strict'>
+<div class=Section1>
+<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0
+ style='margin-left:5.4pt;border-collapse:collapse'>
+ <tr>
+  <td width=162 valign=top style='width:96.9pt;border:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Описание
+  команды</span></b></p>
+  </td>
+  <td width=122 valign=top style='width:73.45pt;border:solid black 1.0pt;
+  border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Пример</span></b></p>
+  </td>
+  <td width=146 valign=top style='width:87.7pt;border:solid black 1.0pt;
+  border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Описание</span></b></p>
+  </td>
+  <td width=113 valign=top style='width:67.8pt;border:solid black 1.0pt;
+  border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Диапазон</span></b></p>
+  </td>
+  <td width=255 valign=top style='width:152.7pt;border:solid black 1.0pt;
+  border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Ответ
+  модуля</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=162 valign=top style='width:96.9pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Установить
+  частоту приема</span></b></p>
+  </td>
+  <td width=122 valign=top style='width:73.45pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial;color:fuchsia'>AT+FRE=875</span></b></p>
+  </td>
+  <td width=146 valign=top style='width:87.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Устанавливается
+  частота 87,5 МГц</span></b></p>
+  </td>
+  <td width=113 valign=top style='width:67.8pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>760-1080
+  </span></b><b><span lang=EN-US style='font-size:8.0pt;font-family:Arial'>(CAMPUS=1)</span></b><b><span
+  style='font-size:8.0pt;font-family:Arial'><br>
+  870-1080</span></b></p>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>(CAMPUS=0)</span></b></p>
+  </td>
+  <td width=255 valign=top style='width:152.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>FRE=875</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=162 valign=top style='width:96.9pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Уменьшить
+  частоту на </span></b><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>0,1 </span></b><b><span style='font-size:8.0pt;font-family:Arial'>Мгц</span></b></p>
+  </td>
+  <td width=122 valign=top style='width:73.45pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial;color:fuchsia'>AT+FRED</span></b></p>
+  </td>
+  <td width=146 valign=top style='width:87.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>&nbsp;</span></b></p>
+  </td>
+  <td width=113 valign=top style='width:67.8pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>&nbsp;</span></b></p>
+  </td>
+  <td width=255 valign=top style='width:152.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>FRE=</span></b><b><span style='font-size:8.0pt;font-family:Arial'>новое
+  значение частоты</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=162 valign=top style='width:96.9pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Увеличить 
+  частоту на </span></b><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>0,1 </span></b><b><span style='font-size:8.0pt;font-family:Arial'>Мгц</span></b></p>
+  </td>
+  <td width=122 valign=top style='width:73.45pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial;color:fuchsia'>AT+FREU</span></b></p>
+  </td>
+  <td width=146 valign=top style='width:87.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>&nbsp;</span></b></p>
+  </td>
+  <td width=113 valign=top style='width:67.8pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>&nbsp;</span></b></p>
+  </td>
+  <td width=255 valign=top style='width:152.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>FRE=</span></b><b><span style='font-size:8.0pt;font-family:Arial'>новое
+  значение частоты</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=162 valign=top style='width:96.9pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Временная
+  остановить работы приемника</span></b></p>
+  </td>
+  <td width=122 valign=top style='width:73.45pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial;color:fuchsia'>AT+PAUS</span></b></p>
+  </td>
+  <td width=146 valign=top style='width:87.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>При
+  повторной передаче команды работа приемника возобновляется</span></b></p>
+  </td>
+  <td width=113 valign=top style='width:67.8pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>&nbsp;</span></b></p>
+  </td>
+  <td width=255 valign=top style='width:152.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>PAUS, PLAY, ERR</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=162 valign=top style='width:96.9pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Установить
+  громкость</span></b></p>
+  </td>
+  <td width=122 valign=top style='width:73.45pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial;color:fuchsia'>AT+VOL=15</span></b></p>
+  </td>
+  <td width=146 valign=top style='width:87.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Установить
+  громкость (обязательно две цифры)</span></b></p>
+  </td>
+  <td width=113 valign=top style='width:67.8pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>00…30</span></b></p>
+  </td>
+  <td width=255 valign=top style='width:152.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>VOL=</span></b><b><span style='font-size:8.0pt;font-family:Arial'>15</span></b><b><span
+  lang=EN-US style='font-size:8.0pt;font-family:Arial'>, ERR</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=162 valign=top style='width:96.9pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Уменьшить
+  громкость на 1</span></b></p>
+  </td>
+  <td width=122 valign=top style='width:73.45pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial;color:fuchsia'>AT+VOLD</span></b></p>
+  </td>
+  <td width=146 valign=top style='width:87.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>&nbsp;</span></b></p>
+  </td>
+  <td width=113 valign=top style='width:67.8pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>&nbsp;</span></b></p>
+  </td>
+  <td width=255 valign=top style='width:152.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>VOL</span></b><b><span style='font-size:8.0pt;font-family:Arial'>=новое
+  значение громкости, </span></b><b><span lang=EN-US style='font-size:8.0pt;
+  font-family:Arial'>ERR</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=162 valign=top style='width:96.9pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Увеличить
+  громкость на 1</span></b></p>
+  </td>
+  <td width=122 valign=top style='width:73.45pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial;color:fuchsia'>AT+VOLU</span></b></p>
+  </td>
+  <td width=146 valign=top style='width:87.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>&nbsp;</span></b></p>
+  </td>
+  <td width=113 valign=top style='width:67.8pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>&nbsp;</span></b></p>
+  </td>
+  <td width=255 valign=top style='width:152.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>VOL</span></b><b><span style='font-size:8.0pt;font-family:Arial'>=новое
+  значение громкости, </span></b><b><span lang=EN-US style='font-size:8.0pt;
+  font-family:Arial'>ERR</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=162 valign=top style='width:96.9pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Установить
+  время работы подсветки индикатора</span></b></p>
+  </td>
+  <td width=122 valign=top style='width:73.45pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial;color:fuchsia'>AT+BANK=10</span></b></p>
+  </td>
+  <td width=146 valign=top style='width:87.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Устанавливается
+  время работы подсветки ЖК-индикатора в секундах после ее включения</span></b></p>
+  </td>
+  <td width=113 valign=top style='width:67.8pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>00…99</span></b></p>
+  </td>
+  <td width=255 valign=top style='width:152.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>BANK</span></b><b><span style='font-size:8.0pt;font-family:Arial'>=новое
+  время работы подсветки, </span></b><b><span lang=EN-US style='font-size:8.0pt;
+  font-family:Arial'>ERR</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=162 valign=top style='width:96.9pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Включить/выключить
+  режим расширенного частотного диапазона</span></b></p>
+  </td>
+  <td width=122 valign=top style='width:73.45pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial;color:fuchsia'>AT+CAMPUS=1</span></b></p>
+  </td>
+  <td width=146 valign=top style='width:87.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>760-1080
+  Мгц </span></b><b><span lang=EN-US style='font-size:8.0pt;font-family:Arial'>(CAMPUS=1)</span></b><b><span
+  style='font-size:8.0pt;font-family:Arial'><br>
+  870-1080 МГц</span></b></p>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>(CAMPUS=0)</span></b></p>
+  </td>
+  <td width=113 valign=top style='width:67.8pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>1 –
+  включить</span></b></p>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>0 –
+  выключить</span></b></p>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>&nbsp;</span></b></p>
+  </td>
+  <td width=255 valign=top style='width:152.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>CAMPUS_ON</span></b></p>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>CAMPUS_OFF</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=162 valign=top style='width:96.9pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Включить/выключить</span></b><b><span
+  style='font-size:8.0pt;font-family:Arial'> </span></b><b><span
+  style='font-size:8.0pt;font-family:Arial'>шумоподавитель</span></b></p>
+  </td>
+  <td width=122 valign=top style='width:73.45pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial;color:fuchsia'>AT+SN=1</span></b></p>
+  </td>
+  <td width=146 valign=top style='width:87.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>&nbsp;</span></b></p>
+  </td>
+  <td width=113 valign=top style='width:67.8pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>1 –
+  включить</span></b></p>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>0 –
+  выключить</span></b></p>
+  </td>
+  <td width=255 valign=top style='width:152.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>SN_ON</span></b></p>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>SN_OFF</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=162 valign=top style='width:96.9pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Установить
+  порог срабатывания шумоподавителя</span></b></p>
+  </td>
+  <td width=122 valign=top style='width:73.45pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial;color:fuchsia'>AT+SN_THR=10</span></b></p>
+  </td>
+  <td width=146 valign=top style='width:87.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>&nbsp;</span></b></p>
+  </td>
+  <td width=113 valign=top style='width:67.8pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>00…20</span></b></p>
+  </td>
+  <td width=255 valign=top style='width:152.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>SN</span></b><b><span style='font-size:8.0pt;font-family:Arial'>_</span></b><b><span
+  lang=EN-US style='font-size:8.0pt;font-family:Arial'>THR</span></b><b><span
+  style='font-size:8.0pt;font-family:Arial'>=новое значение порога, </span></b><b><span
+  lang=EN-US style='font-size:8.0pt;font-family:Arial'>ERR</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=162 valign=top style='width:96.9pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Сбросить
+  параметры в начальные установки</span></b></p>
+  </td>
+  <td width=122 valign=top style='width:73.45pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial;color:fuchsia'>AT+CR</span></b></p>
+  </td>
+  <td width=146 valign=top style='width:87.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>VOL=16</span></b></p>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>SN_OFF</span></b></p>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>SN_THR=10</span></b></p>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>FRE=875</span></b></p>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>BANK=20</span></b></p>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>CAMPUS_OFF</span></b></p>
+  </td>
+  <td width=113 valign=top style='width:67.8pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>&nbsp;</span></b></p>
+  </td>
+  <td width=255 valign=top style='width:152.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>OK</span></b></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=162 valign=top style='width:96.9pt;border:solid black 1.0pt;
+  border-top:none;padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Отобразить
+  текущие параметры</span></b></p>
+  </td>
+  <td width=122 valign=top style='width:73.45pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial;color:fuchsia'>AT+RET</span></b></p>
+  </td>
+  <td width=146 valign=top style='width:87.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>&nbsp;</span></b></p>
+  </td>
+  <td width=113 valign=top style='width:67.8pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>&nbsp;</span></b></p>
+  </td>
+  <td width=255 valign=top style='width:152.7pt;border-top:none;border-left:
+  none;border-bottom:solid black 1.0pt;border-right:solid black 1.0pt;
+  padding:0cm 5.4pt 0cm 5.4pt'>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>/***********************************/</span></b></p>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>VOL=09</span></b></p>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>FRE=895</span></b></p>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>SN_ON</span></b></p>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>SN_THR=10</span></b></p>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>PLAY</span></b></p>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>BANK=20s</span></b></p>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>CAMPOS_OFF</span></b></p>
+  <p class=NoSpacing><b><span lang=EN-US style='font-size:8.0pt;font-family:
+  Arial'>PCB_NUMBE:LCD_FM_RX_ENC_V1.9</span></b></p>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>Thank
+  you for using!</span></b></p>
+  <p class=NoSpacing><b><span style='font-size:8.0pt;font-family:Arial'>/***********************************/</span></b></p>
+  </td>
+ </tr>
 </table>
-<p style="line-height: 100%; margin-bottom: 0cm"><font face="Arial, serif">Перечень
-AT-команд</font></p>
-<p style="line-height: 100%; margin-bottom: 0cm"><a name="_GoBack"></a>
-<font face="Arial, serif"><span lang="en-US">(</span></font><font face="Arial, serif">скорость
-38400, TTL-уровни</font><font face="Arial, serif"><span lang="en-US">)</span></font></p>
-<p style="line-height: 100%; margin-bottom: 0cm"><br/>
-
-</p>
-<p style="line-height: 100%; margin-bottom: 0cm"><br/>
-
-</p>
+<p class=NoSpacing><b><i><span style='font-size:9.0pt'>&nbsp;</span></i></b></p>
+</div>
 </body>
 </html>
