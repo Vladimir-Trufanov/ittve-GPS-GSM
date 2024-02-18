@@ -78,10 +78,9 @@ ittve-GPS-GSM
 0=Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoMain\uno_uart_unoMain.ino
 1=Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoHand\uno_uart_unoHand.ino
 2=..\IttveMe\www\UpSiteCSS.php
-3=Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\AT-comands_FM_module.html
 [Selected Project Files]
 Main=
-Selected=Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\AT-comands_FM_module.html
+Selected=..\IttveMe\www\UpSiteCSS.php
 [Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoMain\uno_uart_unoMain.ino]
 TopLine=35
 Caret=5,46
@@ -91,6 +90,3 @@ Caret=4,26
 [..\IttveMe\www\UpSiteCSS.php]
 TopLine=5
 Caret=22,15
-[Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\AT-comands_FM_module.html]
-TopLine=1
-Caret=1,1
