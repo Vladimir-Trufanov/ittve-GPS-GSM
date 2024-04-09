@@ -19,14 +19,21 @@ Extensions=*.*
 ittve-GPS-GSM
 	+ittve-GPS-GSM
 		+Detail
-			+modul-fm-radiopriemnika-dsp-pll-87-108-mgc
+			-modul-fm-radiopriemnika-dsp-pll-87-108-mgc
 				-kroshechnaya-dokumentaciya-najdennaya-v-internete
 					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\kroshechnaya-dokumentaciya-najdennaya-v-internete\fm_china_at.pdf
 					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\kroshechnaya-dokumentaciya-najdennaya-v-internete\kroshechnaya-dokumentaciya-najdennaya-v-internete.md
+				-LCD-FM-RX-V2_0-parts
+					-breadboards
+						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\LCD-FM-RX-V2_0-parts\breadboards\LCD-FM-RX-V20_breadboard.svg
+					-icon
+						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\LCD-FM-RX-V2_0-parts\icon\LCD-FM-RX-V20_icon.svg
+					-pcb
+						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\LCD-FM-RX-V2_0-parts\pcb\LCD-FM-RX-V20_pcb.svg
+					-schematic
+						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\LCD-FM-RX-V2_0-parts\schematic\LCD-FM-RX-V20_schematic.svg
+					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\LCD-FM-RX-V2_0-parts\LCD-FM-RX-V2.0.fzpz
 				-testirovanie
-					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\testirovanie\LCD-FM-RX-v20.html
-					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\testirovanie\LCD-FM-RX-v20-1.html
-					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\testirovanie\LCD-FM-RX-v20-2.html
 					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\testirovanie\malenkaja-plata.jpg
 					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\testirovanie\testirovanie-resivera.jpg
 				-Uno_uart_Uno
@@ -34,59 +41,62 @@ ittve-GPS-GSM
 						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoHand\uno_uart_unoHand.ino
 					-uno_uart_unoMain
 						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoMain\uno_uart_unoMain.ino
-				+Расширение темы для хранилища
-					+Программа обмена через Com-порт и AT-команды радиоприёмника
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\AT-comands_FM_module 1.doc
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\AT-comands_FM_module 1.html
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\AT-comands_FM_module 2.html
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\AT-comands_FM_module.html
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\AT-comands_FM_module 4.html
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\AT-comands_FM_module.doc
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\dddd.htm
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\dddd1.htm
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\dddd2.htm
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\dddd3.htm
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\fil1.htm
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\fil1.mht
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\sscom.ini
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\sscom32E.exe
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\ашд.doc
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\ашд.htm
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\ашд1.htm
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\ашд2.htm
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Программа обмена через Com-порт и AT-команды радиоприёмника\ашд3.htm
-					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Uno1-Uno2.jpg
-					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Расширение темы для хранилища\Настраиваем связь по SoftwareSerial.mp4
+				-Программа обмена через Com-порт и AT-команды радиоприёмника
+					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Программа обмена через Com-порт и AT-команды радиоприёмника\AT-comands_FM_module.doc
+					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Программа обмена через Com-порт и AT-команды радиоприёмника\sscom.ini
+					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Программа обмена через Com-порт и AT-команды радиоприёмника\sscom32E.exe
 				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\AT-comands_FM_module.html
+				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\DSP-PLL-niz.jpg
 				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\DSP-PLL-verh.jpg
 				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\modul-fm-radiopriemnika-dsp-pll-87-108-mgc.md
-				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\modul-fm-radiopriemnika-dsp-pll-87-108-mgc.md.backup
 				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\pins-LCD-FM-RX-v2_0.jpg
 				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\testirovanie.md
-				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\testirovanie.md.backup
+				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\wiring-diagram.jpg
+			+radiomodul-nrf24l01
+				+Cadil_TM-24-фев-2021-в-23_23
+					-skaner-ehfira
+						Detail\radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\skaner-ehfira\skaner-ehfira.ino
+					-sketch-peredatchika
+						Detail\radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\sketch-peredatchika\sketch-peredatchika.ino
+					+sketch-prijomnika
+						Detail\radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\sketch-prijomnika\sketch-prijomnika.ino
+				-Электроника-Arduino-и-IT
+					-proverka-rabotosposobnosti-nrf24l01
+						Detail\radiomodul-nrf24l01\Электроника-Arduino-и-IT\proverka-rabotosposobnosti-nrf24l01\proverka-rabotosposobnosti-nrf24l01.ino
+					-testirovanie-nrf24l01-peredacha
+						Detail\radiomodul-nrf24l01\Электроника-Arduino-и-IT\testirovanie-nrf24l01-peredacha\testirovanie-nrf24l01-peredacha.ino
+					-testirovanie-nrf24l01-priyom
+						Detail\radiomodul-nrf24l01\Электроника-Arduino-и-IT\testirovanie-nrf24l01-priyom\testirovanie-nrf24l01-priyom.ino
+				Detail\radiomodul-nrf24l01\1.webp
+				Detail\radiomodul-nrf24l01\podklyuchenie-nrf24l01-k-arduino.png
+				Detail\radiomodul-nrf24l01\radiomodul-nrf24l01.md
+				Detail\radiomodul-nrf24l01\radiomodul-nrf24l01.md.backup
+				Detail\radiomodul-nrf24l01\shema-podklyucheniya-nrf24l01-k-arduino.jpg
+				Detail\radiomodul-nrf24l01\TZT NRF24L01 - PA - LNA.webp
 		-Tinkercad
 			Tinkercad\Tinkercad.lnk
 			Tinkercad\Tinkercad.md
-			Tinkercad\Tinkercad.md.backup
 		ittve-GPS-GSM Реестр купленных деталей.doc
 		ittve-GPS-GSM.ppr
 		LICENSE
-		NEO-6_DataSheet_(GPS.G6-HW-09005).pdf
 		README.md
-		README.md.backup
 [Open project files]
 0=Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoMain\uno_uart_unoMain.ino
-1=Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoHand\uno_uart_unoHand.ino
-2=..\IttveMe\www\UpSiteCSS.php
+1=Detail\radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\skaner-ehfira\skaner-ehfira.ino
+2=Detail\radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\sketch-peredatchika\sketch-peredatchika.ino
+3=Detail\radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\sketch-prijomnika\sketch-prijomnika.ino
 [Selected Project Files]
 Main=
-Selected=..\IttveMe\www\UpSiteCSS.php
+Selected=Detail\radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\sketch-prijomnika\sketch-prijomnika.ino
 [Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoMain\uno_uart_unoMain.ino]
 TopLine=35
 Caret=5,46
-[Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoHand\uno_uart_unoHand.ino]
+[Detail\radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\skaner-ehfira\skaner-ehfira.ino]
+TopLine=8
+Caret=1,38
+[Detail\radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\sketch-peredatchika\sketch-peredatchika.ino]
 TopLine=1
-Caret=4,26
-[..\IttveMe\www\UpSiteCSS.php]
-TopLine=5
-Caret=22,15
+Caret=25,21
+[Detail\radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\sketch-prijomnika\sketch-prijomnika.ino]
+TopLine=6
+Caret=1,26
