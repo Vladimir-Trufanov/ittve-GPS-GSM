@@ -2,11 +2,27 @@
 
 Для проектов с GPS-навигацией и радио
 
-### Детали
+### [SIM900 и подключение к Arduino](SIM900-i-podklyuchenie-k-arduino/SIM900-i-podklyuchenie-k-arduino.md)
 
-#### [Модуль FM радиоприемника DSP PLL 87-108 МГц](Detail/modul-fm-radiopriemnika-dsp-pll-87-108-mgc/modul-fm-radiopriemnika-dsp-pll-87-108-mgc.md)
+### Реестр купленных деталей
 
-### GPS-трекеры из интернета
+- #### [SIM900A SIM900 MINI V4.0 беспроводной модуль передачи данных GSM GPRS комплект платы с антенной C83, 2023-09-07]()
 
-#### [Модуль FM радиоприемника DSP PLL 87-108 МГц](Detail/modul-fm-radiopriemnika-dsp-pll-87-108-mgc/modul-fm-radiopriemnika-dsp-pll-87-108-mgc.md)
+2. 2023-09-07
+GY-NEO6MV2 новый телефон с GPS модулем NEO6MV2 с управлением полетом EEPROM MWC APM2.5, большая антенна для Arduino 6MV2
 
+3. 2023-09-07
+GY-NEO6MV2 Новый NEO-6M GPS модуль NEO6MV2 с полета Управление EEPROM MWC APM2.5 большой антенна для Arduino
+
+4. 2023-09-07
+Серия 3362P, сопротивление 101 201 501 102 202 502 триммер, потенциометр 103 500R 10K, 10 шт.
+
+5. 2023-09-18
+ATmega32U4/ATMEGA328P LilyPad 328, Micro USB ATtiny85 LilyTiny, основная плата, зуммер WS2812 RGB CR2032 TEMT6000
+
+6. 2023-09-18
+Модуль ЖК-дисплея 1602 1602, 1 шт., зеленый экран, 16x2 символа, модуль ЖК-дисплея 1602, 5 В, зеленый экран и белый код для arduino
+
+7. 2023-09-18
+GPS + BDS двухрежимный Модуль управления полетом Спутниковое позиционирование навигатор, ATGM336H замена, для arduino NEO-M8N NEO-6M
+ 
