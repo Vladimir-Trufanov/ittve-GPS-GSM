@@ -1,0 +1,36 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.CompileOnBackground=0
+Compilator.ProgSaveAll=0
+Compilator.ProgRunSelection=0
+Compilator.LogType=0
+Compilator.LogEncoding=0
+DefaultDir=C:\ittve-GPS-GSM\SIM900-i-podklyuchenie-k-arduino\Send-Receive-SMS-Call-SIM900-v2
+DefaultCP=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+HTServer=localhost
+Extensions=*.*
+[Project tree]
+Send-Receive-SMS-Call-SIM900-v2
+	+Send-Receive-SMS-Call-SIM900-v2
+		+Testing-AT-Commands
+			Testing-AT-Commands\Testing-AT-Commands.ino
+		Send-Receive-SMS-Call-SIM900-v2.pdf
+		Send-Receive-SMS-Call-SIM900-v2.ppr
+[Open project files]
+0=Новый1.txt
+1=Testing-AT-Commands\Testing-AT-Commands.ino
+[Selected Project Files]
+Main=
+Selected=Testing-AT-Commands\Testing-AT-Commands.ino
+[Новый1.txt]
+TopLine=1
+Caret=1,1
+[Testing-AT-Commands\Testing-AT-Commands.ino]
+TopLine=6
+Caret=5,33

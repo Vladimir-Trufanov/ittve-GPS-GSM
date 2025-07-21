@@ -142,6 +142,170 @@
 - завершить вызов: ATH
 - поступил входящий вызов: ATA
 
+### Проверка at команд sim900
+
+[https://we.easyelectronics.ru/part/gsm-gprs-modul-sim900-chast-vtoraya.html](https://we.easyelectronics.ru/part/gsm-gprs-modul-sim900-chast-vtoraya.html)
+
+[https://codernet.ru/articles/drugoe/modem_sim900_at-komandyi_na_russkom_kak_nachat_obshhenie_s_modulem/](https://codernet.ru/articles/drugoe/modem_sim900_at-komandyi_na_russkom_kak_nachat_obshhenie_s_modulem/)
+
+Проверка AT-команд для модуля SIM900 — это процесс анализа ответов модуля на запросы, которые используются для проверки его работы, настройки или получения информации. 
+
+AT-команды — это короткие текстовые строки, которые модуль распознаёт, когда находится в командном режиме. 
+
+> Важно: чтобы команду воспринял модуль, в её конце нужно поставить символ перевода каретки «\r».
+
+SIM900 работают в трёх режимах: ***тестовый*** — модуль отвечает, поддерживает ли команда, и если поддерживает, то с какими параметрами; ***чтение*** — возвращаются текущие значения параметра; ***запись*** — после символа «=» идут новые значения параметров.
+
+Чтобы проверить работу модуля, нужно отправлять AT-команды и анализировать ответы. Некоторые особенности анализа:
+
+Проверка завершения вывода — если строка ответа равна коду конечного результата, вывод из командной строки завершён, и модуль готов к приёму новых команд.
+
+Анализ префикса для строк информационного текста ответа — если команда имеет префикс, нужно проверить, начинается ли строка с него, и если да, обработать строку, иначе игнорировать её.
+
+Проверка формата ответа — если команда имеет префикс, нужно проверить, начинается ли строка с него, и если да, обработать строку, иначе игнорировать её.
+
+[Правильная стратегия анализа вывода команды AT заключается в следующем:](https://translated.turbopages.org/proxy_u/en-ru.ru.901fc3fd-687dcabc-a6b8d5ae-74722d776562/https/stackoverflow.com/questions/36850022/sim900-at-commands-response-parsing)
+
+Отправьте командную строку AT (с правильным завершением "\r").
+
+Считывайте по одному символу, полученному от модема, пока не получите полную строку, завершающуюся "\r\n", а затем проанализируйте эту строку.
+
+Если строка соответствует конечному коду результата, значит, вывод из командной строки завершён (и модем готов принимать новые команды). Это первое, что нужно проверить!
+
+Если у выполняемой команды AT есть префикс для строк информационного текста (он есть почти у всех), проверьте, начинается ли строка с этого префикса. Если да, обработайте строку, в противном случае проигнорируйте её.
+
+Если у выполняемой команды AT нет префикса, вы, вероятно, захотите вывести на экран всё до получения окончательного кода результата. Это применимо только к устаревшим командам, таким как ATI, и при их разборе вам может быть важно, будет ли выводиться эхо-сигнал.
+
+C командой AT+CMGL придётся повозиться немного больше, так как ответы разбиты на несколько строк.
+
+Прежде всего, лучшим источником информации должна быть техническая документация производителя, а вторым по значимости — официальная спецификация [3GPP 27.005](), в которой стандартизирована команда AT+CMGL.
+
+Ответ на запрос AT+CMGL в текстовом режиме указан как
+
+```
++CMGL: <index>,<stat>,<oa/da>,[<alpha>],[<scts>][,<tooa/toda>,
+<length>]<CR><LF><data>[<CR><LF>
++CMGL: <index>,<stat>,<da/oa>,[<alpha>],[<scts>][,<tooa/toda>,
+<length>]<CR><LF><data>[...]]
+```
+
+Таким образом, после получения строки, начинающейся с «+CMGL:», все последующие строки до пустой строки («\r\n») относятся к этому формату.
+
+См. [этот ответ](https://translated.turbopages.org/proxy_u/en-ru.ru.901fc3fd-687dcabc-a6b8d5ae-74722d776562/https/stackoverflow.com/questions/31677801/when-requesting-com-port-returns-the-same-request/31688517#31688517) об общей структуре кода и его работе, хотя, как уже было сказано выше, многострочный ответ требует дополнительной обработки. Я бы использовал что-то вроде следующего (***непроверенный код***):
+
+```
+enum CMGL_state {
+    CMGL_NONE,
+    CMGL_PREFIX,
+    CMGL_DATA
+};
+
+// Extra prototype needed because of Arduino's auto-prototype generation which often breaks compilation when enums are used.
+enum CMGL_state parse_CMGL(enum CMGL_state state, String line);
+enum CMGL_state parse_CMGL(enum CMGL_state state, String line)
+{
+    if (line.equals("\r\n") {
+        return CMGL_NONE;
+    }
+    if (line.startsWith("+CMGL: ") {
+        return CMGL_PREFIX;
+    }
+    if (state == CMGL_PREFIX || state == CMGL_DATA) {
+        return CMGL_DATA;
+    }
+    return CMGL_NONE;
+}
+
+...
+
+write_to_modem("AT+CMGL=\"ALL\"\r");
+CMGL_state = CMGL_NONE;
+goto start;
+do {
+    CMGL_state = parse_CMGL(CMGL_state, line);
+    switch (CMGL_state) {
+    case CMGL_PREFIX:
+        process_prefix(line); // or whatever you want to do with this line
+        break;
+    case CMGL_DATA:
+        process_data(line); // or whatever you want to do with this line
+        break;
+    case CMGL_NONE:
+    default:
+        break;
+    }
+start:
+    line = read_line_from_modem();
+} while (! is_final_result_code(line))
+```
+
+Если вы используете arduino, я бы порекомендовал вам хорошую библиотеку! Вам не нужно разбираться в этом. Попробуйте [http://www.gsmlib.org/]() или любую другую, которая вам понравится.
+
+Я приведу здесь один пример.
+
+```
+#include "SIM900.h"
+#include <SoftwareSerial.h>
+//If not used, is better to exclude the HTTP library,
+//for RAM saving.
+//If your sketch reboots itself proprably you have finished,
+//your memory available.
+//#include "inetGSM.h"
+
+//If you want to use the Arduino functions to manage SMS, uncomment the lines below.
+#include "sms.h"
+SMSGSM sms;
+
+//To change pins for Software Serial, use the two lines in GSM.cpp.
+
+//GSM Shield for Arduino
+//www.open-electronics.org
+//this code is based on the example of Arduino Labs.
+
+//Simple sketch to send and receive SMS.
+
+int numdata;
+boolean started=false;
+char smsbuffer[160];
+char n[20];
+
+void setup() 
+{
+  //Serial connection.
+  Serial.begin(9600);
+  Serial.println("GSM Shield testing.");
+  //Start configuration of shield with baudrate.
+  //For http uses is raccomanded to use 4800 or slower.
+  if (gsm.begin(2400)){
+    Serial.println("\nstatus=READY");
+    started=true;  
+  }
+  else Serial.println("\nstatus=IDLE");
+
+  if(started){
+    //Enable this two lines if you want to send an SMS.
+    //if (sms.SendSMS("3471234567", "Arduino SMS"))
+      //Serial.println("\nSMS sent OK");
+  }
+
+};
+
+void loop() 
+{
+  if(started){
+    //Read if there are messages on SIM card and print them.
+    if(gsm.readSMS(smsbuffer, 160, n, 20))
+    {
+      Serial.println(n);
+      Serial.println(smsbuffer);
+    }
+    delay(1000);
+  }
+};
+
+```
+
+
 ### [Дополнительная информация по AT-командам](SIM900AT20Command20ManualV103.653745192.pdf)
 
 ### Примеры работы с платой SIM900 и использования команд
@@ -203,7 +367,7 @@ SoftwareSerial SIM900(7, 8);
 void setup() {
   // Arduino communicates with SIM900 GSM shield at a baud rate of 19200
   // Make sure that corresponds to the baud rate of your module
-  SIM900.begin(19200);
+  SIM900.begin(9600);
   // Give time to your GSM shield log on to network
   delay(20000);   
   
@@ -481,4 +645,12 @@ SIM900 - это сетевое устройство 2G.
 
 Существует также версия этой платы немного меньшего размера без держателя аккумулятора и слота для SIM-карты на задней панели. В них также нет разъёмов для подключения телефона и чипа RTC. Отсутствие RTC не является проблемой, так как время можно определить по входящим звонкам и сообщениям.
 Удачи вам в ваших проектах…
+
+### Примеры по материалам
+
+#### [Send-Receive-SMS-Call-SIM900-v2](Send-Receive-SMS-Call-SIM900-v2.pdf)
+
+#### [Testing-AT-Commands.ino](Testing-AT-Commands.ino)
+
+
 
