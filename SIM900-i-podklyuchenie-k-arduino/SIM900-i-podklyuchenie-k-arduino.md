@@ -142,6 +142,61 @@
 - завершить вызов: ATH
 - поступил входящий вызов: ATA
 
+### [GSM модуль SIM900A. Прошивка и использование](https://robotclass.ru/articles/gsm-sim900a-configure-and-use/)
+
+![](Terminalv1-9b.jpg)
+
+```
+RDY
+
++CFUN: 1
+
++CPIN: READY
+
+Call Ready
+AT
+
+OK
+AT+GMR
+
+Revision:1137B10SIM900M64_ST
+
+OK
+AT+GSN
+
+013226003743016
+
+OK
+AT+CPAS
+
++CPAS: 0
+
+OK
+AT+COPS?
+
++COPS: 0,0,"MTS RUS"
+
+OK
+ATD+79214524295;
+
+OK
+AT+CPAS
+
++CPAS: 4
+
+OK
+ATH0
+
+OK
+AT+CPAS
+
++CPAS: 0
+
+OK
+
+```
+
+
 ### Проверка at команд sim900
 
 [https://we.easyelectronics.ru/part/gsm-gprs-modul-sim900-chast-vtoraya.html](https://we.easyelectronics.ru/part/gsm-gprs-modul-sim900-chast-vtoraya.html)

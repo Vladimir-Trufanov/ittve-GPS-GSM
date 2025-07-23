@@ -33,6 +33,65 @@ AT+GMR - спрашиваем файл прошивки
 
 2024-05-27 Получилось!
 
+### [GSM модуль SIM900A. Прошивка и использование](https://robotclass.ru/articles/gsm-sim900a-configure-and-use/)
+
+![](USB-UART-and-sim900a.png)
+
+```
+ATAT
+
+ERROR
+AT
+
+OK
+ATAT/rAT/rAT\rAT\rat
+
+ERROR
+at
+
+OK
+AT+GMR
+
+Revision:1137B02SIM900M64_ST_ENHANCE
+
+OK
+AT+GSN
+
+012207000000015
+
+OK
+AT+CPAS
+
++CPAS: 0
+
+OK
+AT+COPS?
+
++COPS: 0,0,"MTS RUS"
+
+OK
+
+ATD+79214524295;
+
+OK
+
+AT+CPAS
+
++CPAS: 4
+
+OK
+
+ATH0
+OK
+
+AT+CPAS
+
++CPAS: 0
+
+OK
+
+
+```
 
 
 
