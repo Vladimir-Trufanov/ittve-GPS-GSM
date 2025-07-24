@@ -144,7 +144,7 @@
 
 ### [GSM модуль SIM900A. Прошивка и использование](https://robotclass.ru/articles/gsm-sim900a-configure-and-use/)
 
-![](Terminalv1-9b.jpg)
+![](Terminal-v1-9b.jpg)
 
 ```
 RDY
