@@ -1,0 +1,60 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.CompileOnBackground=0
+Compilator.ProgSaveAll=0
+Compilator.ProgRunSelection=0
+Compilator.LogType=0
+Compilator.LogEncoding=0
+DefaultDir=C:\ittve-GPS-GSM\SIM900-i-podklyuchenie-k-arduino
+DefaultCP=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+Extensions=*.*
+[Project tree]
+SIM900-i-podklyuchenie-k-arduino
+	+SIM900-i-podklyuchenie-k-arduino
+		-MakePhoneCall
+			MakePhoneCall\MakePhoneCall.ino
+		-Send-Receive-SMS-Call-SIM900-v1
+			Send-Receive-SMS-Call-SIM900-v1\Send-Receive-SMS-Call-SIM900-v1.pdf
+		-Send-Receive-SMS-Call-SIM900-v2
+			-proba2
+				Send-Receive-SMS-Call-SIM900-v2\proba2\proba2.ino
+			-Testing-AT-Commands
+				Send-Receive-SMS-Call-SIM900-v2\Testing-AT-Commands\Testing-AT-Commands.ino
+			Send-Receive-SMS-Call-SIM900-v2\Send-Receive-SMS-Call-SIM900-v2.pdf
+			Send-Receive-SMS-Call-SIM900-v2\Send-Receive-SMS-Call-SIM900-v2.ppr
+		-SMS-SIM900-v1
+			SMS-SIM900-v1\Send-Receive-SMS-Call-SIM900-v1.pdf
+		+TurnSIM900_upDown
+			TurnSIM900_upDown\TurnSIM900_upDown.ino
+		DC-jack.webp
+		gprs_vs.png
+		GSM-Arduino-circuit.webp
+		GSM-FTDI-circuit-1.webp
+		GSM-shield-labels.webp
+		insert-SIM.webp
+		LockSIMcard.webp
+		power-key.webp
+		SIM900.webp
+		SIM900_Hardware Design_V1.05.pdf
+		SIM900_Hardware Design_V2.05.pdf
+		SIM900AT20Command20ManualV103.653745192.pdf
+		SIM900-i-podklyuchenie-k-arduino.html
+		SIM900-i-podklyuchenie-k-arduino.md
+		SIM900-i-podklyuchenie-k-arduino.md.backup
+		software-serial.webp
+		Terminal-v1-9b.jpg
+		Zadnjaja-storona-platy.jpg
+[Open project files]
+0=TurnSIM900_upDown\TurnSIM900_upDown.ino
+[Selected Project Files]
+Main=
+Selected=TurnSIM900_upDown\TurnSIM900_upDown.ino
+[TurnSIM900_upDown\TurnSIM900_upDown.ino]
+TopLine=1
+Caret=1,48

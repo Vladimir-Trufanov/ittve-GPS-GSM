@@ -146,7 +146,7 @@
 
 > [В нашем случае, 2025-07-14, мы с Гошей не разобрались (ясно стало потом при работе через Terminal-v1.9b), как завершать команду возвратом каретки в оболочке Arduino](#).
 
-### [2025-07-23 Получился контакт SIM900a и Terminal-v1.9b!](https://robotclass.ru/articles/gsm-sim900a-configure-and-use/)
+### [2025-07-23 Получился контакт SIM900a - SIM900 и Terminal-v1.9b!](https://robotclass.ru/articles/gsm-sim900a-configure-and-use/)
 
 - Сделал подключение SIM900 к Terminal-v1.9b на основе статьи ***[GSM модуль SIM900A. Прошивка и использование](https://robotclass.ru/articles/gsm-sim900a-configure-and-use/)***
 

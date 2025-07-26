@@ -23,14 +23,10 @@ Send-Receive-SMS-Call-SIM900-v2
 		Send-Receive-SMS-Call-SIM900-v2.pdf
 		Send-Receive-SMS-Call-SIM900-v2.ppr
 [Open project files]
-0=Новый1.txt
-1=Testing-AT-Commands\Testing-AT-Commands.ino
+0=Testing-AT-Commands\Testing-AT-Commands.ino
 [Selected Project Files]
 Main=
 Selected=Testing-AT-Commands\Testing-AT-Commands.ino
-[Новый1.txt]
-TopLine=1
-Caret=1,1
 [Testing-AT-Commands\Testing-AT-Commands.ino]
 TopLine=6
 Caret=5,33
