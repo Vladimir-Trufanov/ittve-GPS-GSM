@@ -13,24 +13,25 @@ DontOpen=0
 AbsolutePath=0
 FileFormat=0
 ProjectFilesOnly=0
+HTServer=localhost
 Extensions=*.*
 [Project tree]
 SIM900-i-podklyuchenie-k-arduino
 	+SIM900-i-podklyuchenie-k-arduino
 		-MakePhoneCall
 			MakePhoneCall\MakePhoneCall.ino
+		+SendingSMS0
+			SendingSMS0\SendingSMS0.ino
 		-Send-Receive-SMS-Call-SIM900-v1
 			Send-Receive-SMS-Call-SIM900-v1\Send-Receive-SMS-Call-SIM900-v1.pdf
 		-Send-Receive-SMS-Call-SIM900-v2
-			-proba2
-				Send-Receive-SMS-Call-SIM900-v2\proba2\proba2.ino
-			-Testing-AT-Commands
-				Send-Receive-SMS-Call-SIM900-v2\Testing-AT-Commands\Testing-AT-Commands.ino
+			-SendingSMS
+				Send-Receive-SMS-Call-SIM900-v2\SendingSMS\SendingSMS.ino
+			-TestingAtCommands
+				Send-Receive-SMS-Call-SIM900-v2\TestingAtCommands\TestingAtCommands.ino
 			Send-Receive-SMS-Call-SIM900-v2\Send-Receive-SMS-Call-SIM900-v2.pdf
 			Send-Receive-SMS-Call-SIM900-v2\Send-Receive-SMS-Call-SIM900-v2.ppr
-		-SMS-SIM900-v1
-			SMS-SIM900-v1\Send-Receive-SMS-Call-SIM900-v1.pdf
-		+TurnSIM900_upDown
+		-TurnSIM900_upDown
 			TurnSIM900_upDown\TurnSIM900_upDown.ino
 		DC-jack.webp
 		gprs_vs.png
@@ -46,15 +47,15 @@ SIM900-i-podklyuchenie-k-arduino
 		SIM900AT20Command20ManualV103.653745192.pdf
 		SIM900-i-podklyuchenie-k-arduino.html
 		SIM900-i-podklyuchenie-k-arduino.md
-		SIM900-i-podklyuchenie-k-arduino.md.backup
+		SIM900-i-podklyuchenie-k-arduino.ppr
 		software-serial.webp
 		Terminal-v1-9b.jpg
 		Zadnjaja-storona-platy.jpg
 [Open project files]
-0=TurnSIM900_upDown\TurnSIM900_upDown.ino
+0=SendingSMS0\SendingSMS0.ino
 [Selected Project Files]
 Main=
-Selected=TurnSIM900_upDown\TurnSIM900_upDown.ino
-[TurnSIM900_upDown\TurnSIM900_upDown.ino]
-TopLine=1
-Caret=1,48
+Selected=SendingSMS0\SendingSMS0.ino
+[SendingSMS0\SendingSMS0.ino]
+TopLine=29
+Caret=1,10

@@ -18,15 +18,27 @@ Extensions=*.*
 [Project tree]
 Send-Receive-SMS-Call-SIM900-v2
 	+Send-Receive-SMS-Call-SIM900-v2
-		+Testing-AT-Commands
-			Testing-AT-Commands\Testing-AT-Commands.ino
+		-MakingCall
+			MakingCall\MakingCall.ino
+		-ReadingSMS
+			ReadingSMS\ReadingSMS.ino
+		+ReceivingCall
+			ReceivingCall\ReceivingCall.ino
+		+SendingSMS
+			SendingSMS\SendingSMS.ino
+		-TestingAtCommands
+			TestingAtCommands\TestingAtCommands.ino
 		Send-Receive-SMS-Call-SIM900-v2.pdf
 		Send-Receive-SMS-Call-SIM900-v2.ppr
 [Open project files]
-0=Testing-AT-Commands\Testing-AT-Commands.ino
+0=ReceivingCall\ReceivingCall.ino
+1=SendingSMS\SendingSMS.ino
 [Selected Project Files]
 Main=
-Selected=Testing-AT-Commands\Testing-AT-Commands.ino
-[Testing-AT-Commands\Testing-AT-Commands.ino]
-TopLine=6
-Caret=5,33
+Selected=SendingSMS\SendingSMS.ino
+[ReceivingCall\ReceivingCall.ino]
+TopLine=11
+Caret=1,28
+[SendingSMS\SendingSMS.ino]
+TopLine=3
+Caret=18,25
