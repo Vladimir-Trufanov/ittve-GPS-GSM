@@ -11,7 +11,7 @@
 #define MINCHANGE 100
  
 #include "SoftwareSerial.h"
-SoftwareSerial GPRS(7,8);
+SoftwareSerial GPRS(7, 8);
 int onModulePin= 9;
 char aux_str[150];
 char aux;
@@ -19,13 +19,11 @@ char data[512];
 int data_size;
 uint8_t answer=0;
  
-#include "TinyGPSpp.h"
-static const int RXPin = 4, TXPin = 3;
-static const uint32_t GPSBaud = 9600;
-// The TinyGPSpp object
-TinyGPSPlus gps;
-SoftwareSerial gpsSerial(RXPin, TXPin);
-
+ 
+#include "TinyGPS.h"
+TinyGPS gps;
+//Tx, Rx 
+SoftwareSerial gpsSerial(2, 3);
 long lat, lon;
 long endlatsend=0; 
 long endlonsend;
@@ -43,10 +41,9 @@ String surl="http://yoursite/gps_tracker/gps_tracker1.php?id_avto=";
 int id_avto=1;
  
 void setup()
-{
-  //GPRS.begin(19200);              // the GPRS baud rate   
-  GPRS.begin(9600);                 // the GPRS baud rate   
-  Serial.begin(9600);               // the Serial port of Arduino baud rate.
+  {
+  GPRS.begin(19200);               // the GPRS baud rate   
+  Serial.begin(9600);             // the Serial port of Arduino baud rate.
   //gpsSerial.begin(9600);
   Serial.println("Starting...");
   pinMode(onModulePin,OUTPUT);
@@ -72,7 +69,7 @@ void setup()
 void loop() 
   {
     digitalWrite(12,HIGH);
-    GPRS.end(); gpsSerial.begin(9600);
+    GPRS.end();gpsSerial.begin(9600);
     while (millis() - millis1 < 2000) 
       {
       if (readgps())

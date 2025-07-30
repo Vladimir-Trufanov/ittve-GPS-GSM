@@ -381,17 +381,20 @@ Web-интерфейс -отображение на Яндекс. Картах �
 ![](arduino170-8.png)
 
 
-#### Библиография по SIM900
+#### Библиография
 
 [SIM900](https://github.com/nthnn/SIM900/)
 
 [GPS Tracker на ардуино своими руками](https://habr.com/ru/articles/196150/)
 
-[Guide to SIM900 GSM GPRS Shield with Arduino](https://randomnerdtutorials.com/sim900-gsm-gprs-shield-arduino/)
+[GPS-трекер на Arduino и GY-NEO6MV2](https://amperkot.ru/blog/gds-gy/?ysclid=mdpho0pmma884044393)
 
-[GSM GPRS SIM900 Shield](https://3d-diy.ru/wiki/arduino-moduli/gsm-gprs-sim900-shield/)
+[Homemade Realtime GPS Tracker (SIM800L, Ublox NEO-6M, Arduino)](https://www.instructables.com/Homemade-Realtime-GPS-Tracker-SIM800L-Ublox-NEO-6M/)
 
-[Мобильный телефон на основе Arduino и GSM модуля](https://microkontroller.ru/arduino-projects/mobilnyj-telefon-na-osnove-arduino-i-gsm-modulya/)
+[TinyGPS++ library](http://arduiniana.org/libraries/tinygpsplus/)
 
-[GSM и GPRS модули для Arduino](https://dzen.ru/a/XywdWFmMDRpE_muK)
+[Arduino Location Tracker using SIM800L GSM Module and NEO-6M GPS Module](https://circuitdigest.com/microcontroller-projects/arduino-gps-tracker-using-sim800l-and-neo-6m)
 
+[GPS Tracker Using Arduino](https://justdoelectronics.com/gps-tracker-using-arduino/)
+
+[GPS трекер на базе GY-NEO6M своими руками - это просто](https://mysku.club/blog/aliexpress/62773.html)

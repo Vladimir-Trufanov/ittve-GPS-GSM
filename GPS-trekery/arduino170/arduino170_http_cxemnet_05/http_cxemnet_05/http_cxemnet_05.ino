@@ -1,31 +1,20 @@
-/* ========================================================================== */
-/*                                                                            */
-/*   gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino                    */
-/*   (c) 2012 Author                                                          */
-/*                                                                            */
-/*   Description                                                              */
-/*                                                                            */
-/* ========================================================================== */
-
 #define INTERVALSEND 30000
 #define MINCHANGE 100
- 
-#include "SoftwareSerial.h"
-SoftwareSerial GPRS(7,8);
+
+#include <SoftwareSerial.h>
+SoftwareSerial GPRS(7, 8);
 int onModulePin= 9;
 char aux_str[150];
 char aux;
 char data[512];
 int data_size;
 uint8_t answer=0;
- 
-#include "TinyGPSpp.h"
-static const int RXPin = 4, TXPin = 3;
-static const uint32_t GPSBaud = 9600;
-// The TinyGPSpp object
-TinyGPSPlus gps;
-SoftwareSerial gpsSerial(RXPin, TXPin);
 
+
+#include <TinyGPS.h>
+TinyGPS gps;
+//Tx, Rx 
+SoftwareSerial gpsSerial(2, 3);
 long lat, lon;
 long endlatsend=0; 
 long endlonsend;
@@ -35,25 +24,25 @@ bool newdata = false;
 unsigned long millis1=0;
 unsigned long millissend=0;
 unsigned long millisdata=0;
- 
- 
+
+
 char apn[]="internet.beeline.ru";
+//char url[]="http://toysshoponline.ru/gps_tracker/gps_tracker1.php?id_avto=1&lat=450391&lon=419821";
 char url[150];
-String surl="http://yoursite/gps_tracker/gps_tracker1.php?id_avto=";
+String surl="http://toysshoponline.ru/gps_tracker/gps_tracker1.php?id_avto=";
 int id_avto=1;
- 
+
 void setup()
-{
-  //GPRS.begin(19200);              // the GPRS baud rate   
-  GPRS.begin(9600);                 // the GPRS baud rate   
-  Serial.begin(9600);               // the Serial port of Arduino baud rate.
+  {
+  GPRS.begin(19200);               // the GPRS baud rate   
+  Serial.begin(9600);             // the Serial port of Arduino baud rate.
   //gpsSerial.begin(9600);
   Serial.println("Starting...");
   pinMode(onModulePin,OUTPUT);
-   
+  
   pinMode(12,OUTPUT);
   digitalWrite(12,LOW);
-   
+  
   power_on();
   delay(3000);
   //sendATcommand("AT", "OK", 2000);
@@ -68,11 +57,11 @@ void setup()
     }
   delay(1000);
   }
- 
+
 void loop() 
   {
     digitalWrite(12,HIGH);
-    GPRS.end(); gpsSerial.begin(9600);
+    GPRS.end();gpsSerial.begin(9600);
     while (millis() - millis1 < 2000) 
       {
       if (readgps())
@@ -92,7 +81,7 @@ void loop()
    //if(millis()-millissend>INTERVALSEND && millis()-millisdata<INTERVALSEND
       //&& abs(lat-endlatsend)>MINCHANGE && abs(lon-endlonsend)>MINCHANGE)
   if(millis()-millissend>INTERVALSEND && millis()-millisdata<INTERVALSEND
-      && abs(lat-endlatsend)>MINCHANGE && abs(lon-endlonsend)>MINCHANGE
+      //&& abs(lat-endlatsend)>MINCHANGE && abs(lon-endlonsend)>MINCHANGE
       )
      {
      GPRS.begin(19200);gpsSerial.end();
@@ -151,7 +140,7 @@ int8_t sendATcommand(char* ATcommand, char* expected_answer, unsigned int timeou
    uint8_t x=0,  answer=0;
    char response[150];
    unsigned long previous;
- 
+
    memset(response, '\0', 150);    // Initialize the string
    delay(100);
    while( GPRS.available() > 0) GPRS.read();    // Clean the input buffer
@@ -201,8 +190,8 @@ void power_on()
     digitalWrite(onModulePin,LOW);
     delay(3000);
     Serial.println("POWER!!!!");
-     
-       
+    
+      
     // power on pulse
     digitalWrite(onModulePin,HIGH);
     delay(3000);
@@ -230,7 +219,7 @@ bool readgps()
     }
   return false;
   }
-   
+  
  String set_url_avto()
   {
   String surl1;
@@ -245,4 +234,3 @@ bool readgps()
   id_avto=0;
   return surl1; 
   }
-  

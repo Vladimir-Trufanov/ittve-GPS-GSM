@@ -1,0 +1,36 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.CompileOnBackground=0
+Compilator.ProgSaveAll=0
+Compilator.ProgRunSelection=0
+Compilator.LogType=0
+Compilator.LogEncoding=0
+DefaultDir=C:\ittve-GPS-GSM\GPS-trekery\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server
+DefaultCP=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+HTServer=localhost
+Extensions=*.*
+[Project tree]
+project-gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server
+	+gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server
+		gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
+		project-gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ppr
+		TinyGPSpp.cpp
+		TinyGPSpp.h
+[Open project files]
+0=Новый1.txt
+1=gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
+[Selected Project Files]
+Main=
+Selected=gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
+[Новый1.txt]
+TopLine=1
+Caret=1,1
+[gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino]
+TopLine=41
+Caret=17,75
