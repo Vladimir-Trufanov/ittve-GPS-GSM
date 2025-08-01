@@ -22,20 +22,21 @@ void setup() {
 /**
  * Выполнить AT команду SIM900
 **/ 
-void sendCommand(const char* command, String info) 
+void sendCommand(const char* command, char* info) 
 {
   // Показываем информацию по предстоящей команде
-  Serial.println("--- "+info);
+  Serial.print("--- ");
+  Serial.println(info);
   // Показываем команду
-  Serial.println(command);
-  Serial.println("-----");
+  //Serial.println(command);
+  //Serial.println("-----");
   // Отправляем команду SIM900
   gprsShield.println(command);
   // Serial.flush() — функция в аппаратной платформе Arduino, которая ожидает окончания передачи исходящих данных. 
   // После вызова этой функции можно быть уверенным, что все данные отправлены, а буфер пуст. 
   // Кроме того, Serial.flush() очищает буфер приёма, сбрасывая любые входящие данные, которые ещё не были прочитаны. 
   // Это особенно полезно в ситуациях, когда входящие данные могут быть устаревшими или неактуальными. 
-  gprsShield.flush();
+  // gprsShield.flush();
   // Uncomment this delay if you need to wait a while
   delay(1000);   
   ShowSerialData();
@@ -111,15 +112,41 @@ void sendGetRequest()
   sendCommand("AT+SAPBR=1,1","Устанавливаем соединение для профиля с идентификатором 1"); // open GPRS context bearer
   sendCommand("AT+SAPBR=2,1","Снова получаем состояние сессии c IP-адресом"); 
   
-  
+  // Инициализируем сервис HTTP
+  //sendCommand("AT+HTTPINIT","Инициализируем сервис HTTP"); // initiate HTTP request
+
+  sendCommand("AT+GMR","AT+GMR"); 
 
   /*
-  sendCommand("AT+HTTPINIT");//initiate HTTP request
-  sendCommand("AT+HTTPPARA=\"CID\",1");//set parameters for http session
-  sendCommand("AT+HTTPPARA=\"URL\",\"http://google.com/\""); //Change the URL from google.com to the server you want to reach
-  sendCommand("AT+HTTPACTION=0");//send http request to specified URL, GET session start
-  delay(9000); //wait for response for 9 seconds, reduce or increase based on your need
-  sendCommand("AT+HTTPREAD");// read results of request, normally contains status code 200 if successful
+  // AT+HTTPSSL=1 // Включить протокол SSL для HTTP
+  sendCommand("AT+HTTPSSL=1","Включить протокол SSL для HTTP"); 
+  
+  // Задаём идентификатор профиля сеанса
+  sendCommand("AT+HTTPPARA=\"CID\",1","Задаём идентификатор профиля сеанса"); // set parameters for http session
+
+  // Задаём URL сайта, к которому будет отправляться запрос HTTP GET.
+  // sendCommand("AT+HTTPPARA=\"URL\",\"http://google.com/\"","Задаём URL сайта http://google.com/"); // Change the URL from google.com to the server you want to reach
+  // sendCommand("AT+HTTPPARA=\"URL\",\"http://my-json-server.typicode.com/typicode/demo/posts\"","Задаём URL демонстрационного сервера");
+  sendCommand("AT+HTTPPARA=\"URL\",\"https://probatv.ru/\"","Задаём URL сайта https://probatv.ru/"); // Change the URL from google.com to the server you want to reach
+  // sendCommand("AT+HTTPPARA=\"URL\",\"http://87.242.70.183/\"","Задаём URL сайта https://probatv.ru/"); // Change the URL from google.com to the server you want to reach
+  
+  //http://probatv.ru/
+  //https://probatv.ru/
+
+  // Вводим команду для выполнения запроса GET: AT+HTTPACTION=0.
+  // Параметр команды AT+HTTPACTION задает тип запроса HTTP: 0 — GET, 1 — POST, 2 — HEAD, 3 — DELETE.
+  // В нашем случае нулевое значение предписывает выполнить запрос GET.
+  // +HTTPACTION: 0,200,134
+  sendCommand("AT+HTTPACTION=0","Вводим команду для выполнения запроса GET"); // send http request to specified URL, GET session start
+
+  Serial.println("Ждем 3 сек, чтобы запросить ответ");
+  delay(3000); 
+  
+  // Cчитываем результаты запроса, обычно содержит код состояния 200 в случае успеха
+  sendCommand("AT+HTTPREAD", "Cчитываем результаты запроса, обычно содержит код состояния 200");
+  */
+
+  /*
   sendCommand("AT+HTTPTERM");//close http connection
   sendCommand("AT+CIPSHUT");//close or turn off network connection
   sendCommand("AT+SAPBR=0,1");// close GPRS context bearer

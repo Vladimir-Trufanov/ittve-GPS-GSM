@@ -10,6 +10,8 @@
 
 #### [Описание АТ-команд GSM/GPRS Shield, модуль A9, A6 (GSM07.07,07.05;)](https://wiki.iarduino.ru/page/a6_gprs_at/)
 
+#### [Продолжаем глубже изучать передачу данных по сетям GSM через GPRS с помощью SIM868 и Repka Pi — про AT-команды](https://habr.com/ru/articles/777582/)
+
 #### [Передача данных на веб-сервер с использованием Arduino и GPRS/GSM](https://microkontroller.ru/arduino-projects/peredacha-dannyh-na-veb-server-s-ispolzovaniem-arduino-i-gprs-gsm/)
 
 #### [GSM module HTTP GET & POST request using arduino microcontroller and SIM900](https://github.com/RDjarbeng/HTTP-GET-POST-Request-with-GSM)
