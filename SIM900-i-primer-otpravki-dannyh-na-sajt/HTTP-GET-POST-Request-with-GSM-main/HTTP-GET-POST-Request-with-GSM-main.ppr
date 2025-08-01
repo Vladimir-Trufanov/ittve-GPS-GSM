@@ -1,0 +1,37 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.CompileOnBackground=0
+Compilator.ProgSaveAll=0
+Compilator.ProgRunSelection=0
+Compilator.LogType=0
+Compilator.LogEncoding=0
+DefaultDir=C:\ittve-GPS-GSM\SIM900-i-primer-otpravki-dannyh-na-sajt\HTTP-GET-POST-Request-with-GSM-main
+DefaultCP=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+Extensions=*.*
+[Project tree]
+HTTP-GET-POST-Request-with-GSM-main
+	+HTTP-GET-POST-Request-with-GSM-main
+		+sendGetRequest
+			sendGetRequest\sendGetRequest.ino
+		-testSerial
+			testSerial\testSerial.ino
+		HTTP-GET-POST-Request-with-GSM-main.ppr
+		LICENSE.txt
+		README.md
+		sendGetRequest.ino
+		sendPostRequest.ino
+		testSerial.ino
+[Open project files]
+0=sendGetRequest\sendGetRequest.ino
+[Selected Project Files]
+Main=
+Selected=sendGetRequest\sendGetRequest.ino
+[sendGetRequest\sendGetRequest.ino]
+TopLine=33
+Caret=19,52
