@@ -116,6 +116,10 @@ void sendGetRequest()
   //sendCommand("AT+HTTPINIT","Инициализируем сервис HTTP"); // initiate HTTP request
 
   sendCommand("AT+GMR","AT+GMR"); 
+  sendCommand("AT+HTTPSSL=?","AT+HTTPSSL=?"); 
+  sendCommand("AT+HTTPSSL?","AT+HTTPSSL?"); 
+  sendCommand("AT+HTTPSSL=1","AT+HTTPSSL=1"); 
+  sendCommand("AT+HTTPSSL?","AT+HTTPSSL?"); 
 
   /*
   // AT+HTTPSSL=1 // Включить протокол SSL для HTTP
