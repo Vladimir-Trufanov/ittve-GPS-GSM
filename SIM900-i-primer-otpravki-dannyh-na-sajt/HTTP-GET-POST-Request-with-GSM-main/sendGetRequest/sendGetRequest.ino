@@ -73,8 +73,8 @@ void sendGetRequest()
   // 3 — в регистрации отказано. Служба GPRS отключена; 4 - Неизвестно; 5 — зарегистрирован, в роуминге.
   // Итак, если вы уверены, что устройство находится в зоне действия сигнала, вам нужно всего лишь каждую секунду 
   // вводить команду AT+CGREG? и ждать +CGREG=0,1 (или +CGREG=0,5 , если вы работаете в роуминге).
-  sendCommand("AT+CREG?","Проверяем регистрацию в сети GSM"); 
-  sendCommand("AT+CGREG?","Проверяем регистрацию в сети передачи данных 2G"); 
+  //sendCommand("AT+CREG?","Проверяем регистрацию в сети GSM"); 
+  //sendCommand("AT+CGREG?","Проверяем регистрацию в сети передачи данных 2G"); 
   
   // Закрываем все соединения TCP/UDP, которые могли быть открыты на модуле. 
   // Использование этой команды может быть полезно, например, при переустановке 
@@ -92,7 +92,7 @@ void sendGetRequest()
   // 2 — пассивное подключение; 3 — GPRS.
   // Далее в ответе команды идет адрес IP, выделенный в рамках сессии.
   // В нашем случае сессия открыта, ее тип — GPRS, но адрес IP не выделен. Это означает, что подключение к GPRS еще не выполнено.
-  sendCommand("AT+SAPBR=2,1","Определяем состояние сессии"); 
+  // sendCommand("AT+SAPBR=2,1","Определяем состояние сессии"); 
 
   // Закрываем носитель контекста GPRS (сессию), если он был оставлен открытым
   // (команда AT+SAPBR=0,1 используется для закрытия сессии и соединения TCP/IP, 
@@ -111,28 +111,33 @@ void sendGetRequest()
   // IP из внутренней сети мобильного провайдера   
   sendCommand("AT+SAPBR=1,1","Устанавливаем соединение для профиля с идентификатором 1"); // open GPRS context bearer
   sendCommand("AT+SAPBR=2,1","Снова получаем состояние сессии c IP-адресом"); 
-  
-  // Инициализируем сервис HTTP
-  //sendCommand("AT+HTTPINIT","Инициализируем сервис HTTP"); // initiate HTTP request
 
-  sendCommand("AT+GMR","AT+GMR"); 
-  sendCommand("AT+HTTPSSL=?","AT+HTTPSSL=?"); 
-  sendCommand("AT+HTTPSSL?","AT+HTTPSSL?"); 
-  sendCommand("AT+HTTPSSL=1","AT+HTTPSSL=1"); 
-  sendCommand("AT+HTTPSSL?","AT+HTTPSSL?"); 
+  // Получаем версию прошивки
+  // sendCommand("AT+GMR","Получаем версию прошивки"); 
 
-  /*
-  // AT+HTTPSSL=1 // Включить протокол SSL для HTTP
-  sendCommand("AT+HTTPSSL=1","Включить протокол SSL для HTTP"); 
+  // Включаем протокол SSL для HTTP 
+  // sendCommand("AT+HTTPSSL=?","AT+HTTPSSL=?"); 
+  // sendCommand("AT+HTTPSSL?","AT+HTTPSSL?"); 
+  // sendCommand("AT+HTTPSSL=1","Включаем протокол SSL для HTTP"); 
+  // sendCommand("AT+HTTPSSL?","AT+HTTPSSL?"); 
   
+  // sendCommand("AT+HTTPSSL=0","ВЫКЛЮЧАЕМ протокол SSL для HTTP"); 
+  // sendCommand("AT+HTTPSSL?","AT+HTTPSSL?"); 
+
+  // Инициализируем сервис HTTP (с 2025-08-02 считаем, что если включен протокол SSL для HTTP, инициализировать HTTP не нужно)
+  sendCommand("AT+HTTPINIT","Инициализируем сервис HTTP"); // initiate HTTP request
+
   // Задаём идентификатор профиля сеанса
   sendCommand("AT+HTTPPARA=\"CID\",1","Задаём идентификатор профиля сеанса"); // set parameters for http session
 
   // Задаём URL сайта, к которому будет отправляться запрос HTTP GET.
   // sendCommand("AT+HTTPPARA=\"URL\",\"http://google.com/\"","Задаём URL сайта http://google.com/"); // Change the URL from google.com to the server you want to reach
   // sendCommand("AT+HTTPPARA=\"URL\",\"http://my-json-server.typicode.com/typicode/demo/posts\"","Задаём URL демонстрационного сервера");
-  sendCommand("AT+HTTPPARA=\"URL\",\"https://probatv.ru/\"","Задаём URL сайта https://probatv.ru/"); // Change the URL from google.com to the server you want to reach
+  // sendCommand("AT+HTTPPARA=\"URL\",\"https://probatv.ru/\"","Задаём URL сайта https://probatv.ru/"); // Change the URL from google.com to the server you want to reach
   // sendCommand("AT+HTTPPARA=\"URL\",\"http://87.242.70.183/\"","Задаём URL сайта https://probatv.ru/"); // Change the URL from google.com to the server you want to reach
+
+  // xn--http://-2hga2ewc.xn--p1ai
+  sendCommand("AT+HTTPPARA=\"URL\",\"xn--http://-2hga2ewc.xn--p1ai\"","Задаём URL сайта http://пифи.рф"); // Change the URL from google.com to the server you want to reach
   
   //http://probatv.ru/
   //https://probatv.ru/
@@ -144,11 +149,10 @@ void sendGetRequest()
   sendCommand("AT+HTTPACTION=0","Вводим команду для выполнения запроса GET"); // send http request to specified URL, GET session start
 
   Serial.println("Ждем 3 сек, чтобы запросить ответ");
-  delay(3000); 
+  delay(9000); 
   
   // Cчитываем результаты запроса, обычно содержит код состояния 200 в случае успеха
   sendCommand("AT+HTTPREAD", "Cчитываем результаты запроса, обычно содержит код состояния 200");
-  */
 
   /*
   sendCommand("AT+HTTPTERM");//close http connection
