@@ -14,9 +14,9 @@ void setup() {
 
   //sendGetRequestWithParameters(apn, url);  
   Serial.println("");
-  //sendGetRequest();  
+  sendGetRequest();  
   //probaSSL();
-  proba2();
+  // proba2();
 
   // Add any additional code here if needed
 }
@@ -229,8 +229,8 @@ void sendGetRequest()
 
   // Задаём URL сайта, к которому будет отправляться запрос HTTP GET.
   // sendCommand("AT+HTTPPARA=\"URL\",\"http://google.com/\"","Задаём URL сайта http://google.com/"); // Change the URL from google.com to the server you want to reach
-  sendCommand("AT+HTTPPARA=\"URL\",\"http://my-json-server.typicode.com/typicode/demo/posts\"","Задаём URL демонстрационного сервера");
-  // sendCommand("AT+HTTPPARA=\"URL\",\"https://probatv.ru/\"","Задаём URL сайта https://probatv.ru/"); // Change the URL from google.com to the server you want to reach
+  // sendCommand("AT+HTTPPARA=\"URL\",\"http://my-json-server.typicode.com/typicode/demo/posts\"","Задаём URL демонстрационного сервера");
+     sendCommand("AT+HTTPPARA=\"URL\",\"http://probatv.ru/\"","Задаём URL сайта http://probatv.ru/"); // Change the URL from google.com to the server you want to reach
   // sendCommand("AT+HTTPPARA=\"URL\",\"http://87.242.70.183/\"","Задаём URL сайта https://probatv.ru/"); // Change the URL from google.com to the server you want to reach
 
   // xn--http://-2hga2ewc.xn--p1ai
