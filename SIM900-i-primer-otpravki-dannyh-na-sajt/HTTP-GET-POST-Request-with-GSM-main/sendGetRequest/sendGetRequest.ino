@@ -14,7 +14,9 @@ void setup() {
 
   //sendGetRequestWithParameters(apn, url);  
   Serial.println("");
-  sendGetRequest();  
+  //sendGetRequest();  
+  //probaSSL();
+  proba2();
 
   // Add any additional code here if needed
 }
@@ -53,6 +55,101 @@ void ShowSerialData()
   }
   Serial.println("");
   delay(1000);
+}
+
+void proba2()
+{
+  // https://arduino.stackexchange.com/questions/43091/sending-post-request-to-https-aws-server-using-sim900a
+  // AT
+  sendCommand("AT","AT"); 
+  // AT+CGATT = 1
+  sendCommand("AT+CGATT = 1","AT+CGATT = 1"); 
+  // AT+SAPBR=3,1,"CONTYPE","GPRS"
+  sendCommand("AT+SAPBR=3,1,\"CONTYPE\",\"GPRS\"","AT+SAPBR=3,1,CONTYPE,GPRS"); 
+  // AT+SAPBR=3,1,"APN","www"
+  sendCommand("AT+SAPBR=3,1,\"APN\",\"www\"","AT+SAPBR=3,1,APN,www"); 
+  // AT+SAPBR=1,1
+  sendCommand("AT+SAPBR=1,1","AT+SAPBR=1,1"); 
+  // AT+SAPBR=2,1
+  sendCommand("AT+SAPBR=2,1","AT+SAPBR=2,1"); 
+  // AT+HTTPSSL=1
+  sendCommand("AT+HTTPSSL=1","AT+HTTPSSL=1"); 
+  // AT+HTTPINIT
+  sendCommand("AT+HTTPINIT","AT+HTTPINIT"); 
+  // AT+HTTPPARA="CID",1
+  sendCommand("AT+HTTPPARA=\"CID\",1","AT+HTTPPARA=CID,1"); 
+  // AT+HTTPPARA="URL","https://www.google.com"
+  // sendCommand("AT+HTTPPARA=\"URL\",\"https://www.google.com\"","AT+HTTPPARA=URL,https://www.google.com"); 
+  //sendCommand("AT+HTTPPARA=\"URL\",\"www.google.com\"","AT+HTTPPARA=URL,https://www.google.com"); 
+  //sendCommand("AT+HTTPPARA=\"URL\",\"https://google.com\"","AT+HTTPPARA=URL,https://www.google.com"); 
+  //sendCommand("AT+HTTPPARA=\"URL\",\"google.com\"","AT+HTTPPARA=URL,https://www.google.com"); 
+  // sendCommand("AT+HTTPPARA=\"URL\",\"www.probatv.ru\"","AT+HTTPPARA=URL,https://www.probatv.ru"); 
+  sendCommand("AT+HTTPPARA=\"URL\",\"probatv.ru\"","AT+HTTPPARA=URL,probatv.ru"); 
+
+  // www.probatv.ru
+  // AT+HTTPACTION=0
+  sendCommand("AT+HTTPACTION=0","AT+HTTPACTION=0"); 
+  // AT+HTTPREAD
+  sendCommand("AT+HTTPREAD","AT+HTTPREAD"); 
+
+  /*
+  // Проверяем, реагирует ли модуль, ожидаемое значение  OK
+  sendCommand("AT","Проверяем, реагирует ли SIM900 на команды"); 
+  sendCommand("AT+CIPSHUT","Закрываем все соединения TCP/UDP"); 
+  sendCommand("AT+SAPBR=2,1","Определяем состояние сессии"); 
+  sendCommand("AT+SAPBR=0,1","Закрываем сессию (ответ может быть ERROR)"); 
+
+  // Открываем контекст GPRS и устанавливаем GPRS-соединение
+  sendCommand("AT+SAPBR=3,1,\"Contype\",\"GPRS\"","Открываем контекст GPRS и устанавливаем GPRS-соединение");
+  // Определяем имя точки доступа Access Point Name (APN) — как “internet.mts.ru”.
+  sendCommand("AT+SAPBR=3,1,\"APN\",\"internet.mts.ru\"","Определяем имя точки доступа APN, как МТС"); // change this apn value for the SIM card
+  sendCommand("AT+HTTPPARA=\"CID\",1","Задаём идентификатор профиля сеанса"); // set parameters for http session
+  sendCommand("AT+SAPBR=1,1","Устанавливаем соединение для профиля с идентификатором 1"); // open GPRS context bearer
+  sendCommand("AT+SAPBR=2,1","Снова получаем состояние сессии c IP-адресом"); 
+
+  sendCommand("AT+HTTPSSL=1","Включаем протокол SSL для HTTP"); 
+
+  // Задаём идентификатор профиля сеанса
+  //sendCommand("AT+HTTPPARA=\"CID\",1","Задаём идентификатор профиля сеанса"); // set parameters for http session
+  sendCommand("AT+HTTPPARA=\"URL\",\"https://probatv.ru/\"","Задаём URL сайта https://probatv.ru/"); // Change the URL from google.com to the server you want to reach
+  
+  // Вводим команду для выполнения запроса GET: AT+HTTPACTION=0.
+  sendCommand("AT+HTTPACTION=0","Вводим команду для выполнения запроса GET"); // send http request to specified URL, GET session start
+  // Cчитываем результаты запроса, обычно содержит код состояния 200 в случае успеха
+  sendCommand("AT+HTTPREAD", "Cчитываем результаты запроса, обычно содержит код состояния 200");
+
+   sendCommand("AT+HTTPTERM", "Terminate https service");
+  */
+}
+
+void probaSSL()
+{
+  // Проверяем, реагирует ли модуль, ожидаемое значение  OK
+  sendCommand("AT","Проверяем, реагирует ли SIM900 на команды"); 
+  sendCommand("AT+CIPSHUT","Закрываем все соединения TCP/UDP"); 
+  sendCommand("AT+SAPBR=2,1","Определяем состояние сессии"); 
+  sendCommand("AT+SAPBR=0,1","Закрываем сессию (ответ может быть ERROR)"); 
+
+  // Открываем контекст GPRS и устанавливаем GPRS-соединение
+  sendCommand("AT+SAPBR=3,1,\"Contype\",\"GPRS\"","Открываем контекст GPRS и устанавливаем GPRS-соединение");
+  // Определяем имя точки доступа Access Point Name (APN) — как “internet.mts.ru”.
+  sendCommand("AT+SAPBR=3,1,\"APN\",\"internet.mts.ru\"","Определяем имя точки доступа APN, как МТС"); // change this apn value for the SIM card
+  sendCommand("AT+HTTPPARA=\"CID\",1","Задаём идентификатор профиля сеанса"); // set parameters for http session
+  sendCommand("AT+SAPBR=1,1","Устанавливаем соединение для профиля с идентификатором 1"); // open GPRS context bearer
+  sendCommand("AT+SAPBR=2,1","Снова получаем состояние сессии c IP-адресом"); 
+
+  sendCommand("AT+HTTPSSL=1","Включаем протокол SSL для HTTP"); 
+
+  // Задаём идентификатор профиля сеанса
+  //sendCommand("AT+HTTPPARA=\"CID\",1","Задаём идентификатор профиля сеанса"); // set parameters for http session
+  sendCommand("AT+HTTPPARA=\"URL\",\"https://probatv.ru/\"","Задаём URL сайта https://probatv.ru/"); // Change the URL from google.com to the server you want to reach
+  
+  // Вводим команду для выполнения запроса GET: AT+HTTPACTION=0.
+  sendCommand("AT+HTTPACTION=0","Вводим команду для выполнения запроса GET"); // send http request to specified URL, GET session start
+  // Cчитываем результаты запроса, обычно содержит код состояния 200 в случае успеха
+  sendCommand("AT+HTTPREAD", "Cчитываем результаты запроса, обычно содержит код состояния 200");
+
+   sendCommand("AT+HTTPTERM", "Terminate https service");
 }
 
 void sendGetRequest()
@@ -132,12 +229,13 @@ void sendGetRequest()
 
   // Задаём URL сайта, к которому будет отправляться запрос HTTP GET.
   // sendCommand("AT+HTTPPARA=\"URL\",\"http://google.com/\"","Задаём URL сайта http://google.com/"); // Change the URL from google.com to the server you want to reach
-  // sendCommand("AT+HTTPPARA=\"URL\",\"http://my-json-server.typicode.com/typicode/demo/posts\"","Задаём URL демонстрационного сервера");
+  sendCommand("AT+HTTPPARA=\"URL\",\"http://my-json-server.typicode.com/typicode/demo/posts\"","Задаём URL демонстрационного сервера");
   // sendCommand("AT+HTTPPARA=\"URL\",\"https://probatv.ru/\"","Задаём URL сайта https://probatv.ru/"); // Change the URL from google.com to the server you want to reach
   // sendCommand("AT+HTTPPARA=\"URL\",\"http://87.242.70.183/\"","Задаём URL сайта https://probatv.ru/"); // Change the URL from google.com to the server you want to reach
 
   // xn--http://-2hga2ewc.xn--p1ai
-  sendCommand("AT+HTTPPARA=\"URL\",\"xn--http://-2hga2ewc.xn--p1ai\"","Задаём URL сайта http://пифи.рф"); // Change the URL from google.com to the server you want to reach
+  // sendCommand("AT+HTTPPARA=\"URL\",\"xn--http://-2hga2ewc.xn--p1ai\"","Задаём URL сайта http://пифи.рф"); // Change the URL from google.com to the server you want to reach
+  // sendCommand("AT+HTTPPARA=\"URL\",\"http://пифи.рф/\"","Задаём URL сайта http://пифи.рф/"); // Change the URL from google.com to the server you want to reach
   
   //http://probatv.ru/
   //https://probatv.ru/
