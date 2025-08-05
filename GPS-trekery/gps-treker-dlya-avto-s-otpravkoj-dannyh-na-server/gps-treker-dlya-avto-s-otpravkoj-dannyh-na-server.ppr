@@ -18,19 +18,21 @@ Extensions=*.*
 [Project tree]
 gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server
 	+gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server
+		+project33
+			project33\project33.ino
 		gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
 		gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ppr
-		TinyGPSpp.cpp
-		TinyGPSpp.h
+		TinyGPS.cpp
+		TinyGPS.h
 [Open project files]
 0=gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
-1=..\..\SIM900-i-primer-otpravki-dannyh-na-sajt\HTTP-GET-POST-Request-with-GSM-main\sendGetRequest\sendGetRequest.ino
+1=project33\project33.ino
 [Selected Project Files]
 Main=
 Selected=gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
 [gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino]
-TopLine=51
+TopLine=193
 Caret=1,49
-[..\..\SIM900-i-primer-otpravki-dannyh-na-sajt\HTTP-GET-POST-Request-with-GSM-main\sendGetRequest\sendGetRequest.ino]
-TopLine=205
-Caret=59,233
+[project33\project33.ino]
+TopLine=8
+Caret=82,14

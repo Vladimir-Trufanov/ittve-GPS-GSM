@@ -10,7 +10,8 @@
    9600-baud serial GPS device hooked up on pins 4(rx) and 3(tx).
 */
 
-static const int RXPin = 4, TXPin = 3;
+//static const int RXPin = 4, TXPin = 3;
+static const int RXPin = 2, TXPin = 3;
 static const uint32_t GPSBaud = 9600;
 
 // The TinyGPS++ object
@@ -21,7 +22,8 @@ SoftwareSerial ss(RXPin, TXPin);
 
 void setup()
 {
-  Serial.begin(115200);
+  //Serial.begin(115200);
+  Serial.begin(GPSBaud);
   ss.begin(GPSBaud);
 
   Serial.println(F("РУС DeviceExample.ino"));

@@ -9,7 +9,7 @@
 /* ========================================================================== */
 
 #define INTERVALSEND 30000
-#define MINCHANGE 100
+#define MINCHANGE 10 // 100
  
 #include "SoftwareSerial.h"
 SoftwareSerial GPRS(7, 8);
@@ -77,11 +77,14 @@ void setup()
   snprintf(aux_str, sizeof(aux_str), "AT+SAPBR=3,1,\"APN\",\"%s\"", apn);
   sendATcommand(aux_str, "OK", 2000);
 
-  while (sendATcommand("AT+SAPBR=1,1", "OK", 2000) == 0)
-  {
-    delay(2000);
-  }
+  // Отключил контроль на OK
+  //while (sendATcommand("AT+SAPBR=1,1", "OK", 2000) == 0)
+  //{
+  //  delay(2000);
+  //}
+  sendATcommand("AT+SAPBR=1,1", "OK", 2000);
   delay(1000);
+  
   Serial.println("Завершен Setup");
 }
  
