@@ -3,7 +3,7 @@
 /*   gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino                    */
 /*   (c) 2012 Author                                                          */
 /*                                                                            */
-/* v2.0.3, 2025-08-04 - 2025-08-05 Отлаживаю включение SIM900 на работу       */
+/* v2.0.2, 2025-08-04 - 2025-08-05 Просто замкнул на "http://probatv.ru/"     */
 /* ========================================================================== */
 
 // Трекер читает данные по протоколу NMEA с TX пина от GPS V.KEL 16. Уровень — 5V, скорость — 9600 бод. 
@@ -32,11 +32,14 @@ AT+HTTPTERM                              // остановить HTTP
 
 // В процедуре setup() - выбор номера модуля для отправки данных на сервер (id_avto=) - считывается их трехпереключателей
 
+
+
 #define INTERVALSEND 10000 //30000
 #define MINCHANGE 1 // 100
  
 #include "SoftwareSerial.h"
 SoftwareSerial GPRS(7, 8);
+int onModulePin= 9;           // пин включения питания модуля
 char aux_str[150];            // буфер формирования AT-команды
 char aux;
 char data[512];
@@ -72,13 +75,13 @@ void setup()
   //gpsSerial.begin(9600);
   Serial.println(" ");
   Serial.println("Starting...");
+  pinMode(onModulePin,OUTPUT);
    
   pinMode(12,OUTPUT);
   digitalWrite(12,LOW);
    
-  power_on();
+  ///power_on();
   
-  /*
   delay(3000);
   sendATcommand("AT", "OK", 2000);
   delay(3000);
@@ -107,14 +110,12 @@ void setup()
   //}
   sendATcommand("AT+SAPBR=1,1", "OK", 2000);
   delay(1000);
-  */
   
   Serial.println("Завершен Setup");
 }
  
 void loop() 
 {
-  /*
   digitalWrite(12,HIGH);
   GPRS.end();
 
@@ -139,7 +140,7 @@ void loop()
   // && abs(lat-endlatsend)>MINCHANGE && abs(lon-endlonsend)>MINCHANGE)
   
   if(millis()-millissend>INTERVALSEND && millis()-millisdata<INTERVALSEND
-  / *&& abs(lat-endlatsend)>MINCHANGE && abs(lon-endlonsend)>MINCHANGE* /)
+  /*&& abs(lat-endlatsend)>MINCHANGE && abs(lon-endlonsend)>MINCHANGE*/)
   {
 
 
@@ -155,11 +156,11 @@ void loop()
       {// Sets url 
         endlatsend=lat; endlonsend=lon;
         
-        / *
+        /*
         String surl1=set_url_avto()+"&lat="+String(lat)+"&lon="+String(lon);
         surl1+="&date="+String(date1)+"&time="+String(time1);
         surl1.toCharArray(url,surl1.length()+1);
-        * /
+        */
         String surl1=set_url_avto();
         surl1.toCharArray(url,surl1.length()+1);
 
@@ -202,7 +203,6 @@ void loop()
   millis1=millis();
   GPRS.begin(9600);
   gpsSerial.end();
-  */
 }
 
 // отправка AT-команд
@@ -247,44 +247,13 @@ int8_t sendATcommand(char* ATcommand, char* expected_answer, unsigned int timeou
   Serial.println(response);
   return answer;
 }
-// ***************************************************************
-// * Выполнить программное включение модуля GPRS (2G)
-// ***************************************************************
-uint8_t power_on()
+
+// программное включение питания
+void power_on()
 {
-  int onModulePin=9;           // пин включения модуля
-  int nCycle=0;                // Счетчик попыток включения модуля
-  int nLimit=10;               // Количество попыток включения модуля
-  uint8_t answer=0;            // Состояние ответа на команду - возвращаемый результат
-  // Настраиваем 9 пин на включение
+  uint8_t answer=0;
+  //answer = sendATcommand("AT+CPOWD=1", "OK", 2000);
   pinMode(onModulePin,OUTPUT);
-  // Выполняем нормальное выключение модуля GPRS
-  Serial.println("Выполняем контрольное выключение модуля GPRS");
-  sendATcommand("AT+CPOWD=1","OK",2000);
-  // В цикле выполняем контрольные тики включения-выключения
-  // и посылаем контрольную AT-команду пока GPRS не ответит
-  while (answer == 0)
-  {  
-    digitalWrite(onModulePin,LOW);
-    delay(1000);
-    digitalWrite(onModulePin,HIGH);
-    delay(2000);
-    digitalWrite(onModulePin,LOW);
-    delay(3000);
-    answer = sendATcommand("AT","OK",2000);  
-    delay(1000); 
-    // Трассируем попытки включить GPRS
-    nCycle=nCycle+1; 
-    if (nCycle>1)
-    {
-      Serial.print("Включение GPRS, попытка: "); Serial.println(nCycle);
-    }
-  }
-  Serial.print("answer="); Serial.println(answer);
-  sendATcommand("AT+CPOWD=1","OK",2000);
-  
-  
-  /*
   // checks if the module is started
   digitalWrite(onModulePin,LOW);
   delay(1000);
@@ -314,9 +283,6 @@ uint8_t power_on()
       answer = sendATcommand("AT", "OK", 2000);    
     }
   }
-  */
-  //  Serial.println("Power End");
-  return answer; 
 }
 
 // проверка наличия данных gps
