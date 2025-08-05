@@ -4,7 +4,7 @@
 /*   (c) 2012 Author                                                          */
 /*                                                                            */
 /*   Description 
-/* v2.0.0, 2025-08-04                                                             */
+/* v2.0.1, 2025-08-04 - 2025-08-05                                                           */
 /*                                                                            */
 /* ========================================================================== */
 
@@ -13,8 +13,8 @@
  
 #include "SoftwareSerial.h"
 SoftwareSerial GPRS(7, 8);
-int onModulePin= 9; // пин включения питания модулч
-char aux_str[150];
+int onModulePin= 9;           // пин включения питания модуля
+char aux_str[150];            // буфер формирования AT-команды
 char aux;
 char data[512];
 int data_size;
@@ -47,6 +47,7 @@ void setup()
   GPRS.begin(9600);               // the GPRS baud rate   
   Serial.begin(9600);             // the Serial port of Arduino baud rate.
   //gpsSerial.begin(9600);
+  Serial.println(" ");
   Serial.println("Starting...");
   pinMode(onModulePin,OUTPUT);
    
@@ -54,27 +55,42 @@ void setup()
   digitalWrite(12,LOW);
    
   ///power_on();
+  
   delay(3000);
   sendATcommand("AT", "OK", 2000);
   delay(3000);
-  /*
-  // sets APN , user name and password
+
   sendATcommand("AT+SAPBR=3,1,\"CONTYPE\",\"GPRS\"", "OK", 2000);
+
+  // sets APN, user name and password: AT+SAPBR=3,1,"APN","internet.mts.ru"
+
+  // snprintf — функция в C++ для форматирования строк. Она позволяет создавать строки с контролем формата, но записывает результат в буфер, 
+  // вместо того чтобы вывести строку в стандартный вывод. 
+  // Синтаксис: int snprintf(char* buffer, size_t buf_size, const char* format, ...). 
+  // Параметры: buffer — указатель на строковый буфер для записи результата. buf_size — максимальное количество символов, которые могут быть записаны 
+  // в буфер (равна buf_size-1). 
+  // format — указатель на строку, заканчивающуюся нулём, которая записывается в буфер. Состоит из символов вместе с необязательными спецификаторами формата, 
+  // начинающимися с %. Дополнительные аргументы — определяют данные для печати, их количество зависит от используемых спецификаторов формата в строке формата. 
+  // Принцип работы: функция записывает строку, на которую указывает параметр format, в буфер. Если результирующая строка будет длиннее, чем buf_size-1 символов, 
+  // оставшиеся символы отбрасываются и не хранятся, но учитываются для значения, возвращаемого функцией. 
+  // После записи символов автоматически добавляется завершающий нулевой символ. Если buf_size равно нулю, ничего не записывается, и buffer может быть нулевым указателем. 
   snprintf(aux_str, sizeof(aux_str), "AT+SAPBR=3,1,\"APN\",\"%s\"", apn);
   sendATcommand(aux_str, "OK", 2000);
+
   while (sendATcommand("AT+SAPBR=1,1", "OK", 2000) == 0)
   {
     delay(2000);
   }
   delay(1000);
-  */
+  Serial.println("Завершен Setup");
 }
  
 void loop() 
 {
-  /*
   digitalWrite(12,HIGH);
   GPRS.end();
+
+  
   gpsSerial.begin(9600);
   while (millis() - millis1 < 2000) 
   {
@@ -93,11 +109,14 @@ void loop()
   }
   // if(millis()-millissend>INTERVALSEND && millis()-millisdata<INTERVALSEND
   // && abs(lat-endlatsend)>MINCHANGE && abs(lon-endlonsend)>MINCHANGE)
+  
   if(millis()-millissend>INTERVALSEND && millis()-millisdata<INTERVALSEND
   && abs(lat-endlatsend)>MINCHANGE && abs(lon-endlonsend)>MINCHANGE)
   {
+
+
     GPRS.begin(9600);
-    gpsSerial.end();
+    ///gpsSerial.end();
     // Initializes HTTP service
     answer = sendATcommand("AT+HTTPINIT", "OK", 10000);
     if (answer == 1)
@@ -141,37 +160,46 @@ void loop()
     }
     sendATcommand("AT+HTTPTERM", "OK", 5000);
     millissend=millis();
+
+
   }
   else Serial.println("data not change!!!");
+
   millis1=millis();
   GPRS.begin(9600);
   gpsSerial.end();
-  */
 }
 
 // отправка AT-команд
 int8_t sendATcommand(char* ATcommand, char* expected_answer, unsigned int timeout)
 {
-  uint8_t x=0,  answer=0;
-  char response[150];
+  uint8_t x=0;                                 // позиция в заполняемом буфере ответа GPRS (SIM900)
+  uint8_t answer=0;                            // возвращаемый ответ
+  char response[150];                          // буфер ответа GPRS
   unsigned long previous;
  
-  memset(response, '\0', 150);    // Initialize the string
+  memset(response, '\0', 150);                 // Initialize the string
   delay(100);
   while (GPRS.available() > 0) GPRS.read();    // Clean the input buffer
-  GPRS.println(ATcommand);    // Send the AT command 
+  GPRS.println(ATcommand);                     // Send the AT command 
   x = 0;
   previous = millis();
-  // this loop waits for the answer
+  // Циклимся, пока не выберем весь ответ
   do
   {
-    if(GPRS.available() != 0)
+    if (GPRS.available() != 0)
     {    
       // if there are data in the UART input buffer, reads it and checks for the asnwer
       response[x] = GPRS.read();
       //Serial.print(response[x]);
       x++;
       // check if the desired answer  is in the response of the module
+      // Функция strstr в C++ используется для поиска первого вхождения подстроки в строке. Она определена в стандартной библиотеке C, поэтому доступна и в C++.
+      // Параметры: str1 — строка, в которой выполняется поиск; str2 — подстрока для поиска в строке str1. 
+      // Возвращаемое значение: указатель на первое вхождение подстроки str2 в строке str1; нулевой указатель (nullptr), если подстрока не найдена.
+      // Важно: функция чувствительна к регистру — например, поиск по «hello» не соответствует «Hello». 
+      // Синтаксис: char* strstr(const char* str1, const char* str2). 
+      // Чтобы использовать strstr, в начале кода нужно включить заголовочный файл <cstring> или <string.h> — это гарантирует, что компилятор распознаёт функцию. 
       if (strstr(response, expected_answer) != NULL)    
       {
         answer = 1;
