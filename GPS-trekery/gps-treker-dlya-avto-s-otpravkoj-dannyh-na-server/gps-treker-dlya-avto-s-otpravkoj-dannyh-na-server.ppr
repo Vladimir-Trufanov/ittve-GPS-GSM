@@ -25,17 +25,26 @@ gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server
 			project33\TinyGPS.h
 		-v2.0.1
 			v2.0.1\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
-		-v2.0.2
+		+v2.0.2
 			v2.0.2\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
 		gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
 		gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ppr
+		SayMessage.h
 		TinyGPS.cpp
 		TinyGPS.h
 [Open project files]
 0=gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
+1=SayMessage.h
+2=..\..\..\IttveMe\www\UpSite.php
 [Selected Project Files]
 Main=
 Selected=gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
 [gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino]
-TopLine=214
-Caret=58,247
+TopLine=235
+Caret=8,263
+[SayMessage.h]
+TopLine=1
+Caret=10,21
+[..\..\..\IttveMe\www\UpSite.php]
+TopLine=67
+Caret=78,86

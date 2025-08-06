@@ -3,7 +3,7 @@
 /*   gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino                    */
 /*   (c) 2012 Author                                                          */
 /*                                                                            */
-/* v2.0.3, 2025-08-04 - 2025-08-05 Отлаживаю включение SIM900 на работу       */
+/* v2.0.4, 2025-08-04 - 2025-08-06 Отлаживаю включение SIM900 на работу       */
 /* ========================================================================== */
 
 // Трекер читает данные по протоколу NMEA с TX пина от GPS V.KEL 16. Уровень — 5V, скорость — 9600 бод. 
@@ -36,6 +36,8 @@ AT+HTTPTERM                              // остановить HTTP
 #define MINCHANGE 1 // 100
  
 #include "SoftwareSerial.h"
+#include "SayMessage.h"
+
 SoftwareSerial GPRS(7, 8);
 char aux_str[150];            // буфер формирования AT-команды
 char aux;
@@ -248,75 +250,52 @@ int8_t sendATcommand(char* ATcommand, char* expected_answer, unsigned int timeou
   return answer;
 }
 // ***************************************************************
-// * Выполнить программное включение модуля GPRS (2G)
+// *        Выполнить программное включение модуля GPRS (2G)     *
 // ***************************************************************
-uint8_t power_on()
+int onModulePin=9;    // пин включения модуля
+// Выполнить очередную попытку включения модуля GPRS
+uint8_t _power_on()
 {
-  int onModulePin=9;           // пин включения модуля
-  int nCycle=0;                // Счетчик попыток включения модуля
-  int nLimit=10;               // Количество попыток включения модуля
-  uint8_t answer=0;            // Состояние ответа на команду - возвращаемый результат
-  // Настраиваем 9 пин на включение
-  pinMode(onModulePin,OUTPUT);
-  // Выполняем нормальное выключение модуля GPRS
-  Serial.println("Выполняем контрольное выключение модуля GPRS");
+  uint8_t answer=0;   // состояние ответа на команду - возвращаемый результат
+  // Выполняем контрольное выключение модуля GPRS
   sendATcommand("AT+CPOWD=1","OK",2000);
-  // В цикле выполняем контрольные тики включения-выключения
-  // и посылаем контрольную AT-команду пока GPRS не ответит
-  while (answer == 0)
-  {  
-    digitalWrite(onModulePin,LOW);
-    delay(1000);
-    digitalWrite(onModulePin,HIGH);
-    delay(2000);
-    digitalWrite(onModulePin,LOW);
-    delay(3000);
-    answer = sendATcommand("AT","OK",2000);  
-    delay(1000); 
-    // Трассируем попытки включить GPRS
-    nCycle=nCycle+1; 
-    if (nCycle>1)
-    {
-      Serial.print("Включение GPRS, попытка: "); Serial.println(nCycle);
-    }
-  }
-  Serial.print("answer="); Serial.println(answer);
-  sendATcommand("AT+CPOWD=1","OK",2000);
-  
-  
-  /*
-  // checks if the module is started
+  // Выполняем контрольные тики включения-выключения
+  // и посылаем контрольную AT-команду
   digitalWrite(onModulePin,LOW);
   delay(1000);
   digitalWrite(onModulePin,HIGH);
   delay(2000);
   digitalWrite(onModulePin,LOW);
   delay(3000);
-  answer = sendATcommand("AT", "OK", 2000);
-  if (answer == 0)
-  {
-    digitalWrite(onModulePin,LOW);
-    delay(1000);
-    digitalWrite(onModulePin,HIGH);
-    delay(2000);
-    digitalWrite(onModulePin,LOW);
-    delay(3000);
-    Serial.println("POWER!!!!");
- 
-    // power on pulse
-    digitalWrite(onModulePin,HIGH);
-    delay(3000);
-    digitalWrite(onModulePin,LOW);
-    // waits for an answer from the module
-    while(answer == 0)
-    {  
-      // Send AT every two seconds and wait for the answer   
-      answer = sendATcommand("AT", "OK", 2000);    
+  answer = sendATcommand("AT","OK",2000);  
+  delay(1000); 
+  return answer;
+}
+// Выполнить программное включение модуля GPRS (2G)
+void power_on()
+{
+  uint8_t nCycle=0;            // Счетчик попыток включения модуля
+  uint8_t answer=0;            // Состояние ответа на команду - возвращаемый результат
+  // Настраиваем 9 пин на включение
+  pinMode(onModulePin,OUTPUT);
+  // "Выполняем включение модуля GPRS"
+  sayln(vypolnyaem_vklyuchenie_modulya_gprs);
+  // Выполняем и трассируем попытки включить GPRS
+  while (answer == 0)
+  {  
+    answer=_power_on();
+    nCycle=nCycle+1; 
+    // Отмечаем "Не включается GPRS/нет питания"
+    if (answer<1) 
+    {
+      say(ne_vklyuchaetsya_gprs_net_pitaniya);
+      say(" ["); say(String(nCycle)); say("]");
     }
   }
-  */
-  //  Serial.println("Power End");
-  return answer; 
+  // Отмечаем включение модуля
+  if (answer==1) sayln(modul_gprs_rabotaet);
+  // Вставка для отладки поведения модуля 2025-08-05
+  // sendATcommand("AT+CPOWD=1","OK",2000);
 }
 
 // проверка наличия данных gps
