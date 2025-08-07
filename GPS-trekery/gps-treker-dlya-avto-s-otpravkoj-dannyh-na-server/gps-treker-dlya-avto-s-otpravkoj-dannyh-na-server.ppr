@@ -23,9 +23,10 @@ gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server
 			project33\project33.ino
 			project33\TinyGPS.cpp
 			project33\TinyGPS.h
+		-TwoPortReceive
 		-v2.0.1
 			v2.0.1\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
-		+v2.0.2
+		-v2.0.2
 			v2.0.2\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
 		gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
 		gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ppr
@@ -34,29 +35,17 @@ gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server
 		TinyGPS.h
 [Open project files]
 0=gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
-1=SayMessage.h
-2=..\..\..\IttveMe\www\UpSite.php
-3=TinyGPS.cpp
-4=TinyGPS.h
-5=project33\TinyGPS.cpp
+1=project33\project33.ino
+2=TwoPortReceive\TwoPortReceive.ino
 [Selected Project Files]
 Main=
-Selected=project33\TinyGPS.cpp
+Selected=gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
 [gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino]
-TopLine=17
-Caret=1,17
-[SayMessage.h]
+TopLine=254
+Caret=5,282
+[project33\project33.ino]
 TopLine=1
-Caret=2,21
-[..\..\..\IttveMe\www\UpSite.php]
-TopLine=67
-Caret=69,86
-[TinyGPS.cpp]
-TopLine=179
-Caret=1,1
-[TinyGPS.h]
-TopLine=61
-Caret=57,83
-[project33\TinyGPS.cpp]
-TopLine=290
-Caret=16,296
+Caret=81,4
+[TwoPortReceive\TwoPortReceive.ino]
+TopLine=31
+Caret=2,70
