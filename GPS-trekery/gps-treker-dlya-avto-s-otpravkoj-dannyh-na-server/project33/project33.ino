@@ -1,20 +1,21 @@
-/* ========================================================================== */
+/* ============================================================ project33.ino */
 /*                                                                            */
-/*    project33.ino                                                               */
-/*   (c) 2012 Author                                                          */
+/*   Выводить данные GPS c указанием расстояния до выбранной точки            */
+/*   (c) 2025 tve                                                             */
 /*                                                                            */
-/*   Description                                                              */
-/*                                                                            */
+/*   v2.0.0 2025-08-07 - 2025.08.07                                           */
 /* ========================================================================== */
 
 #include <SoftwareSerial.h>
 #include "TinyGPS.h"
 
 TinyGPS gps;
-SoftwareSerial gpsSerial(2,3);  // синий на 2 - будет RX; зеленый на 3 - будет TX
+SoftwareSerial gpsSerial(2,3);      // синий на 2 - будет RX; зеленый на 3 - будет TX
 bool newdata = false;
 unsigned long start;
 long lat, lon;
+long lat0=61801663, lon0=34329565;  // координаты выбранной точки
+float DistanceBetween;
 unsigned long time, date;
 
 void setup()
@@ -36,10 +37,14 @@ void loop()
       start = millis();
       gps.get_position(&lat, &lon);
       gps.get_datetime(&date, &time);
-      Serial.print("Lat: "); Serial.print(lat);
+      DistanceBetween=gps.distance_between (lat0,lon0,lat,lon)/10000000;
+      //DistanceBetween=gps.distance_between (lat,lon,lat,lon);
+
+      Serial.print("Lat: ");   Serial.print(lat);
       Serial.print(" Long: "); Serial.print(lon);
       Serial.print(" Date: "); Serial.print(date);
-      Serial.print(" Time: "); Serial.println(time);
+      Serial.print(" Time: "); Serial.print(time);
+      Serial.print(" Dist: "); Serial.println(DistanceBetween);
     }
   }
 }

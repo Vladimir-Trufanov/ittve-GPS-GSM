@@ -14,6 +14,7 @@
 AT+SAPBR=1,1                             // Открыть несущую (Carrier)
 AT+SAPBR=3,1,"CONTYPE","GPRS"            // тип подключения - GPRS
 AT+SAPBR=3,1,"APN","internet.mts.ru"     // APN, для МТС: internet.mts.ru
+
 AT+HTTPINIT                              // Инициализировать HTTP 
 AT+HTTPPARA="CID",1                      // Carrier ID для использования.
 AT+HTTPPARA="URL","http:/????????.ru/gps_tracker/gps_tracker1.php?id_avto=?N&lat=XXXXXlon=YYYYY"    // Собственно URL, после sprintf с координатами
