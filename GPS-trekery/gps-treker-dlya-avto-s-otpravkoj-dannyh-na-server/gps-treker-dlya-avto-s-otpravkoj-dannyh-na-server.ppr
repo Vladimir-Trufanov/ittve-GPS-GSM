@@ -24,10 +24,13 @@ gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server
 			project33\TinyGPS.cpp
 			project33\TinyGPS.h
 		-TwoPortReceive
+			TwoPortReceive\TwoPortReceive.ino
 		-v2.0.1
 			v2.0.1\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
 		-v2.0.2
 			v2.0.2\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
+		-v2.0.5
+			v2.0.5\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
 		gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
 		gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ppr
 		SayMessage.h
@@ -35,17 +38,9 @@ gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server
 		TinyGPS.h
 [Open project files]
 0=gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
-1=project33\project33.ino
-2=TwoPortReceive\TwoPortReceive.ino
 [Selected Project Files]
 Main=
 Selected=gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
 [gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino]
-TopLine=254
+TopLine=260
 Caret=5,282
-[project33\project33.ino]
-TopLine=1
-Caret=81,4
-[TwoPortReceive\TwoPortReceive.ino]
-TopLine=31
-Caret=2,70
