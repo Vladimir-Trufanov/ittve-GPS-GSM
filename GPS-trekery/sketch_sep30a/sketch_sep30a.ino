@@ -3,10 +3,10 @@
 #include "TinyGPS.h"
 
 TinyGPS gps;
-//SoftwareSerial gsmSerial(2,8);
-//SoftwareSerial gpsSerial(3, 3);
-#define gsmSerial Serial1
-#define gpsSerial Serial2
+SoftwareSerial gsmSerial(2,8);
+SoftwareSerial gpsSerial(3, 3);
+//#define gsmSerial Serial1
+//#define gpsSerial Serial2
 #define LEDPIN 13
 #define RSTGPRSPIN 22
 #define RSTGPSPIN 23
