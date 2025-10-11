@@ -20,6 +20,7 @@ TinyGPSPlus gps;
 SoftwareSerial ss(RXPin, TXPin);
 
 uint32_t nCikl=0;
+//int nCikl=0;
 
 void setup()
 {
@@ -39,9 +40,10 @@ void setup()
 void loop()
 {
   nCikl=nCikl+1;
-  if (nCikl<100)
+  if (nCikl<15)
   {
-    //Serial.print("nCikl="); Serial.println(nCikl);
+    Serial.print("nCikl="); Serial.println(nCikl);
+    /*
     static const double LONDON_LAT = 51.508131, LONDON_LON = -0.128002;
 
     printInt(gps.satellites.value(), gps.satellites.isValid(), 5);
@@ -80,11 +82,11 @@ void loop()
     printInt(gps.sentencesWithFix(), true, 10);
     printInt(gps.failedChecksum(), true, 9);
     Serial.println();
-  
+    */
     smartDelay(1000);
     
-    if (millis() > 5000 && gps.charsProcessed() < 10)
-      Serial.println(F("No GPS data received: check wiring"));
+    //if (millis() > 5000 && gps.charsProcessed() < 10)
+    //  Serial.println(F("No GPS data received: check wiring"));
   }
 }
 

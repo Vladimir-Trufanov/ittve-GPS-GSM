@@ -1,16 +1,15 @@
 #include <TinyGPSPlus.h>
 #include <SoftwareSerial.h>
 /*
-   This sample code tracks satellite elevations using TinyGPSCustom objects.
+  Этот пример кода отслеживает отметки спутников с помощью объектов TinyGPSCustom.
 
-   Satellite numbers and elevations are not normally tracked by TinyGPSPlus, but 
-   by using TinyGPSCustom we get around this.
-
-   It requires the use of SoftwareSerial and assumes that you have a
-   4800-baud serial GPS device hooked up on pins 4(RX) and 3(TX).
+  Номера спутников и отметки обычно не отслеживаются TinyGPSPlus, но 
+  используя TinyGPSCustom, мы можем обойти эту проблему.
 */
-static const int RXPin = 4, TXPin = 3;
-static const uint32_t GPSBaud = 4800;
+
+static const int RXPin = 2, TXPin = 3; // синий на 2 - будет RX; зеленый на 3 - будет TX
+static const uint32_t GPSBaud = 9600;
+
 static const int MAX_SATELLITES = 40;
 static const int PAGE_LENGTH = 40;
 
@@ -39,7 +38,7 @@ void setup()
   ss.begin(GPSBaud);
 
   Serial.println(F("SatElevTracker.ino"));
-  Serial.println(F("Displays GPS satellite elevations as they change"));
+  Serial.println(F("Отображение высоты спутников GPS по мере их изменения"));
   Serial.print(F("Testing TinyGPSPlus library v. ")); Serial.println(TinyGPSPlus::libraryVersion());
   Serial.println(F("by Mikal Hart"));
   Serial.println();
@@ -55,6 +54,7 @@ void setup()
 void loop()
 {
   // Dispatch incoming characters
+  // Serial.println(F("Начало"));
   if (ss.available() > 0)
   {
     gps.encode(ss.read());
@@ -97,6 +97,7 @@ void loop()
       }
     }
   }
+  // Serial.println(F("Конец"));
 }
 
 void IntPrint(int n, int len)

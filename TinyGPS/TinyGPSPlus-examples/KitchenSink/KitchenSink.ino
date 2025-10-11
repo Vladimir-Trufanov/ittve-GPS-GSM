@@ -4,9 +4,15 @@
    This sample code demonstrates just about every built-in operation of TinyGPSPlus (TinyGPSPlus).
    It requires the use of SoftwareSerial, and assumes that you have a
    4800-baud serial GPS device hooked up on pins 4(rx) and 3(tx).
+
+   Этот пример кода демонстрирует практически все встроенные операции TinyGPSPlus (TinyGPSPlus).
+   Для этого требуется использовать SoftwareSerial и предполагается, что у вас есть
+   последовательное GPS-устройство со скоростью 9600 бод подключено к контактам 2 (rx) и 3 (tx).
 */
-static const int RXPin = 4, TXPin = 3;
-static const uint32_t GPSBaud = 4800;
+
+static const int RXPin = 2, TXPin = 3; // синий на 2 - будет RX; зеленый на 3 - будет TX
+static const uint32_t GPSBaud = 9600;
+
 
 // The TinyGPSPlus object
 TinyGPSPlus gps;
@@ -29,8 +35,13 @@ void setup()
   Serial.println();
 }
 
+uint32_t nCikl = 0;
+
 void loop()
 {
+  //nCikl++;
+  //if (nCikl<3)
+  //{
   // Dispatch incoming characters
   while (ss.available() > 0)
     gps.encode(ss.read());
@@ -188,4 +199,5 @@ void loop()
     last = millis();
     Serial.println();
   }
+  //}
 }

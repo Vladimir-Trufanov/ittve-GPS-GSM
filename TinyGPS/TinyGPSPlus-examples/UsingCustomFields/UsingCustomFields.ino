@@ -2,17 +2,15 @@
 #include <SoftwareSerial.h>
 
 /*
-   This sample demonstrates TinyGPSPlus's capacity for extracting custom
-   fields from any NMEA sentence.  TinyGPSPlus has built-in facilities for
-   extracting latitude, longitude, altitude, etc., from the $GPGGA and 
-   $GPRMC sentences.  But with the TinyGPSCustom type, you can extract
-   other NMEA fields, even from non-standard NMEA sentences.
-
-   It requires the use of SoftwareSerial, and assumes that you have a
-   4800-baud serial GPS device hooked up on pins 4(RX) and 3(TX).
+  Этот пример демонстрирует возможности TinyGPSPlus по извлечению пользовательских
+  полей из любого предложения NMEA.  В TinyGPSPlus есть встроенные средства для
+  извлечения широты, долготы, высоты и т.д. из предложений $GPGGA и 
+  $GPRMC.  Но с помощью типа TinyGPSCustom вы можете извлекать
+  другие поля NMEA даже из нестандартных предложений NMEA.
 */
-static const int RXPin = 4, TXPin = 3;
-static const uint32_t GPSBaud = 4800;
+
+static const int RXPin = 2, TXPin = 3; // синий на 2 - будет RX; зеленый на 3 - будет TX
+static const uint32_t GPSBaud = 9600;
 
 // The TinyGPSPlus object
 TinyGPSPlus gps;
@@ -21,17 +19,16 @@ TinyGPSPlus gps;
 SoftwareSerial ss(RXPin, TXPin);
 
 /*
-   By declaring TinyGPSCustom objects like this, we announce that we
-   are interested in the 15th, 16th, and 17th fields in the $GPGSA 
-   sentence, respectively the PDOP (F("positional dilution of precision")),
-   HDOP (F("horizontal...")), and VDOP (F("vertical...")).
+  Объявляя объекты TinyGPSCustom подобным образом, мы объявляем, что нас
+  интересуют 15-е, 16-е и 17-е поля в предложении $GPGSA, соответственно 
+  PDOP (F("позиционное снижение точности")), HDOP (F("горизонтальный...")) и VDOP (F("вертикальный...")).
 
-   (Counting starts with the field immediately following the sentence name, 
-   i.e. $GPGSA.  For more information on NMEA sentences, consult your
-   GPS module's documentation and/or http://aprs.gids.nl/nmea/.)
+  (Подсчет начинается с поля, следующего непосредственно за названием предложения,
+  т.е. с $GPGSA.  Для получения дополнительной информации о предложениях NMEA обратитесь к 
+  документации по GPS-модулю и/или http://aprs.gids.nl/nmea/.)
 
-   If your GPS module doesn't support the $GPGSA sentence, then you 
-   won't get any output from this program.
+  Если ваш GPS-модуль не поддерживает предложение $GPGSA, то вы
+  не получите никаких выходных данных от этой программы.
 */
 
 TinyGPSCustom pdop(gps, "GPGSA", 15); // $GPGSA sentence, 15th element

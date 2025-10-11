@@ -1,20 +1,18 @@
 #include <TinyGPSPlus.h>
 #include <SoftwareSerial.h>
 /*
-   This sample code demonstrates how to use an array of TinyGPSCustom objects
-   to monitor all the visible satellites.
+  Этот пример кода демонстрирует, как использовать массив объектов TinyGPSCustom
+  для мониторинга всех видимых спутников.
 
-   Satellite numbers, elevation, azimuth, and signal-to-noise ratio are not
-   normally tracked by TinyGPSPlus, but by using TinyGPSCustom we get around this.
+  Номера спутников, высота, азимут и отношение сигнал/шум
+  обычно не отслеживаются TinyGPSPlus, но с помощью TinyGPSCustom мы можем это обойти.
 
-   The simple code also demonstrates how to use arrays of TinyGPSCustom objects,
-   each monitoring a different field of the $GPGSV sentence.
-
-   It requires the use of SoftwareSerial, and assumes that you have a
-   4800-baud serial GPS device hooked up on pins 4(RX) and 3(TX).
+  Простой код также демонстрирует, как использовать массивы объектов TinyGPSCustom,
+  каждый из которых отслеживает отдельное поле предложения $GPGSV.
 */
-static const int RXPin = 4, TXPin = 3;
-static const uint32_t GPSBaud = 4800;
+
+static const int RXPin = 2, TXPin = 3; // синий на 2 - будет RX; зеленый на 3 - будет TX
+static const uint32_t GPSBaud = 9600;
 
 // The TinyGPSPlus object
 TinyGPSPlus gps;
