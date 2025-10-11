@@ -3,6 +3,10 @@
    This sample sketch should be the first you try out when you are testing a TinyGPSPlus
    (TinyGPSPlus) installation.  In normal use, you feed TinyGPSPlus objects characters from
    a serial NMEA GPS device, but this example uses static strings for simplicity.
+
+   Этот примерный эскиз должен быть первым, что вы попробуете при тестировании установки TinyGPSPlus
+   (TinyGPSPlus).  При обычном использовании вы вводите символы объектов TinyGPSPlus из
+   серийного GPS-устройства NMEA, но для простоты в этом примере используются статические строки.
 */
 
 // A sample NMEA stream.
@@ -28,8 +32,7 @@ void setup()
   Serial.println();
 
   while (*gpsStream)
-    if (gps.encode(*gpsStream++))
-      displayInfo();
+    if (gps.encode(*gpsStream++)) displayInfo();
 
   Serial.println();
   Serial.println(F("Done."));

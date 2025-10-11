@@ -4,9 +4,14 @@
    This sample sketch demonstrates the normal use of a TinyGPSPlus (TinyGPSPlus) object.
    It requires the use of SoftwareSerial, and assumes that you have a
    4800-baud serial GPS device hooked up on pins 4(rx) and 3(tx).
+
+   Этот примерный эскиз демонстрирует обычное использование объекта TinyGPSPlus (TinyGPSPlus).
+   Для этого требуется использовать SoftwareSerial и предполагается, что у вас есть
+   последовательное GPS-устройство со скоростью 9600 бод подключено к контактам 2 (rx) и 3 (tx).
 */
-static const int RXPin = 4, TXPin = 3;
-static const uint32_t GPSBaud = 4800;
+
+static const int RXPin = 2, TXPin = 3; // синий на 2 - будет RX; зеленый на 3 - будет TX
+static const uint32_t GPSBaud = 9600;
 
 // The TinyGPSPlus object
 TinyGPSPlus gps;
