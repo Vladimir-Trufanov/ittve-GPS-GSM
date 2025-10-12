@@ -3,18 +3,18 @@
 #include "TinyGPS.h"
 
 TinyGPS gps;
-SoftwareSerial gsmSerial(2,8);
-SoftwareSerial gpsSerial(3, 3);
-//#define gsmSerial Serial1
-//#define gpsSerial Serial2
+SoftwareSerial gsmSerial(2,8);   // SIM900
+SoftwareSerial gpsSerial(3, 3);  // приемник gps-координат
 #define LEDPIN 13
 #define RSTGPRSPIN 22
 #define RSTGPSPIN 23
-int led_period = 2000;
+int led_period = 2000;           // интервал мигания лампочки 2 секунды
+
 void setup()
 {
-  Serial.begin(19200); //USB
-  gsmSerial.begin(19200); //GSM
+  Serial.begin(19200);          // USB
+  gsmSerial.begin(19200);       // GSM
+  // Задаем максимальное время ожидания данных во время операций чтения 6 секунд
   gsmSerial.setTimeout(6000);
   gpsSerial.begin(9600);
   pinMode(LEDPIN, OUTPUT);
@@ -23,9 +23,8 @@ void setup()
   digitalWrite(LEDPIN, LOW);
   digitalWrite(RSTGPRSPIN, LOW);
   digitalWrite(RSTGPSPIN, HIGH);  
-//  gpsSerial.begin(9600);
-//  gsmSerial.begin(19200);
 }
+
 unsigned long last_powerup_attempt = 0;
 #define MINPOWERUPDELAY 10000
 #define MINFIRSTPOWERUPDELAY 100
@@ -51,9 +50,13 @@ int readGps()
 {
   return gpsSerial.read();
 }
+
+// ****************************************************************************
+// *                            Перегрузить приемник GPS                      *
+// ****************************************************************************
 void reset_gps()
 {
-  Serial.println("Resetting gps");
+  Serial.println("Перегрузка приемника GPS");
   led_period = 1000;
   digitalWrite(RSTGPSPIN, LOW);
   delay(1000);
@@ -64,6 +67,9 @@ int availableGps()
   return gpsSerial.available();
 }
 
+// ****************************************************************************
+// *         Переключить лампочку по истечении интервала мигания              *
+// ****************************************************************************
 unsigned long led_last_millis = 0;
 int led_pin_val = 0;
 void blinkLed()
@@ -86,8 +92,11 @@ long lat = -1, lng = -1;
 int had_coords = false;
 int new_coords = false;
 int count_same_coords = 0;
+// Временная метка начала ожидания сигнала GPS
 unsigned long last_data_from_gps = 0;
-#define MAXGPSDELAY 60000
+// Максимальное ожидание очередного сигнала GPS
+#define MAXGPSDELAY 60000 // 60 секунд
+
 void loop_gps()
 {
   int c;
@@ -134,7 +143,9 @@ void loop_gps()
   {
     if (millis() - last_data_from_gps > MAXGPSDELAY)
     {
+      // Перегружаем приемник GPS
       reset_gps();
+      // Начинаем отсчет ожидания сигнала GPS
       last_data_from_gps = millis();
     }
   }
@@ -255,7 +266,9 @@ int stopme = false;
 
 void loop()
 {
+  // Переключаем лампочку по истечении интервала мигания
   blinkLed();
+  //
   loop_gps();
   if (!gsm_initialized)
     init_gsm();
@@ -294,6 +307,6 @@ void loop()
     c = gsmSerial.read();
     Serial.write(c);
   }
-  //loop_gps();
-//  init_gsm();
+  // loop_gps();
+  // init_gsm();
 }
