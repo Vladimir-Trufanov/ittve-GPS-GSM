@@ -8,6 +8,86 @@
 
 #### [Три прикладных примера по TinyGPSPlus](https://best-of-web.builder.io/library/mikalhart/TinyGPSPlus)
 
+***1. Анализ данных GPS:
+***
+```
+#include <TinyGPSPlus.h>
+
+TinyGPSPlus gps;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  while (Serial.available() > 0) {
+    if (gps.encode(Serial.read())) {
+      if (gps.location.isValid()) {
+        Serial.print("Latitude: ");
+        Serial.println(gps.location.lat(), 6);
+        Serial.print("Longitude: ");
+        Serial.println(gps.location.lng(), 6);
+      }
+    }
+  }
+}
+```
+
+***2. Доступ к атрибутам GPS:
+***
+```
+#include <TinyGPSPlus.h>
+
+TinyGPSPlus gps;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  while (Serial.available() > 0) {
+    if (gps.encode(Serial.read())) {
+      Serial.print("Date: ");
+      Serial.print(gps.date.value());
+      Serial.print(" Time: ");
+      Serial.print(gps.time.value());
+      Serial.print(" Satellites: ");
+      Serial.println(gps.satellites.value());
+    }
+  }
+}
+```
+***3. Обработка ошибок GPS:
+***
+```
+#include <TinyGPSPlus.h>
+
+TinyGPSPlus gps;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  while (Serial.available() > 0) {
+    if (gps.encode(Serial.read())) {
+      if (gps.location.isValid()) {
+        Serial.print("Latitude: ");
+        Serial.println(gps.location.lat(), 6);
+        Serial.print("Longitude: ");
+        Serial.println(gps.location.lng(), 6);
+      } else {
+        Serial.println("Location data is not valid.");
+      }
+    }
+  }
+}
+```
+
+#### [Описание протокола NMEA 0183](https://wiki.iarduino.ru/page/NMEA-0183/)
+
+#### [Описание NMEA протокола](NMEA.pdf)
+
 #### [GPS - NMEA sentence information](http://aprs.gids.nl/nmea/)
 
 #### [Оценка точности GPS-измерений с помощью вычисления CEn](https://gis-lab.info/qa/cep.html)
