@@ -1,28 +1,38 @@
-#include <SoftwareSerial.h>
+/* ======================================================= sketch_sep30a.ino */
+/*                                                                           */
+/*   Выводить данные GPS на сайт - ознакомительный вариант,                  */
+/*   ориентировочно - от окна гостинной:  по гармину = 61.80193,  34.32983   */
+/*                                        по яндекс  = 61.802082, 34.329586  */
+/*   (c) 2025 tve                                                            */
+/*                                                                           */
+/*   v2.0.1 2025-10-13 - 2025.08.07                                          */
+/* ========================================================================= */
 
+#include <SoftwareSerial.h>
 #include "TinyGPS.h"
 
 TinyGPS gps;
-SoftwareSerial gsmSerial(2,8);   // SIM900
-SoftwareSerial gpsSerial(3, 3);  // приемник gps-координат
+SoftwareSerial gpsSerial(2,3);   // синий на 2 - будет RX; зеленый на 3 - будет TX, приемник gps-координат
+
+SoftwareSerial gsmSerial(7,8);   // SIM900
 #define LEDPIN 13
-#define RSTGPRSPIN 22
-#define RSTGPSPIN 23
+//#define RSTgprsPIN 22
+#define RSTGPSPIN  23
 int led_period = 2000;           // интервал мигания лампочки 2 секунды
 
 void setup()
 {
-  Serial.begin(19200);          // USB
-  gsmSerial.begin(19200);       // GSM
+  Serial.begin(9600);          // USB
+  //gsmSerial.begin(19200);       // GSM
   // Задаем максимальное время ожидания данных во время операций чтения 6 секунд
-  gsmSerial.setTimeout(6000);
+  //gsmSerial.setTimeout(6000);
   gpsSerial.begin(9600);
   pinMode(LEDPIN, OUTPUT);
-  pinMode(RSTGPRSPIN, OUTPUT); 
-  pinMode(RSTGPSPIN, OUTPUT); 
+  //pinMode(RSTgprsPIN, OUTPUT); 
+  //pinMode(RSTGPSPIN, OUTPUT); 
   digitalWrite(LEDPIN, LOW);
-  digitalWrite(RSTGPRSPIN, LOW);
-  digitalWrite(RSTGPSPIN, HIGH);  
+  //digitalWrite(RSTgprsPIN, LOW);
+  //digitalWrite(RSTGPSPIN, HIGH);  
 }
 
 unsigned long last_powerup_attempt = 0;
@@ -35,9 +45,9 @@ void power_up_gprs()
     return;
  Serial.println("Powering up the gprs shield");
  last_powerup_attempt = millis();
- digitalWrite(RSTGPRSPIN,HIGH);
+ //digitalWrite(RSTgprsPIN,HIGH);
  delay(2000);
- digitalWrite(RSTGPRSPIN,LOW);
+ //digitalWrite(RSTgprsPIN,LOW);
 }
 int printgps = 1;
 int tolower(int c)
@@ -46,6 +56,16 @@ int tolower(int c)
     c -= 'A';
     c += 'a';
 }
+
+// ****************************************************************************
+// * Считать очередной доступный байт из буфера последовательного соединения  *
+// * приемника GPS. Возвращаемое значение: следующий доступный байт (или -1,  *
+// * если его нет). Тип данных — int.                                         *
+// * Особенности: если ввести слово из 5 букв, каждый символ будет считан     *
+// * отдельно, и его код из таблицы будет выведен в монитор последовательно.  *
+// * Для конвертации принятого значения в символ нужно привести его к         * 
+// * символьному типу — (char)Serial.read().                                  *
+// ****************************************************************************
 int readGps()
 {
   return gpsSerial.read();
@@ -62,6 +82,11 @@ void reset_gps()
   delay(1000);
   digitalWrite(RSTGPSPIN, HIGH);
 }
+
+// ****************************************************************************
+// *         Проверить наличие байт(символов), доступных для чтения из        *
+// *                последовательного интерфейса приемника GPS                *
+// ****************************************************************************
 int availableGps()
 {
   return gpsSerial.available();
@@ -85,9 +110,11 @@ void blinkLed()
     digitalWrite(LEDPIN, led_pin_val?HIGH:LOW);
     led_last_millis = millis();
   }
-
 }
 
+// ****************************************************************************
+// *                         Принять и обработать данные GPS                  *
+// ****************************************************************************
 long lat = -1, lng = -1;
 int had_coords = false;
 int new_coords = false;
@@ -99,15 +126,31 @@ unsigned long last_data_from_gps = 0;
 
 void loop_gps()
 {
+  //Serial.println("loop_gps BEGIN");
   int c;
+  // Проверяем есть ли байты(символы), доступные для чтения из      
+  // последовательного интерфейса приемника GPS    
+  //c=availableGps();
+  //Serial.print("c=");
+  //Serial.println(c);
+ 
   if (availableGps())
   {
+    // Считываем очередной доступный байт из буфера последовательного 
+    // соединения приемника GPS. 
     c = readGps();
-    last_data_from_gps = millis();
-    if (!printgps)
-    {
-      Serial.write(c);
-    }
+    //Serial.print("с="); Serial.println(с);
+    Serial.write(c);
+
+    // Начинаем отсчет ожидания сигнала GPS
+    //last_data_from_gps = millis();
+    
+    //if (!printgps)
+    //{
+      // Передаем символ в последовательный порт
+      //Serial.write(c);
+    //}
+    /*
     if (gps.encode(c))
     {
       led_period = 500;
@@ -138,9 +181,13 @@ void loop_gps()
         had_coords = true;
       }
     }
+    */
   }
+  /*
   else 
   {
+    // Если данных GPS нет и истекло максимальное ожидание очередного сигнала 
+    // GPS, то перегружаем приёмник и начинаем отсчет нового ожидания
     if (millis() - last_data_from_gps > MAXGPSDELAY)
     {
       // Перегружаем приемник GPS
@@ -149,6 +196,8 @@ void loop_gps()
       last_data_from_gps = millis();
     }
   }
+  */
+  //Serial.println("loop_gps END");
 }
 
 int SendAT(const char * command, const char * expect)
@@ -266,10 +315,12 @@ int stopme = false;
 
 void loop()
 {
+  // Serial.println("loop_ BEGIN");
   // Переключаем лампочку по истечении интервала мигания
   blinkLed();
   //
   loop_gps();
+  /*
   if (!gsm_initialized)
     init_gsm();
   if (!gsm_initialized)
@@ -307,6 +358,9 @@ void loop()
     c = gsmSerial.read();
     Serial.write(c);
   }
+  */
   // loop_gps();
   // init_gsm();
+  // Serial.println("loop_ END");
+  //delay(1000);
 }
