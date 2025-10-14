@@ -18,27 +18,18 @@ Extensions=*.*
 [Project tree]
 sketch_sep30a
 	+sketch_sep30a
+		-tinyGPS
+			tinyGPS\TinyGPS.cpp
+			tinyGPS\TinyGPS.h
 		sketch_sep30a.ino
 		sketch_sep30a.ppr
 		TinyGPS.cpp
 		TinyGPS.h
 [Open project files]
 0=sketch_sep30a.ino
-1=..\..\GPS-trekery\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server\project33\project33.ino
-2=TinyGPS.cpp
-3=TinyGPS.h
 [Selected Project Files]
 Main=
-Selected=TinyGPS.h
+Selected=sketch_sep30a.ino
 [sketch_sep30a.ino]
-TopLine=125
-Caret=34,142
-[..\..\GPS-trekery\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server\project33\project33.ino]
-TopLine=1
-Caret=1,9
-[TinyGPS.cpp]
-TopLine=1
-Caret=7,1
-[TinyGPS.h]
-TopLine=1
-Caret=7,1
+TopLine=300
+Caret=21,318
