@@ -22,7 +22,10 @@ SoftwareSerial gsmSerial(7,8);   // SIM900
 #define RSTGPSPIN    23          // 
 
 //#define RSTgprsPIN 22
-int led_period = 2000;           // интервал мигания лампочки 2 секунды
+
+// Определяем начальный интервал мигания лампочки 2 секунды
+// (до тех пор, пока не пойдут данные с приемника GPS)
+int led_period = 2000;    
 
 void setup()
 {
@@ -129,6 +132,8 @@ void blinkLed()
 int printgps = false;
 // Инициируем начальные значения широты и долготы
 long lat = -1, lng = -1;
+// Отмечаем, что текущие координаты с начала сеанса приема сигналов GPS
+// еще не идут
 int had_coords = false;
 // Сбрасываем счетчик последовательно поступивших одинаковых координат
 int count_same_coords = 0;
@@ -164,7 +169,10 @@ void loop_gps()
     // Если пошли координаты, обрабатываем данные
     if (gps.encode(c))
     {
+      // Переопределяем интервал мигания лампочки в пол-секунды,
+      // так как пошли данные с приемника GPS
       led_period = 500;
+      // Считываем координаты и возраст текущего состояния
       unsigned long age;
       long old_lat = lat, old_lng = lng;
       gps.get_position(&lat, &lng, &age);
@@ -191,20 +199,18 @@ void loop_gps()
         new_coords = true;
         count_same_coords = 0;
       }
-
-      /*
+      
+      // Отмечаем, что пошли текущие координаты с начала сеанса приема сигналов GPS
       if (!had_coords)
       {
         printgps = 0;
         unsigned long m = millis();
-        Serial.print("\nAcquisition time: ");
+        Serial.print("\Время начала приема сигналов GPS: ");
         Serial.print(m);
-        Serial.println(" ms");
+        Serial.println(" мс");
         had_coords = true;
       }
-      */
     }
-    
   }
   else 
   {
