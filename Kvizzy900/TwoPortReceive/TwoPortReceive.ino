@@ -1,6 +1,9 @@
 /*
   Software serial multple serial test
-
+  https://github.com/arduino/ArduinoCore-primo/blob/master/libraries/SoftwareSerial/examples/TwoPortReceive/TwoPortReceive.ino
+  https://docs.arduino.cc/tutorials/communication/TwoPortReceive/
+  
+  
  Receives from the two software serial ports,
  sends to the hardware serial port.
 

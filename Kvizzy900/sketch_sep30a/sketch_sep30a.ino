@@ -15,7 +15,6 @@ TinyGPS gps;
 //#include <TinyGPSPlus.h>
 //TinyGPSPlus gps;
 SoftwareSerial gpsSerial(2,3);   // синий на 2 - будет RX; зеленый на 3 - будет TX, приемник gps-координат
-
 SoftwareSerial gsmSerial(7,8);   // SIM900
 
 #define LEDPIN       13          // пользовательский светодиод на 13 пине Arduino UNO
@@ -27,13 +26,88 @@ SoftwareSerial gsmSerial(7,8);   // SIM900
 // (до тех пор, пока не пойдут данные с приемника GPS)
 int led_period = 2000;    
 
+
+void updateSerial()
+{
+  delay(500);
+  while (Serial.available())
+  {
+    gsmSerial.write(Serial.read()); // Forward what Serial received to Software Serial Port
+  }
+  while (gsmSerial.available())
+  {
+    Serial.write(gsmSerial.read()); // Forward what Software Serial received to Serial Port
+  }
+}
+
+/**
+ * Выполнить AT команду SIM900
+**/ 
+void sendCommand(const char* command, char* info) 
+{
+  // Показываем информацию по предстоящей команде
+  Serial.print("--- ");
+  Serial.println(info);
+  // Показываем команду
+  //Serial.println(command);
+  //Serial.println("-----");
+  // Отправляем команду SIM900
+  gsmSerial.println(command);
+  // Serial.flush() — функция в аппаратной платформе Arduino, которая ожидает окончания передачи исходящих данных. 
+  // После вызова этой функции можно быть уверенным, что все данные отправлены, а буфер пуст. 
+  // Кроме того, Serial.flush() очищает буфер приёма, сбрасывая любые входящие данные, которые ещё не были прочитаны. 
+  // Это особенно полезно в ситуациях, когда входящие данные могут быть устаревшими или неактуальными. 
+  // gsmSerial.flush();
+  // Uncomment this delay if you need to wait a while
+  delay(1000);   
+  ShowSerialData();
+}
+/**
+ * Prints the serial data, and waits 1 second
+**/
+void ShowSerialData() 
+{
+  while (gsmSerial.available()) 
+  {
+    char c = gsmSerial.read();
+    Serial.write(c);
+  }
+  Serial.println("");
+  delay(1000);
+}
+
+
 void setup()
 {
-  Serial.begin(19200);          // USB
-  //gsmSerial.begin(19200);     // GSM
+
+  Serial.begin(9600);
+  gsmSerial.begin(9600);
+  delay(500);
+  updateSerial();
+  //gpsSerial.begin(9600);
+
   // Задаем максимальное время ожидания данных во время операций чтения 6 секунд
   //gsmSerial.setTimeout(6000);
-  gpsSerial.begin(9600);
+
+  Serial.println(" ");
+  Serial.println("Инициализация и ожидание 1 сек...");
+  delay(1000);
+
+  gsmSerial.println("AT"); // Handshaking with SIM900
+  updateSerial();
+
+  // Проверяем, реагирует ли модуль, ожидаемое значение  OK
+  sendCommand("AT","Проверяем, реагирует ли SIM900 на команды"); 
+  sendCommand("AT+CIPSHUT","Закрываем все соединения TCP/UDP"); 
+  sendCommand("AT+SAPBR=2,1","Определяем состояние сессии"); 
+  sendCommand("AT+SAPBR=0,1","Закрываем сессию (ответ может быть ERROR)"); 
+
+
+
+
+
+
+  /*
 
   pinMode(LEDPIN, OUTPUT);
   digitalWrite(LEDPIN, LOW);
@@ -43,6 +117,7 @@ void setup()
 
   //pinMode(RSTgprsPIN, OUTPUT); 
   //digitalWrite(RSTgprsPIN, LOW);
+  */
 }
 
 unsigned long last_powerup_attempt = 0;
@@ -78,7 +153,7 @@ int tolower(int c)
 // ****************************************************************************
 int readGps()
 {
-  return gpsSerial.read();
+  //return gpsSerial.read();
 }
 
 // ****************************************************************************
@@ -101,7 +176,7 @@ void reset_gps()
 // ****************************************************************************
 int availableGps()
 {
-  return gpsSerial.available();
+  //return gpsSerial.available();
 }
 
 // ****************************************************************************
@@ -148,6 +223,7 @@ unsigned long last_data_from_gps = 0;
 
 void loop_gps()
 {
+  /*
   //Serial.println("loop_gps BEGIN");
   int c;
   // Проверяем есть ли байты(символы), доступные для чтения из      
@@ -224,6 +300,7 @@ void loop_gps()
       last_data_from_gps = millis();
     }
   }
+  */
   //Serial.println("loop_gps END");
 }
 
@@ -346,7 +423,7 @@ void loop()
   // Переключаем лампочку по истечении интервала мигания
   blinkLed();
   //
-  loop_gps();
+  //loop_gps();
   /*
   if (!gsm_initialized)
     init_gsm();
