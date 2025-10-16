@@ -1,0 +1,36 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.CompileOnBackground=0
+Compilator.ProgSaveAll=0
+Compilator.ProgRunSelection=0
+Compilator.LogType=0
+Compilator.LogEncoding=0
+DefaultDir=C:\ittve-GPS-GSM\6-neskolko-softwareserial-na-arduino-uno
+DefaultCP=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+Extensions=*.*
+[Project tree]
+6-neskolko-softwareserial-na-arduino-uno
+	+6-neskolko-softwareserial-na-arduino-uno
+		+Ex1_Talk_SIM900
+			Ex1_Talk_SIM900\Ex1_Talk_SIM900.ino
+		-TestingAtCommands
+			TestingAtCommands\TestingAtCommands.ino
+		-TwoPortReceive
+			TwoPortReceive\TwoPortReceive.ino
+		6-neskolko-softwareserial-na-arduino-uno.ppr
+		neskolko-softwareserial-na-arduino-uno.md
+		neskolko-softwareserial-na-arduino-uno.md.backup
+[Open project files]
+0=Ex1_Talk_SIM900\Ex1_Talk_SIM900.ino
+[Selected Project Files]
+Main=
+Selected=Ex1_Talk_SIM900\Ex1_Talk_SIM900.ino
+[Ex1_Talk_SIM900\Ex1_Talk_SIM900.ino]
+TopLine=40
+Caret=16,91

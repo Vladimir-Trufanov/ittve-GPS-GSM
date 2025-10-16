@@ -12,3 +12,5 @@
 
 ### [TinyGPS](5-TinyGPS/MikalHart.md)
 
+### [Несколько SoftwareSerial на Ардуино UNO](6-neskolko-softwareserial-na-arduino-uno/neskolko-softwareserial-na-arduino-uno.md)
+
