@@ -1,8 +1,6 @@
-## V-KEL-TTL
+## Подключение приемников GPS V.KEL: VK16E, VK2828U7G5LF
 
 ### [V.KEL VK16E](https://arduino-kit.ru/blogs/blog/project_33?)
-
-2025-08-05. Пример из статьи project33 размещен в проекте про трекер.
 
 #### [Подключаем GPS модуль VK16E к Arduino](https://litl-admin.ru/zhelezo/podklyuchaem-gps-modul-vk16e-k-arduino.html)
 
