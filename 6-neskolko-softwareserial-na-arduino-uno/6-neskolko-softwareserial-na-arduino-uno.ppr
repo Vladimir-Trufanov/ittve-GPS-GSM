@@ -18,7 +18,7 @@ Extensions=*.*
 [Project tree]
 6-neskolko-softwareserial-na-arduino-uno
 	+6-neskolko-softwareserial-na-arduino-uno
-		-Ex1_Talk_SIM900
+		+Ex1_Talk_SIM900
 			Ex1_Talk_SIM900\Ex1_Talk_SIM900.ino
 		-Ex2_Talk_VKEL_TTL
 			Ex2_Talk_VKEL_TTL\Ex2_Talk_VKEL_TTL.ino
@@ -44,5 +44,5 @@ Caret=1,96
 TopLine=46
 Caret=1,81
 [Ex3_closing_one_opening_other\Ex3_closing_one_opening_other.ino]
-TopLine=33
-Caret=1,59
+TopLine=42
+Caret=14,58
