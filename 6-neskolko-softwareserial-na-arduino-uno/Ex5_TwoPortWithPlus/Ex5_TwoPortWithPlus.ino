@@ -1,4 +1,4 @@
-/** Arduino C/C++ ********************************** Ex4_TwoPortReceive.ino ***
+/** Arduino C/C++ ********************************* Ex5_TwoPortWithPlus.ino ***
  *
  * 5 пример из набора примеров "Несколько SoftwareSerial на Ардуино UNO"
  * 
@@ -13,8 +13,10 @@
  * При использовании двух программных последовательных портов необходимо переключать порты,
  * прослушивая каждый из них по очереди. Следует выбирать логичное время для переключения
  * портов, например, в конце ожидаемой передачи или когда буфер пуст. 
+ *
+ * Вместо устаревшей TinyGPS используется TinyGPSPlus.
  * 
- * v1.0.1, 20.10.2025                                 Автор:      Труфанов В.Е.
+ * v1.0.2, 21.10.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
  *
 **/
@@ -25,16 +27,12 @@ SoftwareSerial   SIM900(7,8); // SIM900
 unsigned long ncikl=0;
 
 // Настраиваем переменные и модули для работы с V.KEL TTL
-// #include "TinyGPS.h"
 #include <TinyGPSPlus.h>
-
-// TinyGPS gps;
 TinyGPSPlus gps;
 
 double lat,lng; 
 double lat0=61.801900, lng0=34.329700;  // координаты выбранной точки
 double DistanceBetween;
-unsigned long time, date;
 
 void setup()
 {
@@ -62,18 +60,7 @@ void loop()
     // порта V.KEL-TTL заполнился данными с координатами
     delay(1000);
     // Выбираем данные навигации из приёмника GPS V.KEL TTL 
-    // Talk_VKEL_TTL();
-    Talk_VKEL_TTL1();
-    
-    /*
-    // This sketch displays information every time a new sentence is correctly encoded.
-    while (VKEL_TTL.available() > 0) if (gps.encode(VKEL_TTL.read())) displayInfo();
-    if (millis() > 5000 && gps.charsProcessed() < 10)
-    {
-      Serial.println(F("No GPS detected: check wiring."));
-      while(true);
-    }
-    */
+    Talk_VKEL_TTL();
 
     // Начинаем прослушивать и работать с портом SIM900
     SIM900.listen();
@@ -82,132 +69,76 @@ void loop()
   }
 }
 
-void displayInfo()
-{
-  Serial.print(ncikl); Serial.print(":"); 
-  Serial.print(F("Location: ")); 
-  if (gps.location.isValid())
-  {
-    Serial.print(gps.location.lat(), 6);
-    Serial.print(F(","));
-    Serial.print(gps.location.lng(), 6);
-  }
-  else
-  {
-    Serial.print(F("INVALID"));
-  }
-
-  Serial.print(F("  Date/Time: "));
-  if (gps.date.isValid())
-  {
-    Serial.print(gps.date.month());
-    Serial.print(F("/"));
-    Serial.print(gps.date.day());
-    Serial.print(F("/"));
-    Serial.print(gps.date.year());
-  }
-  else
-  {
-    Serial.print(F("INVALID"));
-  }
-
-  Serial.print(F(" "));
-  if (gps.time.isValid())
-  {
-    if (gps.time.hour() < 10) Serial.print(F("0"));
-    Serial.print(gps.time.hour());
-    Serial.print(F(":"));
-    if (gps.time.minute() < 10) Serial.print(F("0"));
-    Serial.print(gps.time.minute());
-    Serial.print(F(":"));
-    if (gps.time.second() < 10) Serial.print(F("0"));
-    Serial.print(gps.time.second());
-    Serial.print(F("."));
-    if (gps.time.centisecond() < 10) Serial.print(F("0"));
-    Serial.print(gps.time.centisecond());
-  }
-  else
-  {
-    Serial.print(F("INVALID"));
-  }
-
-  Serial.println();
-}
 
 // ****************************************************************************
 // *            Выбрать данные навигации из приёмника GPS V.KEL TTL           *
 // ****************************************************************************
 bool Talk_VKEL_TTL()
 {
-  /*
   bool newdata = false;
   // Если данные есть, то считываем их и публикуем
   newdata = readgps();
   if (newdata)
   {
-    gps.get_position(&lat, &lon);
-    gps.get_datetime(&date, &time);
-    DistanceBetween=gps.distance_between (lat0,lon0,lat,lon)/10000000;
-
-    Serial.print(ncikl);     Serial.print(":"); 
-    Serial.print(" Lat: ");  Serial.print(lat);
-    Serial.print(" Long: "); Serial.print(lon);
-    Serial.print(" Date: "); Serial.print(date);
-    Serial.print(" Time: "); Serial.print(time);
-    Serial.print(" Dist: "); Serial.println(DistanceBetween);
-  }
-  return newdata;
-  */
-}
-
-// ****************************************************************************
-// *            Выбрать данные навигации из приёмника GPS V.KEL TTL           *
-// ****************************************************************************
-bool Talk_VKEL_TTL1()
-{
-  bool newdata = false;
-  // Если данные есть, то считываем их и публикуем
-  newdata = readgps();
-  if (newdata)
-  {
-    Serial.print(ncikl); Serial.print(":"); 
+    Serial.print(ncikl); Serial.print(". "); 
+    // Определяем координаты
     if (gps.location.isValid())
     {
       lat=gps.location.lat();
       lng=gps.location.lng();
-      //Serial.print("lat=");  Serial.println(lat,6);
-      //Serial.println(gps.location.lat());
-      Serial.print(lat,6); Serial.print(F(",")); Serial.print(lng,6);
+      Serial.print(F("Координаты: ")); Serial.print(lat,6); Serial.print(F(",")); Serial.print(lng,6);
       DistanceBetween = gps.distanceBetween(lat,lng,lat0,lng0);
-      Serial.print(" DistanceBetween=");  Serial.println(DistanceBetween,6);
-      
-      /*
-        TinyGPSPlus::distanceBetween(
-          gps.location.lat(),
-          gps.location.lng(),
-          LONDON_LAT, 
-          LONDON_LON);
-      */
-
+      Serial.print(F(". Расстояние от предыдущей точки: ")); Serial.print(DistanceBetween,2); Serial.print(F(" м."));
+      // Меняем прежнее положение для определения будущего расстояния между точками
+      lat0=lat; lng0=lng;  
     }
     else
     {
       Serial.print(F("Неопределяется локация"));
     }
-
-
-    /*
-    gps.get_position(&lat, &lon);
-    gps.get_datetime(&date, &time);
-    DistanceBetween=gps.distance_between (lat0,lon0,lat,lon)/10000000;
-
-    Serial.print(ncikl);     Serial.print(":"); 
-    Serial.print(" Lat: ");  Serial.print(lat);
-    Serial.print(" Long: "); Serial.print(lon);
-    Serial.print(" Date: "); Serial.print(date);
-    Serial.print(" Time: "); Serial.print(time);
-    Serial.print(" Dist: "); Serial.println(DistanceBetween);
-    */
+    Serial.println();
+    // Определяем дату
+    if (gps.date.isValid())
+    {
+      Serial.print(gps.date.day());
+      Serial.print(F("."));
+      Serial.print(gps.date.month());
+      Serial.print(F("."));
+      Serial.print(gps.date.year());
+    }
+    else
+    {
+      Serial.print(F("Неопределяется дата "));
+    }
+    Serial.print(F(" "));
+    // Определяем время
+    if (gps.time.isValid())
+    {
+      if (gps.time.hour() < 10) Serial.print(F("0"));
+      Serial.print(gps.time.hour());
+      Serial.print(F(":"));
+      if (gps.time.minute() < 10) Serial.print(F("0"));
+      Serial.print(gps.time.minute());
+      Serial.print(F(":"));
+      if (gps.time.second() < 10) Serial.print(F("0"));
+      Serial.print(gps.time.second());
+      Serial.print(F("."));
+      if (gps.time.centisecond() < 10) Serial.print(F("0"));
+      Serial.print(gps.time.centisecond());
+    }
+    else
+    {
+      Serial.print(F("Неопределяется время "));
+    }
+    Serial.println();
+  }
+  else
+  {
+    if (millis() > 5000 && gps.charsProcessed() < 10)
+    {
+      Serial.println(F("GPS не обнаружен: проверьте соединения и оборудование"));
+      while(true);
+    }
   }
   return newdata;
 }
@@ -219,7 +150,18 @@ bool readgps()
   while (VKEL_TTL.available())
   {
     int b = VKEL_TTL.read();
-    // в TinyGPS есть ошибка: не обрабатываются данные с \r и \n
+    // !!! Windows обратно совместима с MS-DOS (даже в агрессивной форме), а в MS-DOS использовалась комбинация CR-LF, 
+    // потому что MS-DOS была совместима с CP/M-80 (в некоторой степени случайно), в которой использовалась комбинация CR-LF, 
+    // потому что так работал принтер (ведь изначально принтеры были пишущими машинками с компьютерным управлением).
+    // В принтерах есть отдельная команда для перемещения бумаги на одну строку вверх и отдельная команда для возврата 
+    // каретки (на которой закреплена бумага) к левому краю.
+    // В современных устройствах по-прежнему есть эти команды, потому что они тоже обратно совместимы с более ранними принтерами
+    // и другими устройствами. (В частности, HP хорошо справляется с этим).
+    // В пишущих машинках тоже, сначала бумага поднимается ("LF" = "\n"), 
+    // а затем каретка возвращается в исходное положение   ("CR" = "\r"), 
+    // даже если это происходит одним движением. Звук «динг» сообщал, что конец строки близок и нужно подготовиться.
+
+    // Отлавливаем конец строки с \r и \n
     if ('\r' != b)
     {
       if (gps.encode(b)) return true;
@@ -227,7 +169,6 @@ bool readgps()
   }
   return false;
 }
-
 
 // ****************************************************************************
 // *               Выбрать ответное сообщение из буфера SIM900                *
@@ -303,5 +244,5 @@ void Talk_SIM900()
   }
 }
 
-// Arduino C/C++ *********************************** Ex4_TwoPortReceive.ino ***
+// Arduino C/C++ ********************************** Ex5_TwoPortWithPlus.ino ***
                                                                                                                                                                                                   

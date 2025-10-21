@@ -17,7 +17,7 @@ HTServer=localhost
 Extensions=*.*
 [Project tree]
 6-neskolko-softwareserial-na-arduino-uno
-	+6-neskolko-softwareserial-na-arduino-uno
+	-6-neskolko-softwareserial-na-arduino-uno
 		-Ex1_Talk_SIM900
 			Ex1_Talk_SIM900\Ex1_Talk_SIM900.ino
 		-Ex2_Talk_VKEL_TTL
@@ -28,16 +28,17 @@ Extensions=*.*
 			Ex3_closing_one_opening_other\Ex3_closing_one_opening_other.ino
 			Ex3_closing_one_opening_other\TinyGPS.cpp
 			Ex3_closing_one_opening_other\TinyGPS.h
-		+Ex4_TwoPortReceive
+		-Ex4_TwoPortReceive
 			Ex4_TwoPortReceive\Ex4_TwoPortReceive.ino
 			Ex4_TwoPortReceive\TinyGPS.cpp
 			Ex4_TwoPortReceive\TinyGPS.h
-		+Ex5_TwoPortWithPlus
+		-Ex5_TwoPortWithPlus
 			Ex5_TwoPortWithPlus\Ex5_TwoPortWithPlus.ino
 		-TwoPortReceive
 			TwoPortReceive\TwoPortReceive.ino
 		6-neskolko-softwareserial-na-arduino-uno.ppr
 		neskolko-softwareserial-na-arduino-uno.md
+		Какой ты взрослый парень – девять лет!.txt
 [Open project files]
 0=Ex1_Talk_SIM900\Ex1_Talk_SIM900.ino
 1=Ex2_Talk_VKEL_TTL\Ex2_Talk_VKEL_TTL.ino
@@ -47,14 +48,14 @@ Extensions=*.*
 Main=
 Selected=Ex5_TwoPortWithPlus\Ex5_TwoPortWithPlus.ino
 [Ex1_Talk_SIM900\Ex1_Talk_SIM900.ino]
-TopLine=58
+TopLine=56
 Caret=1,96
 [Ex2_Talk_VKEL_TTL\Ex2_Talk_VKEL_TTL.ino]
-TopLine=46
+TopLine=44
 Caret=1,81
 [TwoPortReceive\TwoPortReceive.ino]
 TopLine=21
 Caret=1,48
 [Ex5_TwoPortWithPlus\Ex5_TwoPortWithPlus.ino]
-TopLine=131
-Caret=2,132
+TopLine=211
+Caret=1,36
