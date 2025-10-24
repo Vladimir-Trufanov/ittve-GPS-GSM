@@ -18,85 +18,762 @@ Extensions=*.*
 [Project tree]
 ittve-GPS-GSM
 	+ittve-GPS-GSM
-		+Detail
-			-modul-fm-radiopriemnika-dsp-pll-87-108-mgc
-				-kroshechnaya-dokumentaciya-najdennaya-v-internete
-					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\kroshechnaya-dokumentaciya-najdennaya-v-internete\fm_china_at.pdf
-					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\kroshechnaya-dokumentaciya-najdennaya-v-internete\kroshechnaya-dokumentaciya-najdennaya-v-internete.md
-				-LCD-FM-RX-V2_0-parts
-					-breadboards
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\LCD-FM-RX-V2_0-parts\breadboards\LCD-FM-RX-V20_breadboard.svg
-					-icon
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\LCD-FM-RX-V2_0-parts\icon\LCD-FM-RX-V20_icon.svg
-					-pcb
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\LCD-FM-RX-V2_0-parts\pcb\LCD-FM-RX-V20_pcb.svg
-					-schematic
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\LCD-FM-RX-V2_0-parts\schematic\LCD-FM-RX-V20_schematic.svg
-					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\LCD-FM-RX-V2_0-parts\LCD-FM-RX-V2.0.fzpz
-				-testirovanie
-					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\testirovanie\malenkaja-plata.jpg
-					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\testirovanie\testirovanie-resivera.jpg
-				-Uno_uart_Uno
-					-uno_uart_unoHand
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoHand\uno_uart_unoHand.ino
-					-uno_uart_unoMain
-						Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoMain\uno_uart_unoMain.ino
-				-Программа обмена через Com-порт и AT-команды радиоприёмника
-					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Программа обмена через Com-порт и AT-команды радиоприёмника\AT-comands_FM_module.doc
-					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Программа обмена через Com-порт и AT-команды радиоприёмника\sscom.ini
-					Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Программа обмена через Com-порт и AT-команды радиоприёмника\sscom32E.exe
-				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\AT-comands_FM_module.html
-				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\DSP-PLL-niz.jpg
-				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\DSP-PLL-verh.jpg
-				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\modul-fm-radiopriemnika-dsp-pll-87-108-mgc.md
-				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\pins-LCD-FM-RX-v2_0.jpg
-				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\testirovanie.md
-				Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\wiring-diagram.jpg
-			+radiomodul-nrf24l01
-				+Cadil_TM-24-фев-2021-в-23_23
-					-skaner-ehfira
-						Detail\radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\skaner-ehfira\skaner-ehfira.ino
-					-sketch-peredatchika
-						Detail\radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\sketch-peredatchika\sketch-peredatchika.ino
-					+sketch-prijomnika
-						Detail\radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\sketch-prijomnika\sketch-prijomnika.ino
-				-Электроника-Arduino-и-IT
-					-proverka-rabotosposobnosti-nrf24l01
-						Detail\radiomodul-nrf24l01\Электроника-Arduino-и-IT\proverka-rabotosposobnosti-nrf24l01\proverka-rabotosposobnosti-nrf24l01.ino
-					-testirovanie-nrf24l01-peredacha
-						Detail\radiomodul-nrf24l01\Электроника-Arduino-и-IT\testirovanie-nrf24l01-peredacha\testirovanie-nrf24l01-peredacha.ino
-					-testirovanie-nrf24l01-priyom
-						Detail\radiomodul-nrf24l01\Электроника-Arduino-и-IT\testirovanie-nrf24l01-priyom\testirovanie-nrf24l01-priyom.ino
-				Detail\radiomodul-nrf24l01\1.webp
-				Detail\radiomodul-nrf24l01\podklyuchenie-nrf24l01-k-arduino.png
-				Detail\radiomodul-nrf24l01\radiomodul-nrf24l01.md
-				Detail\radiomodul-nrf24l01\radiomodul-nrf24l01.md.backup
-				Detail\radiomodul-nrf24l01\shema-podklyucheniya-nrf24l01-k-arduino.jpg
-				Detail\radiomodul-nrf24l01\TZT NRF24L01 - PA - LNA.webp
-		-Tinkercad
-			Tinkercad\Tinkercad.lnk
-			Tinkercad\Tinkercad.md
+		-1-SIM900-i-podklyuchenie-k-arduino
+			-MakePhoneCall
+				1-SIM900-i-podklyuchenie-k-arduino\MakePhoneCall\MakePhoneCall.ino
+			-Send-Receive-SMS-Call-SIM900-v1
+				1-SIM900-i-podklyuchenie-k-arduino\Send-Receive-SMS-Call-SIM900-v1\Send-Receive-SMS-Call-SIM900-v1.pdf
+			-Send-Receive-SMS-Call-SIM900-v2
+				-MakingCall
+					1-SIM900-i-podklyuchenie-k-arduino\Send-Receive-SMS-Call-SIM900-v2\MakingCall\MakingCall.ino
+				-ReadingSMS
+					1-SIM900-i-podklyuchenie-k-arduino\Send-Receive-SMS-Call-SIM900-v2\ReadingSMS\ReadingSMS.ino
+				-ReceivingCall
+					1-SIM900-i-podklyuchenie-k-arduino\Send-Receive-SMS-Call-SIM900-v2\ReceivingCall\ReceivingCall.ino
+				-SendingSMS
+					1-SIM900-i-podklyuchenie-k-arduino\Send-Receive-SMS-Call-SIM900-v2\SendingSMS\SendingSMS.ino
+				-TestingAtCommands
+					1-SIM900-i-podklyuchenie-k-arduino\Send-Receive-SMS-Call-SIM900-v2\TestingAtCommands\TestingAtCommands.ino
+				1-SIM900-i-podklyuchenie-k-arduino\Send-Receive-SMS-Call-SIM900-v2\Send-Receive-SMS-Call-SIM900-v2.pdf
+				1-SIM900-i-podklyuchenie-k-arduino\Send-Receive-SMS-Call-SIM900-v2\Send-Receive-SMS-Call-SIM900-v2.ppr
+			-TurnSIM900_upDown
+				1-SIM900-i-podklyuchenie-k-arduino\TurnSIM900_upDown\TurnSIM900_upDown.ino
+			1-SIM900-i-podklyuchenie-k-arduino\AN_SIM900 Reference Design Guide_V1.02.pdf
+			1-SIM900-i-podklyuchenie-k-arduino\DC-jack.webp
+			1-SIM900-i-podklyuchenie-k-arduino\DirFlag32x32.png
+			1-SIM900-i-podklyuchenie-k-arduino\gprs_vs.png
+			1-SIM900-i-podklyuchenie-k-arduino\GSM-Arduino-circuit.webp
+			1-SIM900-i-podklyuchenie-k-arduino\GSM-FTDI-circuit-1.webp
+			1-SIM900-i-podklyuchenie-k-arduino\GSM-shield-labels.webp
+			1-SIM900-i-podklyuchenie-k-arduino\insert-SIM.webp
+			1-SIM900-i-podklyuchenie-k-arduino\LockSIMcard.webp
+			1-SIM900-i-podklyuchenie-k-arduino\power-key.webp
+			1-SIM900-i-podklyuchenie-k-arduino\SIM900.webp
+			1-SIM900-i-podklyuchenie-k-arduino\SIM900_AT Command_V1.03.pdf
+			1-SIM900-i-podklyuchenie-k-arduino\SIM900_AT Command_V1.11.pdf
+			1-SIM900-i-podklyuchenie-k-arduino\SIM900_Email_AT Command_V1.04.pdf
+			1-SIM900-i-podklyuchenie-k-arduino\SIM900_Hardware Design_V1.05.pdf
+			1-SIM900-i-podklyuchenie-k-arduino\SIM900_Hardware Design_V2.05.pdf
+			1-SIM900-i-podklyuchenie-k-arduino\SIM900_HTTPS AT Command_V1 00.pdf
+			1-SIM900-i-podklyuchenie-k-arduino\SIM900-i-podklyuchenie-k-arduino.md
+			1-SIM900-i-podklyuchenie-k-arduino\software-serial.webp
+			1-SIM900-i-podklyuchenie-k-arduino\Terminal-v1-9b.jpg
+			1-SIM900-i-podklyuchenie-k-arduino\Zadnjaja-storona-platy.jpg
+		-2-SIM900-i-primer-otpravki-dannyh-na-sajt
+			-HTTP-GET-POST-Request-with-GSM
+				-sendGetRequest
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\HTTP-GET-POST-Request-with-GSM\sendGetRequest\sendGetRequest.ino
+				-testSerial
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\HTTP-GET-POST-Request-with-GSM\testSerial\testSerial.ino
+				2-SIM900-i-primer-otpravki-dannyh-na-sajt\HTTP-GET-POST-Request-with-GSM\HTTP-GET-POST-Request-with-GSM-main.zip
+				2-SIM900-i-primer-otpravki-dannyh-na-sajt\HTTP-GET-POST-Request-with-GSM\LICENSE.txt
+				2-SIM900-i-primer-otpravki-dannyh-na-sajt\HTTP-GET-POST-Request-with-GSM\README.md
+				2-SIM900-i-primer-otpravki-dannyh-na-sajt\HTTP-GET-POST-Request-with-GSM\sendPostRequest.ino
+			-SIM900-2025-08-01
+				-assets
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\assets\sim900-shield.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\assets\sim900-vector.png
+				-docs
+					-search
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_0.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_0.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_1.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_1.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_10.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_10.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_11.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_11.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_12.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_12.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_13.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_13.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_14.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_14.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_15.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_2.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_2.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_3.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_3.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_4.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_4.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_5.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_5.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_6.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_6.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_7.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_7.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_8.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_8.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_9.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_9.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_a.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_a.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_b.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_b.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_c.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_c.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_d.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_d.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_e.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_e.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_f.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\all_f.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\classes_0.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\classes_0.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\classes_1.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\classes_1.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\close.svg
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_0.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_0.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_1.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_1.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_2.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_2.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_3.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_3.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_4.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_4.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_5.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_5.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_6.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_6.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_7.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_7.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_8.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_8.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_9.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_9.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_a.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_a.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_b.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\functions_b.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\mag.svg
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\mag_d.svg
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\mag_sel.svg
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\mag_seld.svg
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\nomatches.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\pages_0.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\pages_0.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\pages_1.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\pages_2.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\pages_3.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\search.css
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\search.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\search_l.png
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\search_m.png
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\search_r.png
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\searchdata.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_0.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_0.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_1.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_1.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_2.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_2.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_3.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_3.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_4.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_4.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_5.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_5.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_6.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_6.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_7.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_7.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_8.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_8.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_9.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_9.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_a.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_a.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_b.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_b.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_c.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_c.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_d.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_d.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_e.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_e.js
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_f.html
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\search\variables_f.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\annotated.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\annotated_dup.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\bc_s.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\bc_sd.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\bdwn.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\classes.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\classSIM900.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\classSIM900.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\classSIM900-members.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\closed.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\dir_34e9a5f624ac092a9ae2401c28d616d7.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\dir_34e9a5f624ac092a9ae2401c28d616d7.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\dir_68267d1309a1af8e8297ef4c3efbcdba.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\dir_68267d1309a1af8e8297ef4c3efbcdba.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\dir_a52f4d3d586a58b02f3a4ddf0a992157.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\doc.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\doc.svg
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\docd.svg
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\doxygen.css
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\doxygen.svg
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\doxygen-awesome.css
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\dynsections.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\files.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\files_dup.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\folderclosed.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\folderclosed.svg
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\folderclosedd.svg
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\folderopen.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\folderopen.svg
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\folderopend.svg
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\functions.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\functions_func.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\functions_vars.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\graph_legend.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\graph_legend.md5
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\graph_legend.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\index.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\jquery.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\menu.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\menudata.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\minus.svg
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\minusd.svg
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\nav_f.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\nav_fd.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\nav_g.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\nav_h.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\nav_hd.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\navtree.css
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\navtree.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\navtreedata.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\navtreeindex0.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\open.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\plus.svg
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\plusd.svg
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\resize.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\sim900__defs_8h_source.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\sim900_8cpp_source.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\sim900_8h_source.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\sim900-shield.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\sim900-shield_8png_source.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\sim900-vector.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\sim900-vector_8png_source.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\splitbar.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\splitbard.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900APN.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900APN.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900APN-members.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900CardAccount.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900CardAccount.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900CardAccount-members.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900HTTPHeader.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900HTTPHeader.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900HTTPHeader-members.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900HTTPRequest.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900HTTPRequest.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900HTTPRequest__coll__graph.map
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900HTTPRequest__coll__graph.md5
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900HTTPRequest__coll__graph.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900HTTPRequest-members.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900HTTPResponse.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900HTTPResponse.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900HTTPResponse__coll__graph.map
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900HTTPResponse__coll__graph.md5
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900HTTPResponse__coll__graph.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900HTTPResponse-members.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900Operator.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900Operator.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900Operator-members.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900PhonebookCapacity.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900PhonebookCapacity.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900PhonebookCapacity-members.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900RTC.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900RTC.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900RTC-members.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900Signal.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900Signal.js
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\struct__SIM900Signal-members.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\structSIM900APN.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\structSIM900CardAccount.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\structSIM900HTTPHeader.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\structSIM900HTTPRequest.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\structSIM900HTTPResponse.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\structSIM900Operator.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\structSIM900PhonebookCapacity.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\structSIM900RTC.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\structSIM900Signal.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\sync_off.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\sync_on.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\tab_a.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\tab_ad.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\tab_b.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\tab_bd.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\tab_h.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\tab_hd.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\tab_s.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\tab_sd.png
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\docs\tabs.css
+				-examples
+					-apn_example
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\examples\apn_example\apn_example.ino
+					-board_info
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\examples\board_info\board_info.ino
+					-card_info
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\examples\card_info\card_info.ino
+					-dial_up
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\examples\dial_up\dial_up.ino
+					-handshake
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\examples\handshake\handshake.ino
+					-network_op
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\examples\network_op\network_op.ino
+					-phonebook_capacity
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\examples\phonebook_capacity\phonebook_capacity.ino
+					-phonebook_example
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\examples\phonebook_example\phonebook_example.ino
+					-rtc_example
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\examples\rtc_example\rtc_example.ino
+					-signal_strength
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\examples\signal_strength\signal_strength.ino
+					-sms_send_example
+						2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\examples\sms_send_example\sms_send_example.ino
+				-misc
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\misc\doxygen-awesome.css
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\misc\footer.html
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\misc\main_page.md
+				-src
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\src\sim900.cpp
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\src\sim900.h
+					2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\src\sim900_defs.h
+				2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\Doxyfile
+				2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\library.json
+				2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\library.properties
+				2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\LICENSE
+				2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\README.md
+				2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-2025-08-01\SIM900-main.zip
+			2-SIM900-i-primer-otpravki-dannyh-na-sajt\AN_SIM900_FTP_HTTP_AT_COMMANDS_USER_GUIDE_beta_V1.00.pdf
+			2-SIM900-i-primer-otpravki-dannyh-na-sajt\SIM900-i-primer-otpravki-dannyh-na-sajt.md
+		-3-V-KEL-TTL
+			-BlinkingPowering
+				3-V-KEL-TTL\BlinkingPowering\Blink.txt
+				3-V-KEL-TTL\BlinkingPowering\BlinkingPowering.ino
+				3-V-KEL-TTL\BlinkingPowering\iarduino_VCC.cpp
+				3-V-KEL-TTL\BlinkingPowering\iarduino_VCC.h
+			-project33
+				3-V-KEL-TTL\project33\33_projects__arduino_listing.zip
+				3-V-KEL-TTL\project33\project33.ino
+				3-V-KEL-TTL\project33\TinyGPS.cpp
+				3-V-KEL-TTL\project33\TinyGPS.h
+			-TinyGPS
+				3-V-KEL-TTL\TinyGPS\keywords.txt
+				3-V-KEL-TTL\TinyGPS\TinyGPS.cpp
+				3-V-KEL-TTL\TinyGPS\TinyGPS.h
+			-TinyGPSpp
+				-BasicExample
+					3-V-KEL-TTL\TinyGPSpp\BasicExample\BasicExample.ino
+				-DeviceExample
+					3-V-KEL-TTL\TinyGPSpp\DeviceExample\DeviceExample.ino
+					3-V-KEL-TTL\TinyGPSpp\DeviceExample\TinyGPSpp.cpp
+					3-V-KEL-TTL\TinyGPSpp\DeviceExample\TinyGPSpp.h
+				-FullExample
+					3-V-KEL-TTL\TinyGPSpp\FullExample\FullExample.ino
+					3-V-KEL-TTL\TinyGPSpp\FullExample\TinyGPSpp.cpp
+					3-V-KEL-TTL\TinyGPSpp\FullExample\TinyGPSpp.h
+				-KitchenSink
+					3-V-KEL-TTL\TinyGPSpp\KitchenSink\KitchenSink.ino
+					3-V-KEL-TTL\TinyGPSpp\KitchenSink\TinyGPSpp.cpp
+					3-V-KEL-TTL\TinyGPSpp\KitchenSink\TinyGPSpp.h
+				-SatElevTracker
+					3-V-KEL-TTL\TinyGPSpp\SatElevTracker\sample_satellite_elevation_log.txt
+					3-V-KEL-TTL\TinyGPSpp\SatElevTracker\SatElevTracker.ino
+					3-V-KEL-TTL\TinyGPSpp\SatElevTracker\TinyGPSpp.cpp
+					3-V-KEL-TTL\TinyGPSpp\SatElevTracker\TinyGPSpp.h
+				-SatelliteTracker
+					3-V-KEL-TTL\TinyGPSpp\SatelliteTracker\SatelliteTracker.ino
+					3-V-KEL-TTL\TinyGPSpp\SatelliteTracker\TinyGPSpp.cpp
+					3-V-KEL-TTL\TinyGPSpp\SatelliteTracker\TinyGPSpp.h
+				-UsingCustomFields
+					3-V-KEL-TTL\TinyGPSpp\UsingCustomFields\TinyGPSpp.cpp
+					3-V-KEL-TTL\TinyGPSpp\UsingCustomFields\TinyGPSpp.h
+					3-V-KEL-TTL\TinyGPSpp\UsingCustomFields\UsingCustomFields.ino
+				3-V-KEL-TTL\TinyGPSpp\TinyGPSpp.cpp
+				3-V-KEL-TTL\TinyGPSpp\TinyGPSpp.h
+				3-V-KEL-TTL\TinyGPSpp\TinyGPSpp.md
+			3-V-KEL-TTL\GPS VK16E.pdf
+			3-V-KEL-TTL\TinyGPS.rar
+			3-V-KEL-TTL\TinyGPSPlus-master.zip
+			3-V-KEL-TTL\V-KEL-TTL.md
+		-4-UCenter-i-VK2828U7G5LF
+			-TestUsbUart
+				4-UCenter-i-VK2828U7G5LF\TestUsbUart\TestUsbUart.ino
+			-U-centerForAndroid
+				4-UCenter-i-VK2828U7G5LF\U-centerForAndroid\u-center GPS evaluation App_1.05_APKPure.apk
+				4-UCenter-i-VK2828U7G5LF\U-centerForAndroid\ucenterAndroid_UserGuide_UBX-15017010.pdf
+			-u-centersetup_v8.12
+				4-UCenter-i-VK2828U7G5LF\u-centersetup_v8.12\u-center_v8.12.exe
+			4-UCenter-i-VK2828U7G5LF\Color-coding_scheme.jpg
+			4-UCenter-i-VK2828U7G5LF\Color-coding_scheme_docking_windows_and_sky_view.jpg
+			4-UCenter-i-VK2828U7G5LF\Color-coding_scheme_for_graphical_views.jpg
+			4-UCenter-i-VK2828U7G5LF\Concept_and_philosophy.jpg
+			4-UCenter-i-VK2828U7G5LF\perekhodnik_usb_uart_user_manual_ru.pdf
+			4-UCenter-i-VK2828U7G5LF\PL2303hxCable.webp
+			4-UCenter-i-VK2828U7G5LF\Relations_between_operating_modes.jpg
+			4-UCenter-i-VK2828U7G5LF\Satellite-coding_scheme.jpg
+			4-UCenter-i-VK2828U7G5LF\Set_maximum_number_of_epochs_to_keep.jpg
+			4-UCenter-i-VK2828U7G5LF\U-center_User_Guide_02001.pdf
+			4-UCenter-i-VK2828U7G5LF\U-center_User_Guide_08007.pdf
+			4-UCenter-i-VK2828U7G5LF\U-center_User_Guide_13005250-R06.pdf
+			4-UCenter-i-VK2828U7G5LF\U-center_User_Guide_13005250-R30.pdf
+			4-UCenter-i-VK2828U7G5LF\u-center_v8-12.jpg
+			4-UCenter-i-VK2828U7G5LF\UCenter_VK2828U7G5LF.md
+			4-UCenter-i-VK2828U7G5LF\u-Center-AE_User_Guide_RU.pdf
+			4-UCenter-i-VK2828U7G5LF\u-centersetup_v8.12.zip
+			4-UCenter-i-VK2828U7G5LF\VK2828U7G5LF_DataSheet_v1.pdf
+		-5-TinyGPS
+			-TinyGPS-master
+				-TinyGPS-master
+					-examples
+						-simple_test
+							5-TinyGPS\TinyGPS-master\TinyGPS-master\examples\simple_test\simple_test.ino
+						-static_test
+							5-TinyGPS\TinyGPS-master\TinyGPS-master\examples\static_test\static_test.ino
+						-test_with_gps_device
+							5-TinyGPS\TinyGPS-master\TinyGPS-master\examples\test_with_gps_device\test_with_gps_device.ino
+					5-TinyGPS\TinyGPS-master\TinyGPS-master\keywords.txt
+					5-TinyGPS\TinyGPS-master\TinyGPS-master\TinyGPS.cpp
+					5-TinyGPS\TinyGPS-master\TinyGPS-master\TinyGPS.h
+			-TinyGPSPlus-examples
+				-BasicExample
+					5-TinyGPS\TinyGPSPlus-examples\BasicExample\BasicExample.ino
+				-DeviceExample
+					5-TinyGPS\TinyGPSPlus-examples\DeviceExample\DeviceExample.ino
+				-FullExample
+					5-TinyGPS\TinyGPSPlus-examples\FullExample\FullExample.ino
+				-KitchenSink
+					5-TinyGPS\TinyGPSPlus-examples\KitchenSink\KitchenSink.ino
+				-SatElevTracker
+					5-TinyGPS\TinyGPSPlus-examples\SatElevTracker\sample_satellite_elevation_log.txt
+					5-TinyGPS\TinyGPSPlus-examples\SatElevTracker\SatElevTracker.ino
+				-SatelliteTracker
+					5-TinyGPS\TinyGPSPlus-examples\SatelliteTracker\SatelliteTracker.ino
+				-UsingCustomFields
+					5-TinyGPS\TinyGPSPlus-examples\UsingCustomFields\UsingCustomFields.ino
+			5-TinyGPS\MikalHart.md
+			5-TinyGPS\NMEA.pdf
+			5-TinyGPS\SatelList1.jpg
+			5-TinyGPS\SatelList2.jpg
+			5-TinyGPS\TinyGPS-master.zip
+			5-TinyGPS\TinyGPSPlus-master.zip
+			5-TinyGPS\Принципы работы GPS.webp
+		+6-neskolko-softwareserial-na-arduino-uno
+			-Ex1_Talk_SIM900
+				6-neskolko-softwareserial-na-arduino-uno\Ex1_Talk_SIM900\Ex1_Talk_SIM900.ino
+			-Ex2_Talk_VKEL_TTL
+				6-neskolko-softwareserial-na-arduino-uno\Ex2_Talk_VKEL_TTL\Ex2_Talk_VKEL_TTL.ino
+				6-neskolko-softwareserial-na-arduino-uno\Ex2_Talk_VKEL_TTL\TinyGPS.cpp
+				6-neskolko-softwareserial-na-arduino-uno\Ex2_Talk_VKEL_TTL\TinyGPS.h
+			-Ex3_closing_one_opening_other
+				6-neskolko-softwareserial-na-arduino-uno\Ex3_closing_one_opening_other\Ex3_closing_one_opening_other.ino
+				6-neskolko-softwareserial-na-arduino-uno\Ex3_closing_one_opening_other\TinyGPS.cpp
+				6-neskolko-softwareserial-na-arduino-uno\Ex3_closing_one_opening_other\TinyGPS.h
+			-Ex4_TwoPortReceive
+				6-neskolko-softwareserial-na-arduino-uno\Ex4_TwoPortReceive\Ex4_TwoPortReceive.ino
+				6-neskolko-softwareserial-na-arduino-uno\Ex4_TwoPortReceive\TinyGPS.cpp
+				6-neskolko-softwareserial-na-arduino-uno\Ex4_TwoPortReceive\TinyGPS.h
+			+Ex5_TwoPortWithPlus
+				6-neskolko-softwareserial-na-arduino-uno\Ex5_TwoPortWithPlus\Ex5_TwoPortWithPlus.ino
+			-TwoPortReceive
+				6-neskolko-softwareserial-na-arduino-uno\TwoPortReceive\TwoPortReceive.ino
+			6-neskolko-softwareserial-na-arduino-uno\6-neskolko-softwareserial-na-arduino-uno.ppr
+			6-neskolko-softwareserial-na-arduino-uno\neskolko-softwareserial-na-arduino-uno.md
+			6-neskolko-softwareserial-na-arduino-uno\Какой ты взрослый парень – девять лет!.txt
+		-GPS-trekery
+			-arduino170
+				-arduino170_http_cxemnet_05
+					-http_cxemnet_05
+						GPS-trekery\arduino170\arduino170_http_cxemnet_05\http_cxemnet_05\http_cxemnet_05.ino
+				-arduino170_www
+					-www
+						-scripts
+							GPS-trekery\arduino170\arduino170_www\www\scripts\show_point.php
+							GPS-trekery\arduino170\arduino170_www\www\scripts\show_route.php
+						-xajax_core
+							-plugin_layer
+								-support
+									GPS-trekery\arduino170\arduino170_www\www\xajax_core\plugin_layer\support\xajaxCallableObject.inc.php
+									GPS-trekery\arduino170\arduino170_www\www\xajax_core\plugin_layer\support\xajaxEvent.inc.php
+									GPS-trekery\arduino170\arduino170_www\www\xajax_core\plugin_layer\support\xajaxUserFunction.inc.php
+								GPS-trekery\arduino170\arduino170_www\www\xajax_core\plugin_layer\xajaxCallableObjectPlugin.inc.php
+								GPS-trekery\arduino170\arduino170_www\www\xajax_core\plugin_layer\xajaxDefaultIncludePlugin.inc.php
+								GPS-trekery\arduino170\arduino170_www\www\xajax_core\plugin_layer\xajaxEventPlugin.inc.php
+								GPS-trekery\arduino170\arduino170_www\www\xajax_core\plugin_layer\xajaxFunctionPlugin.inc.php
+								GPS-trekery\arduino170\arduino170_www\www\xajax_core\plugin_layer\xajaxScriptPlugin.inc.php
+							GPS-trekery\arduino170\arduino170_www\www\xajax_core\legacy.inc.php
+							GPS-trekery\arduino170\arduino170_www\www\xajax_core\xajax.inc.php
+							GPS-trekery\arduino170\arduino170_www\www\xajax_core\xajax_lang_de.inc.php
+							GPS-trekery\arduino170\arduino170_www\www\xajax_core\xajax_lang_nl.inc.php
+							GPS-trekery\arduino170\arduino170_www\www\xajax_core\xajaxArgumentManager.inc.php
+							GPS-trekery\arduino170\arduino170_www\www\xajax_core\xajaxCall.inc.php
+							GPS-trekery\arduino170\arduino170_www\www\xajax_core\xajaxCompress.inc.php
+							GPS-trekery\arduino170\arduino170_www\www\xajax_core\xajaxControl.inc.php
+							GPS-trekery\arduino170\arduino170_www\www\xajax_core\xajaxLanguageManager.inc.php
+							GPS-trekery\arduino170\arduino170_www\www\xajax_core\xajaxPlugin.inc.php
+							GPS-trekery\arduino170\arduino170_www\www\xajax_core\xajaxPluginManager.inc.php
+							GPS-trekery\arduino170\arduino170_www\www\xajax_core\xajaxRequest.inc.php
+							GPS-trekery\arduino170\arduino170_www\www\xajax_core\xajaxResponse.inc.php
+							GPS-trekery\arduino170\arduino170_www\www\xajax_core\xajaxResponseManager.inc.php
+						-xajax_js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax_core.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax_core_uncompressed.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax_debug.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax_debug_uncompressed.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax_lang_bg.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax_lang_bg_uncompressed.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax_lang_de.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax_lang_de_uncompressed.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax_lang_es.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax_lang_es_uncompressed.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax_lang_fr.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax_lang_fr_uncompressed.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax_lang_nl.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax_lang_nl_uncompressed.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax_lang_tr.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax_lang_tr_uncompressed.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax_legacy.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax_legacy_uncompressed.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax_uncompressed.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax_verbose.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajax_verbose_uncompressed.js
+							GPS-trekery\arduino170\arduino170_www\www\xajax_js\xajaxCompress.php
+						GPS-trekery\arduino170\arduino170_www\www\car.png
+						GPS-trekery\arduino170\arduino170_www\www\clear.php
+						GPS-trekery\arduino170\arduino170_www\www\dopfun.php
+						GPS-trekery\arduino170\arduino170_www\www\gps_tracker1.php
+						GPS-trekery\arduino170\arduino170_www\www\index.common.php
+						GPS-trekery\arduino170\arduino170_www\www\index.php
+						GPS-trekery\arduino170\arduino170_www\www\index.server.php
+						GPS-trekery\arduino170\arduino170_www\www\my.php
+						GPS-trekery\arduino170\arduino170_www\www\mybaza.php
+						GPS-trekery\arduino170\arduino170_www\www\right.png
+						GPS-trekery\arduino170\arduino170_www\www\style.css
+					GPS-trekery\arduino170\arduino170_www\site.sql
+				GPS-trekery\arduino170\arduino170_http_cxemnet_05.zip
+				GPS-trekery\arduino170\arduino170_www.zip
+			-gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server
+				-v2.0.1
+					GPS-trekery\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server\v2.0.1\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
+				-v2.0.2
+					GPS-trekery\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server\v2.0.2\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
+				-v2.0.5
+					GPS-trekery\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server\v2.0.5\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
+				GPS-trekery\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
+				GPS-trekery\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ppr
+				GPS-trekery\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server\SayMessage.h
+				GPS-trekery\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server\TinyGPS.cpp
+				GPS-trekery\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server\TinyGPS.h
+			-GSM-GPRS-SIM900-Shield
+				GPS-trekery\GSM-GPRS-SIM900-Shield\sim900-shield-listing-01.ino
+				GPS-trekery\GSM-GPRS-SIM900-Shield\sim900-shield-listing-02.ino
+				GPS-trekery\GSM-GPRS-SIM900-Shield\sim900-shield-listing-03.ino
+			-HomemadeRealtimeGPStracker
+				GPS-trekery\HomemadeRealtimeGPStracker\Datasheet_SIM800L.pdf
+				GPS-trekery\HomemadeRealtimeGPStracker\neogps.ino
+				GPS-trekery\HomemadeRealtimeGPStracker\NeoGPS-master.zip
+				GPS-trekery\HomemadeRealtimeGPStracker\SIM800L-NEO6M-homemade-tracker-master.zip
+				GPS-trekery\HomemadeRealtimeGPStracker\SimGpsTransmitter-master.zip
+			-OriginalINO
+				-gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server
+					GPS-trekery\OriginalINO\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
+			GPS-trekery\arduino170-6.png
+			GPS-trekery\arduino170-7.png
+			GPS-trekery\arduino170-8.png
+			GPS-trekery\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.md
+			GPS-trekery\modul-gps-v-kel-16.jpg
+			GPS-trekery\sim900-gsmgprs-shild-dlya-arduino.jpg
+		-Kvizzy900
+			-sketch_sep30a
+				-tinyGPS
+					Kvizzy900\sketch_sep30a\tinyGPS\TinyGPS.cpp
+					Kvizzy900\sketch_sep30a\tinyGPS\TinyGPS.h
+				Kvizzy900\sketch_sep30a\sketch_sep30a.ino
+				Kvizzy900\sketch_sep30a\sketch_sep30a.ppr
+				Kvizzy900\sketch_sep30a\TinyGPS.cpp
+				Kvizzy900\sketch_sep30a\TinyGPS.h
+		-radiomodul-nrf24l01
+			-Cadil_TM-24-фев-2021-в-23_23
+				-skaner-ehfira
+					radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\skaner-ehfira\skaner-ehfira.ino
+				-sketch-peredatchika
+					radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\sketch-peredatchika\sketch-peredatchika.ino
+				-sketch-prijomnika
+					radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\sketch-prijomnika\sketch-prijomnika.ino
+			-Электроника-Arduino-и-IT
+				-proverka-rabotosposobnosti-nrf24l01
+					radiomodul-nrf24l01\Электроника-Arduino-и-IT\proverka-rabotosposobnosti-nrf24l01\proverka-rabotosposobnosti-nrf24l01.ino
+				-testirovanie-nrf24l01-peredacha
+					radiomodul-nrf24l01\Электроника-Arduino-и-IT\testirovanie-nrf24l01-peredacha\testirovanie-nrf24l01-peredacha.ino
+				-testirovanie-nrf24l01-priyom
+					radiomodul-nrf24l01\Электроника-Arduino-и-IT\testirovanie-nrf24l01-priyom\testirovanie-nrf24l01-priyom.ino
+			radiomodul-nrf24l01\1.webp
+			radiomodul-nrf24l01\podklyuchenie-nrf24l01-k-arduino.png
+			radiomodul-nrf24l01\radiomodul-nrf24l01.md
+			radiomodul-nrf24l01\shema-podklyucheniya-nrf24l01-k-arduino.jpg
+			radiomodul-nrf24l01\TZT NRF24L01 - PA - LNA.webp
+		-SIM800L
+			-Arduino-SIM800L-driver-master
+				-examples
+					-BasicTest_HardwareSerial
+						SIM800L\Arduino-SIM800L-driver-master\examples\BasicTest_HardwareSerial\BasicTest_HardwareSerial.ino
+					-BasicTest_SoftSerial
+						SIM800L\Arduino-SIM800L-driver-master\examples\BasicTest_SoftSerial\BasicTest_SoftSerial.ino
+						SIM800L\Arduino-SIM800L-driver-master\examples\BasicTest_SoftSerial\sketch.json
+					-HTTPS_GET_HardwareSerial
+						SIM800L\Arduino-SIM800L-driver-master\examples\HTTPS_GET_HardwareSerial\HTTPS_GET_HardwareSerial.ino
+					-HTTPS_GET_SoftSerial
+						SIM800L\Arduino-SIM800L-driver-master\examples\HTTPS_GET_SoftSerial\HTTPS_GET_SoftSerial.ino
+					-HTTPS_POST_HardwareSerial
+						SIM800L\Arduino-SIM800L-driver-master\examples\HTTPS_POST_HardwareSerial\HTTPS_POST_HardwareSerial.ino
+					-HTTPS_POST_SoftSerial
+						SIM800L\Arduino-SIM800L-driver-master\examples\HTTPS_POST_SoftSerial\HTTPS_POST_SoftSerial.ino
+				-extras
+					SIM800L\Arduino-SIM800L-driver-master\extras\SIM800 Series_AT Command Manual_V1.09.pdf
+					SIM800L\Arduino-SIM800L-driver-master\extras\SIM800 Series_IP_Application Note_V1.02.pdf
+					SIM800L\Arduino-SIM800L-driver-master\extras\SIM800 Series_SSL_Application Note_V1.00.pdf
+				-src
+					SIM800L\Arduino-SIM800L-driver-master\src\SIM800L.cpp
+					SIM800L\Arduino-SIM800L-driver-master\src\SIM800L.h
+				SIM800L\Arduino-SIM800L-driver-master\.gitignore
+				SIM800L\Arduino-SIM800L-driver-master\keywords.txt
+				SIM800L\Arduino-SIM800L-driver-master\library.properties
+				SIM800L\Arduino-SIM800L-driver-master\LICENSE
+				SIM800L\Arduino-SIM800L-driver-master\README.md
+			-Sim800 Series ArmFile Download v1.00
+				SIM800L\Sim800 Series ArmFile Download v1.00\AmrFile Download.exe
+				SIM800L\Sim800 Series ArmFile Download v1.00\Config.ini
+			SIM800L\Arduino-SIM800L-driver-master.zip
+			SIM800L\Sim800 Series ArmFile Download v1.00.rar
+			SIM800L\SIM800L.md
+		-SIM900A
+			-delaem-iz-kitajskogo-gsm-sim900a-rasshirennyj-sim900
+				-SIM900A_TO_SIM900_ENHANCE
+					SIM900A\delaem-iz-kitajskogo-gsm-sim900a-rasshirennyj-sim900\SIM900A_TO_SIM900_ENHANCE\1137B02SIM900M64_ST_ENHANCE.rar
+					SIM900A\delaem-iz-kitajskogo-gsm-sim900a-rasshirennyj-sim900\SIM900A_TO_SIM900_ENHANCE\RunConfig.ini
+					SIM900A\delaem-iz-kitajskogo-gsm-sim900a-rasshirennyj-sim900\SIM900A_TO_SIM900_ENHANCE\SIM900 Series download Tools Develop 1.9.exe
+				SIM900A\delaem-iz-kitajskogo-gsm-sim900a-rasshirennyj-sim900\ustanavlivaem-parametry-pered-zagruzkoj.jpg
+				SIM900A\delaem-iz-kitajskogo-gsm-sim900a-rasshirennyj-sim900\zapuskaem-programmu-proshivki.jpg
+				SIM900A\delaem-iz-kitajskogo-gsm-sim900a-rasshirennyj-sim900\Делаем из китайского GSM SIM900A расширенный SIM900.mp4
+			-prevrashchaem-sim900a-v-sim900-i-zastavlyaem-rabotat-v-nashih-setyah
+				-SIM900_SDTD
+					SIM900A\prevrashchaem-sim900a-v-sim900-i-zastavlyaem-rabotat-v-nashih-setyah\SIM900_SDTD\RunConfig.ini
+					SIM900A\prevrashchaem-sim900a-v-sim900-i-zastavlyaem-rabotat-v-nashih-setyah\SIM900_SDTD\SIM900 Series download Tools Develop 1.9.exe
+				-sscom3.2
+					SIM900A\prevrashchaem-sim900a-v-sim900-i-zastavlyaem-rabotat-v-nashih-setyah\sscom3.2\sscom.ini
+					SIM900A\prevrashchaem-sim900a-v-sim900-i-zastavlyaem-rabotat-v-nashih-setyah\sscom3.2\sscom32.exe
+				SIM900A\prevrashchaem-sim900a-v-sim900-i-zastavlyaem-rabotat-v-nashih-setyah\1137B03SIM900M64_ST_ENHANCE.cla
+			-SIM900-Series-download-Tools-Develop-1.9
+				SIM900A\SIM900-Series-download-Tools-Develop-1.9\RunConfig.ini
+				SIM900A\SIM900-Series-download-Tools-Develop-1.9\SIM900 Series download Tools Develop 1.9.exe
+			-Первая попытка
+				SIM900A\Первая попытка\IMG20240527202817.jpg
+				SIM900A\Первая попытка\IMG20240527202835.jpg
+				SIM900A\Первая попытка\IMG20240527202855.jpg
+				SIM900A\Первая попытка\IMG20240527202907.jpg
+				SIM900A\Первая попытка\IMG20240527202922.jpg
+				SIM900A\Первая попытка\VID20240527202934.mp4
+			-Скачанные прошивки 2025-07-21
+				-Sim900
+					-docs
+						SIM900A\Скачанные прошивки 2025-07-21\Sim900\docs\AT_Commands_v1.11.pdf
+					-firmware
+						-bin
+							SIM900A\Скачанные прошивки 2025-07-21\Sim900\firmware\bin\1137B01SIM900M64_ST_ENHANCE.cla
+						-Simcom - sim900 Customer flash loader V1.01
+							SIM900A\Скачанные прошивки 2025-07-21\Sim900\firmware\Simcom - sim900 Customer flash loader V1.01\bfldongle.dll
+							SIM900A\Скачанные прошивки 2025-07-21\Sim900\firmware\Simcom - sim900 Customer flash loader V1.01\bfloader.ini
+							SIM900A\Скачанные прошивки 2025-07-21\Sim900\firmware\Simcom - sim900 Customer flash loader V1.01\bfloader.log
+							SIM900A\Скачанные прошивки 2025-07-21\Sim900\firmware\Simcom - sim900 Customer flash loader V1.01\bfluart.dll
+							SIM900A\Скачанные прошивки 2025-07-21\Sim900\firmware\Simcom - sim900 Customer flash loader V1.01\bflusb.dll
+							SIM900A\Скачанные прошивки 2025-07-21\Sim900\firmware\Simcom - sim900 Customer flash loader V1.01\flash_nor_16bits_hwasic_evp_4902_rel.hex
+							SIM900A\Скачанные прошивки 2025-07-21\Sim900\firmware\Simcom - sim900 Customer flash loader V1.01\Simcom - sim900 Customer flash loader V1.01.exe
+						SIM900A\Скачанные прошивки 2025-07-21\Sim900\firmware\AN_SIM900 Series_Update Tool_UGD_V1.02.pdf
+						SIM900A\Скачанные прошивки 2025-07-21\Sim900\firmware\update-instructions.txt
+				-sim900_etc
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\0x3700001000000115.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B01SIM900D64_ST_ENHANCE.zip
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B01SIM900M64_ST_DTMF_JD_MMS_FOTA.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B01SIM900M64_ST_ENHANCE.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B01SIM900R64-ST-ENHANCE-EAT.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B02SIM900M64_ST_ENHANCE (1).rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B02SIM900M64_ST_ENHANCE.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B04SIM900R64_ST.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B04SIM908M64_ST.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B06SIM900D64_ST.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B06SIM900M64_ST_ENHANCE.RAR
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B07SIM900B64_SAMSUNG.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B08SIM900D64_ST.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B08SIM900M64_ST.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B08SIM900M64_ST_DTMF_JD_MMS.cla
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B08SIM900M64_ST_DTMF_JD_MMS.zip
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B09SIM900B32_ST (1).rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B09SIM900B32_ST.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B09SIM900B64_ST.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B09SIM900D64_ST.zip
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B09SIM900M64_ST.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B10SIM900A32_ST.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B10SIM900D64_ST.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B10SIM900M64_ST.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B11SIM900A32_ST.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B11SIM900M64_ST.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B12SIM900A64_ST.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B12SIM900M64_ST.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137B13SIM900A64_ST_DL.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1137b13sim900m64_st.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1308B02SIM800M32_BT.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1308B03SIM800H32.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1308B03SIM800L16.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1308B04SIM800H32.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1308B04SIM800L16.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1308B04SIM800M32_EAT_115200.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1308B06SIM800M32 [2].rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1308B09SIM800L16.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1418B02SIM808M32.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1418B02SIM808M32_BT_EAT.RAR
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\1418B03SIM800C24_BT.zip
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\FIRMWARE_02_1308B02SIM800H32_BT [2].zip
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\FIRMWARE_06_1308B06SIM800H32_NO_BT [2].zip
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\SIM71X0_UpdateTool_V1.00v07 download tool and user guide.zip
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\SIM800H(B05)_EAT_141015.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\sim900.zip
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\sim900_series_download_tools_develop_1_9.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\SIM900A_TO_SIM900_ENHANCE.zip
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\Sim900RB4.RAR
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\SIM900-Series-download-Tools-Develop-1.9.rar
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\simcom - sim900 customer flash loader v1.01.exe
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\simcom modules firmware collection (Sim800 900 series).mhtml
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\SIMCom_SIM800H_EAT_flash_Tool_V1.01 [2].zip
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\terminal1_9_b.zip
+					SIM900A\Скачанные прошивки 2025-07-21\sim900_etc\win7&win8 drivers for SIM7100 SIM5360.zip
+				-SIM900A_TO_SIM900_ENHANCE
+					SIM900A\Скачанные прошивки 2025-07-21\SIM900A_TO_SIM900_ENHANCE\1137B02SIM900M64_ST_ENHANCE.rar
+					SIM900A\Скачанные прошивки 2025-07-21\SIM900A_TO_SIM900_ENHANCE\RunConfig.ini
+					SIM900A\Скачанные прошивки 2025-07-21\SIM900A_TO_SIM900_ENHANCE\SIM900 Series download Tools Develop 1.9.exe
+				SIM900A\Скачанные прошивки 2025-07-21\1137B06SIM900M64_ST_ENHANCE.RAR
+				SIM900A\Скачанные прошивки 2025-07-21\1137B15SIM900M64_ST.RAR
+				SIM900A\Скачанные прошивки 2025-07-21\SIM900A_TO_SIM900_ENHANCE.zip
+			SIM900A\Pinout-smaller.jpg
+			SIM900A\sim900a.jpg
+			SIM900A\SIM900A.md
+			SIM900A\sim900a-v38.jpg
+			SIM900A\Terminal-v1-9b.jpg
+			SIM900A\USB-UART-and-sim900a.png
 		ittve-GPS-GSM Реестр купленных деталей.doc
 		ittve-GPS-GSM.ppr
 		LICENSE
 		README.md
 [Open project files]
-0=Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoMain\uno_uart_unoMain.ino
-1=Detail\radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\skaner-ehfira\skaner-ehfira.ino
-2=Detail\radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\sketch-peredatchika\sketch-peredatchika.ino
-3=Detail\radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\sketch-prijomnika\sketch-prijomnika.ino
+0=6-neskolko-softwareserial-na-arduino-uno\Ex5_TwoPortWithPlus\Ex5_TwoPortWithPlus.ino
 [Selected Project Files]
 Main=
-Selected=Detail\radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\sketch-prijomnika\sketch-prijomnika.ino
-[Detail\modul-fm-radiopriemnika-dsp-pll-87-108-mgc\Uno_uart_Uno\uno_uart_unoMain\uno_uart_unoMain.ino]
-TopLine=35
-Caret=5,46
-[Detail\radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\skaner-ehfira\skaner-ehfira.ino]
-TopLine=8
-Caret=1,38
-[Detail\radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\sketch-peredatchika\sketch-peredatchika.ino]
-TopLine=1
-Caret=25,21
-[Detail\radiomodul-nrf24l01\Cadil_TM-24-фев-2021-в-23_23\sketch-prijomnika\sketch-prijomnika.ino]
-TopLine=6
-Caret=1,26
+Selected=6-neskolko-softwareserial-na-arduino-uno\Ex5_TwoPortWithPlus\Ex5_TwoPortWithPlus.ino
+[6-neskolko-softwareserial-na-arduino-uno\Ex5_TwoPortWithPlus\Ex5_TwoPortWithPlus.ino]
+TopLine=27
+Caret=1,1

@@ -1,0 +1,41 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.CompileOnBackground=0
+Compilator.ProgSaveAll=0
+Compilator.ProgRunSelection=0
+Compilator.LogType=0
+Compilator.LogEncoding=0
+DefaultDir=C:\ittve-GPS-GSM\Kvizzy900
+DefaultCP=65001
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+HTServer=localhost
+Extensions=*.*
+[Project tree]
+Kvizzy900
+	+Kvizzy900
+		+Old
+			-tinyGPS
+				Old\tinyGPS\TinyGPS.cpp
+				Old\tinyGPS\TinyGPS.h
+			Old\sketch_sep30a.ino
+			Old\sketch_sep30a.ppr
+			Old\TinyGPS.cpp
+			Old\TinyGPS.h
+		Kvizzy900.ino
+[Open project files]
+0=Kvizzy900.ino
+1=Old\sketch_sep30a.ino
+[Selected Project Files]
+Main=
+Selected=Old\sketch_sep30a.ino
+[Kvizzy900.ino]
+TopLine=172
+Caret=21,232
+[Old\sketch_sep30a.ino]
+TopLine=303
+Caret=1,308
