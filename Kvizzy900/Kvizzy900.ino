@@ -31,6 +31,10 @@ unsigned long ncikl=0;
 #include <TinyGPSPlus.h>
 TinyGPSPlus gps;
 
+// Подключаем список 16-символьных сообщений приложения Kvizzy900
+// и функцию вывода сообщений
+#include "s16_Kvizzy900.h"
+
 double lat,lng; 
 double lat0=61.801900, lng0=34.329700;  // координаты выбранной точки
 double DistanceBetween;
@@ -54,12 +58,19 @@ void loop()
   if (ncikl>8) delay(1000);
   else
   {
+    //Serial.println(_FS(m1_CliBSIM900)); 
+    saymess(m1_CliBSIM900);
+    saymess(m1_Fill2);
     // По умолчанию прослушивается последний инициализированный порт,
     // если требуется прослушивать другой, следует его явно указать
     VKEL_TTL.listen();
+    //saymess(m1_Fill1);
+    //saymess(m1_Fill);
     // Делаем задержку в 1 секунду для того, чтобы буфер последовательного
     // порта V.KEL-TTL заполнился данными с координатами
     delay(1000);
+    //saymess(m1_Fill2);
+    //saymess(m1_Fill);
     // Выбираем данные навигации из приёмника GPS V.KEL TTL 
     Talk_VKEL_TTL();
 
