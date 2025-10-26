@@ -217,7 +217,7 @@ void loop()
 }
 
 // отправка AT-команд
-int8_t sendATcommand(char* ATcommand, char* expected_answer, unsigned int timeout)
+uint8_t sendATcommand(char* ATcommand, char* expected_answer, unsigned int timeout)
 {
   uint8_t x=0;                                 // позиция в заполняемом буфере ответа GPRS (SIM900)
   uint8_t answer=0;                            // возвращаемый ответ
