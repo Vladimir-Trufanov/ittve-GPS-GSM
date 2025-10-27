@@ -41,6 +41,8 @@ double lat0=61.801900, lng0=34.329700;  // координаты предыдущ
 double DistanceBetween;                 // расстояние между текущей и предыдущей точкой
 unsigned long ncikl=0;                  // счетчик циклов
 uint32_t deltaGPS=1000;                 // интервал в мс между опросами GPS в цикле 
+uint32_t BdelayGPS=millis();            // начало отсчета задержки сигнала в опросе GPS 
+uint32_t delayGPS;                      // задержка сигнала в опросе GPS 
 bool isFullCikl=true;                   // "Выполняем прослушивание" то есть не "Отрабатываем пустой цикл"
 
 void setup()
@@ -58,7 +60,25 @@ void setup()
 
   Serial.println("Ожидаем разговора с V.KEL-TTL ...");
 }
- 
+
+// ****************************************************************************
+// *                Сформировать сообщение о задержке сигнала GPS             *
+// ****************************************************************************
+char* SecToChar(uint32_t MinSec, bool isSec=true) 
+{
+  String stringOne;
+  // "1234567890123456"
+  // "Задержка 23 сек."
+  // "Задержка 99 мин."
+  // "Задержка >99 мин"
+  static char charBuf[32];    
+  memset(charBuf,'\0',32); 
+  if (isSec) stringOne="Задержка "+String(MinSec)+" cек.\0";
+  else stringOne="Задержка "+String(MinSec)+" мин.\0";
+  stringOne.toCharArray(charBuf,31);
+  return charBuf;  
+}  
+
 void loop()
 {
   // Отрабатываем управляющие команды из последовательного порта
@@ -97,11 +117,27 @@ void loop()
     // начинаем прослушивать и работать с портом SIM900
     if (isVKEL_TTL)
     {
-      
+      // Начинаем отсчет интервал в мс до следующего опроса GPS 
+      BdelayGPS=millis();            
+      // Работаем с SIM900
       SIM900.listen();
       delay(500);
       Talk_SIM900();
     }
+    // Пересчитываем и указываем интервал отсутствия сигнала GPS
+    else
+    {
+      delayGPS=millis()-BdelayGPS; 
+      uint32_t deltaSec=delayGPS/1000;
+      if (deltaSec<100) saymest(SecToChar(deltaSec));
+      else 
+      {
+        uint32_t deltaMin=deltaSec/60;
+        if (deltaMin<100) saymest(SecToChar(deltaMin,false));
+        else saymess(m1_Delay99);
+
+      }  
+    }  
   }
 }
 
@@ -170,11 +206,6 @@ bool Talk_VKEL_TTL()
   {
     // "Приемник GPS не подает сигналы"
     saymess(m1_NotSignGPS);
-    //if (millis() > 5000 && gps.charsProcessed() < 10)
-    //{
-    //  Serial.println(F("GPS не обнаружен: проверьте соединения и оборудование"));
-    //  while(true);
-    //}
   }
   return newdata;
 }
