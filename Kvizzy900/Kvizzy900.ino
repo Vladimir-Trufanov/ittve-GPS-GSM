@@ -25,7 +25,6 @@
 #include <SoftwareSerial.h>
 SoftwareSerial VKEL_TTL(2,3); // синий на 2 - будет RX; зеленый на 3 - будет TX
 SoftwareSerial   SIM900(7,8); // SIM900 
-unsigned long ncikl=0;
 
 // Настраиваем переменные и модули для работы с V.KEL TTL
 #include <TinyGPSPlus.h>
@@ -35,9 +34,14 @@ TinyGPSPlus gps;
 // и функцию вывода сообщений
 #include "s16_Kvizzy900.h"
 
-double lat,lng; 
-double lat0=61.801900, lng0=34.329700;  // координаты выбранной точки
-double DistanceBetween;
+bool isVKEL_TTL=false;                  // "Приемник GPS не подает сигналы" = The GPS receiver does not send signals
+bool isSIM900=false;                    // "Не работает SIM900" = SIM900 does not work
+double lat,lng;                         // координаты текущей точеи
+double lat0=61.801900, lng0=34.329700;  // координаты предыдущей точки
+double DistanceBetween;                 // расстояние между текущей и предыдущей точкой
+unsigned long ncikl=0;                  // счетчик циклов
+uint32_t deltaGPS=1000;                 // интервал в мс между опросами GPS в цикле 
+bool isFullCikl=true;                   // "Выполняем прослушивание" то есть не "Отрабатываем пустой цикл"
 
 void setup()
 {
@@ -57,23 +61,47 @@ void setup()
  
 void loop()
 {
-  ncikl++;
-  if (ncikl>8) delay(1000);
-  else
+  // Отрабатываем управляющие команды из последовательного порта
+  if (Serial.available())
   {
-    // По умолчанию прослушивается последний инициализированный порт,
-    // если требуется прослушивать другой, следует его явно указать
+    int c = Serial.read();
+    // Выполняем команду на пустое зацикливание
+    // (например для того, чтобы посмотреть предыдущие сообщения)
+    if (c == 'a') 
+    {
+      isFullCikl=false;
+      saymess(m1_EmptyLoop);
+    }
+    // Отменяем команду на пустое зацикливание
+    else if (c == 's') 
+    {
+      isFullCikl=true;
+      saymess(m1_anAudition);
+    }
+  }
+  if (isFullCikl)
+  {
+    // Выполняем задержку перед очередным снятием показаний приёмника GPS
+    delay(deltaGPS); 
+    ncikl++;
+    // Прослушиваем приемник GPS V.KEL-TTL
+    // (по умолчанию прослушивается последний инициализированный порт,
+    // если требуется прослушивать другой, следует его явно указать)
     VKEL_TTL.listen();
     // Делаем задержку в 1 секунду для того, чтобы буфер последовательного
     // порта V.KEL-TTL заполнился данными с координатами
     delay(1000);
     // Выбираем данные навигации из приёмника GPS V.KEL TTL 
-    Talk_VKEL_TTL();
-
-    // Начинаем прослушивать и работать с портом SIM900
-    SIM900.listen();
-    delay(500);
-    Talk_SIM900();
+    isVKEL_TTL=Talk_VKEL_TTL();
+    // Если данные от приемника GPS есть, то
+    // начинаем прослушивать и работать с портом SIM900
+    if (isVKEL_TTL)
+    {
+      
+      SIM900.listen();
+      delay(500);
+      Talk_SIM900();
+    }
   }
 }
 
@@ -82,9 +110,8 @@ void loop()
 // ****************************************************************************
 bool Talk_VKEL_TTL()
 {
-  bool newdata = false;
-  // Если данные есть, то считываем их и публикуем
-  newdata = readgps();
+  // Считываем и расшифроваем данные из буфера приёмника GPS V.KEL TTL 
+  bool newdata = readgps();
   if (newdata)
   {
     Serial.print(ncikl); Serial.print(". "); 
@@ -141,16 +168,18 @@ bool Talk_VKEL_TTL()
   }
   else
   {
-    if (millis() > 5000 && gps.charsProcessed() < 10)
-    {
-      Serial.println(F("GPS не обнаружен: проверьте соединения и оборудование"));
-      while(true);
-    }
+    // "Приемник GPS не подает сигналы"
+    saymess(m1_NotSignGPS);
+    //if (millis() > 5000 && gps.charsProcessed() < 10)
+    //{
+    //  Serial.println(F("GPS не обнаружен: проверьте соединения и оборудование"));
+    //  while(true);
+    //}
   }
   return newdata;
 }
 // ****************************************************************************
-// *          Проверить наличие данных в буфере приёмника GPS V.KEL TTL       *
+// *      Считать и расшифровать данные из буфера приёмника GPS V.KEL TTL     *
 // ****************************************************************************
 bool readgps()
 {

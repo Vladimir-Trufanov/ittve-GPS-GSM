@@ -770,19 +770,15 @@ ittve-GPS-GSM
 0=Kvizzy900\Kvizzy900.ino
 1=Kvizzy900\Old\sketch_sep30a.ino
 2=Kvizzy900\s16_Kvizzy900.h
-3=GPS-trekery\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino
 [Selected Project Files]
 Main=
 Selected=Kvizzy900\Kvizzy900.ino
 [Kvizzy900\Kvizzy900.ino]
-TopLine=295
-Caret=1,330
+TopLine=152
+Caret=5,172
 [Kvizzy900\Old\sketch_sep30a.ino]
-TopLine=303
-Caret=1,13
+TopLine=425
+Caret=1,446
 [Kvizzy900\s16_Kvizzy900.h]
-TopLine=38
-Caret=1,71
-[GPS-trekery\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server\gps-treker-dlya-avto-s-otpravkoj-dannyh-na-server.ino]
-TopLine=207
-Caret=10,237
+TopLine=13
+Caret=18,38
