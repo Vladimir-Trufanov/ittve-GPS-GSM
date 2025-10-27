@@ -36,14 +36,18 @@ TinyGPSPlus gps;
 
 bool isVKEL_TTL=false;                  // "Приемник GPS не подает сигналы" = The GPS receiver does not send signals
 bool isSIM900=false;                    // "Не работает SIM900" = SIM900 does not work
-double lat,lng;                         // координаты текущей точеи
 double lat0=61.801900, lng0=34.329700;  // координаты предыдущей точки
-double DistanceBetween;                 // расстояние между текущей и предыдущей точкой
 unsigned long ncikl=0;                  // счетчик циклов
 uint32_t deltaGPS=1000;                 // интервал в мс между опросами GPS в цикле 
 uint32_t BdelayGPS=millis();            // начало отсчета задержки сигнала в опросе GPS 
 uint32_t delayGPS;                      // задержка сигнала в опросе GPS 
 bool isFullCikl=true;                   // "Выполняем прослушивание" то есть не "Отрабатываем пустой цикл"
+
+// Данные, выбираемые из приёмника GPS
+double lat,lng;                         // координаты текущей точки
+double DistanceBetween;                 // расстояние между текущей и предыдущей точкой
+int gday,gmonth,gyear;                  // день, месяц, год
+int ghour,gmin,gsec;                    // час,минута,секунда
 
 void setup()
 {
@@ -71,11 +75,31 @@ char* SecToChar(uint32_t MinSec, bool isSec=true)
   // "Задержка 23 сек."
   // "Задержка 99 мин."
   // "Задержка >99 мин"
-  static char charBuf[32];    
-  memset(charBuf,'\0',32); 
+  static char charBuf[34];    
+  memset(charBuf,'\0',34); 
   if (isSec) stringOne="Задержка "+String(MinSec)+" cек.\0";
   else stringOne="Задержка "+String(MinSec)+" мин.\0";
-  stringOne.toCharArray(charBuf,31);
+  stringOne.toCharArray(charBuf,33);
+  return charBuf;  
+}  
+// ****************************************************************************
+// *                     Сформировать сообщение о дате и времени              *
+// ****************************************************************************
+char* DTimeToChar(int gday, int gmonth, int ghour, int gmin, int gsec) 
+{
+  String stringOne;
+  // "1234567890123456"
+  // "27.10.2025 16:27"
+  // "27.10 - 16:27:31"
+  static char charBuf[18];    
+  memset(charBuf,'\0',18); 
+  
+  String chour; if (ghour<10) chour="0"+String(ghour); else chour=String(ghour);
+  String cmin; if (gmin<10) cmin="0"+String(gmin); else cmin=String(gmin);
+  String csec; if (gsec<10) csec="0"+String(gsec); else csec=String(gsec);
+
+  stringOne=String(gday)+"."+=String(gmonth)+" - "+chour+":"+cmin+":"+csec;
+  stringOne.toCharArray(charBuf,17);
   return charBuf;  
 }  
 
@@ -135,7 +159,6 @@ void loop()
         uint32_t deltaMin=deltaSec/60;
         if (deltaMin<100) saymest(SecToChar(deltaMin,false));
         else saymess(m1_Delay99);
-
       }  
     }  
   }
@@ -167,40 +190,32 @@ bool Talk_VKEL_TTL()
       Serial.print(F("Неопределяется локация"));
     }
     Serial.println();
+    
     // Определяем дату
     if (gps.date.isValid())
     {
-      Serial.print(gps.date.day());
-      Serial.print(F("."));
-      Serial.print(gps.date.month());
-      Serial.print(F("."));
-      Serial.print(gps.date.year());
+      gday=gps.date.day(); gmonth=gps.date.month(); gyear=gps.date.year(); 
+      // Определяем время
+      if (gps.time.isValid())
+      {
+        ghour=gps.time.hour(); gmin=gps.time.minute(); gsec=gps.time.second(); 
+        saymest(DTimeToChar(gday,gmonth,ghour,gmin,gsec));
+      }
+      // "Не определяется время"
+      else 
+      {
+        ghour=0; gmin=0; gsec=0; 
+        newdata = false;
+        saymess(m1_TimeIsNot);
+      }
     }
+    // "Не определяется дата"
     else
     {
-      Serial.print(F("Неопределяется дата "));
+      gday=0; gmonth=0; gyear=0; 
+      newdata = false;
+      saymess(m1_DateIsNot);
     }
-    Serial.print(F(" "));
-    // Определяем время
-    if (gps.time.isValid())
-    {
-      if (gps.time.hour() < 10) Serial.print(F("0"));
-      Serial.print(gps.time.hour());
-      Serial.print(F(":"));
-      if (gps.time.minute() < 10) Serial.print(F("0"));
-      Serial.print(gps.time.minute());
-      Serial.print(F(":"));
-      if (gps.time.second() < 10) Serial.print(F("0"));
-      Serial.print(gps.time.second());
-      Serial.print(F("."));
-      if (gps.time.centisecond() < 10) Serial.print(F("0"));
-      Serial.print(gps.time.centisecond());
-    }
-    else
-    {
-      Serial.print(F("Неопределяется время "));
-    }
-    Serial.println();
   }
   else
   {
