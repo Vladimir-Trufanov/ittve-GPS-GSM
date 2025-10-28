@@ -17,7 +17,7 @@
  *
  * Вместо устаревшей TinyGPS используется TinyGPSPlus.
  * 
- * v2.0.2, 26.10.2025                                 Автор:      Труфанов В.Е.
+ * v2.0.3, 28.10.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
  *
 **/
@@ -26,28 +26,15 @@
 SoftwareSerial VKEL_TTL(2,3); // синий на 2 - будет RX; зеленый на 3 - будет TX
 SoftwareSerial   SIM900(7,8); // SIM900 
 
-// Настраиваем переменные и модули для работы с V.KEL TTL
-#include <TinyGPSPlus.h>
-TinyGPSPlus gps;
-
 // Подключаем список 16-символьных сообщений приложения Kvizzy900
 // и функцию вывода сообщений
 #include "s16_Kvizzy900.h"
+// Обеспечиваем взаимодействие и выборку данных из приёмника GPS VKEL_TTL 
+#include "VKEL_TTL.h"     
 
-bool isVKEL_TTL=false;                  // "Приемник GPS не подает сигналы" = The GPS receiver does not send signals
 bool isSIM900=false;                    // "Не работает SIM900" = SIM900 does not work
-double lat0=61.801900, lng0=34.329700;  // координаты предыдущей точки
 unsigned long ncikl=0;                  // счетчик циклов
-uint32_t deltaGPS=1000;                 // интервал в мс между опросами GPS в цикле 
-uint32_t BdelayGPS=millis();            // начало отсчета задержки сигнала в опросе GPS 
-uint32_t delayGPS;                      // задержка сигнала в опросе GPS 
 bool isFullCikl=true;                   // "Выполняем прослушивание" то есть не "Отрабатываем пустой цикл"
-
-// Данные, выбираемые из приёмника GPS
-double lat,lng;                         // координаты текущей точки
-double DistanceBetween;                 // расстояние между текущей и предыдущей точкой
-int gday,gmonth,gyear;                  // день, месяц, год
-int ghour,gmin,gsec;                    // час,минута,секунда
 
 void setup()
 {
@@ -65,43 +52,6 @@ void setup()
   Serial.println("Ожидаем разговора с V.KEL-TTL ...");
 }
 
-// ****************************************************************************
-// *                Сформировать сообщение о задержке сигнала GPS             *
-// ****************************************************************************
-char* SecToChar(uint32_t MinSec, bool isSec=true) 
-{
-  String stringOne;
-  // "1234567890123456"
-  // "Задержка 23 сек."
-  // "Задержка 99 мин."
-  // "Задержка >99 мин"
-  static char charBuf[34];    
-  memset(charBuf,'\0',34); 
-  if (isSec) stringOne="Задержка "+String(MinSec)+" cек.\0";
-  else stringOne="Задержка "+String(MinSec)+" мин.\0";
-  stringOne.toCharArray(charBuf,33);
-  return charBuf;  
-}  
-// ****************************************************************************
-// *                     Сформировать сообщение о дате и времени              *
-// ****************************************************************************
-char* DTimeToChar(int gday, int gmonth, int ghour, int gmin, int gsec) 
-{
-  String stringOne;
-  // "1234567890123456"
-  // "27.10.2025 16:27"
-  // "27.10 - 16:27:31"
-  static char charBuf[18];    
-  memset(charBuf,'\0',18); 
-  
-  String chour; if (ghour<10) chour="0"+String(ghour); else chour=String(ghour);
-  String cmin; if (gmin<10) cmin="0"+String(gmin); else cmin=String(gmin);
-  String csec; if (gsec<10) csec="0"+String(gsec); else csec=String(gsec);
-
-  stringOne=String(gday)+"."+=String(gmonth)+" - "+chour+":"+cmin+":"+csec;
-  stringOne.toCharArray(charBuf,17);
-  return charBuf;  
-}  
 
 void loop()
 {
@@ -136,7 +86,7 @@ void loop()
     // порта V.KEL-TTL заполнился данными с координатами
     delay(1000);
     // Выбираем данные навигации из приёмника GPS V.KEL TTL 
-    isVKEL_TTL=Talk_VKEL_TTL();
+    isVKEL_TTL=Talk_VKEL_TTL(ncikl);
     // Если данные от приемника GPS есть, то
     // начинаем прослушивать и работать с портом SIM900
     if (isVKEL_TTL)
@@ -162,94 +112,6 @@ void loop()
       }  
     }  
   }
-}
-
-// ****************************************************************************
-// *            Выбрать данные навигации из приёмника GPS V.KEL TTL           *
-// ****************************************************************************
-bool Talk_VKEL_TTL()
-{
-  // Считываем и расшифроваем данные из буфера приёмника GPS V.KEL TTL 
-  bool newdata = readgps();
-  if (newdata)
-  {
-    Serial.print(ncikl); Serial.print(". "); 
-    // Определяем координаты
-    if (gps.location.isValid())
-    {
-      lat=gps.location.lat();
-      lng=gps.location.lng();
-      Serial.print(F("Координаты: ")); Serial.print(lat,6); Serial.print(F(",")); Serial.print(lng,6);
-      DistanceBetween = gps.distanceBetween(lat,lng,lat0,lng0);
-      Serial.print(F(". Расстояние от предыдущей точки: ")); Serial.print(DistanceBetween,2); Serial.print(F(" м."));
-      // Меняем прежнее положение для определения будущего расстояния между точками
-      lat0=lat; lng0=lng;  
-    }
-    else
-    {
-      Serial.print(F("Неопределяется локация"));
-    }
-    Serial.println();
-    
-    // Определяем дату
-    if (gps.date.isValid())
-    {
-      gday=gps.date.day(); gmonth=gps.date.month(); gyear=gps.date.year(); 
-      // Определяем время
-      if (gps.time.isValid())
-      {
-        ghour=gps.time.hour(); gmin=gps.time.minute(); gsec=gps.time.second(); 
-        saymest(DTimeToChar(gday,gmonth,ghour,gmin,gsec));
-      }
-      // "Не определяется время"
-      else 
-      {
-        ghour=0; gmin=0; gsec=0; 
-        newdata = false;
-        saymess(m1_TimeIsNot);
-      }
-    }
-    // "Не определяется дата"
-    else
-    {
-      gday=0; gmonth=0; gyear=0; 
-      newdata = false;
-      saymess(m1_DateIsNot);
-    }
-  }
-  else
-  {
-    // "Приемник GPS не подает сигналы"
-    saymess(m1_NotSignGPS);
-  }
-  return newdata;
-}
-// ****************************************************************************
-// *      Считать и расшифровать данные из буфера приёмника GPS V.KEL TTL     *
-// ****************************************************************************
-bool readgps()
-{
-  while (VKEL_TTL.available())
-  {
-    int b = VKEL_TTL.read();
-    // !!! Windows обратно совместима с MS-DOS (даже в агрессивной форме), а в MS-DOS использовалась комбинация CR-LF, 
-    // потому что MS-DOS была совместима с CP/M-80 (в некоторой степени случайно), в которой использовалась комбинация CR-LF, 
-    // потому что так работал принтер (ведь изначально принтеры были пишущими машинками с компьютерным управлением).
-    // В принтерах есть отдельная команда для перемещения бумаги на одну строку вверх и отдельная команда для возврата 
-    // каретки (на которой закреплена бумага) к левому краю.
-    // В современных устройствах по-прежнему есть эти команды, потому что они тоже обратно совместимы с более ранними принтерами
-    // и другими устройствами. (В частности, HP хорошо справляется с этим).
-    // В пишущих машинках тоже, сначала бумага поднимается ("LF" = "\n"), 
-    // а затем каретка возвращается в исходное положение   ("CR" = "\r"), 
-    // даже если это происходит одним движением. Звук «динг» сообщал, что конец строки близок и нужно подготовиться.
-
-    // Отлавливаем конец строки с \r и \n
-    if ('\r' != b)
-    {
-      if (gps.encode(b)) return true;
-    }
-  }
-  return false;
 }
 
 // ****************************************************************************

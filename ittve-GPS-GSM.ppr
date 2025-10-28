@@ -17,7 +17,7 @@ HTServer=localhost
 Extensions=*.*
 [Project tree]
 ittve-GPS-GSM
-	-ittve-GPS-GSM
+	+ittve-GPS-GSM
 		-1-SIM900-i-podklyuchenie-k-arduino
 			-MakePhoneCall
 				1-SIM900-i-podklyuchenie-k-arduino\MakePhoneCall\MakePhoneCall.ino
@@ -774,11 +774,11 @@ ittve-GPS-GSM
 Main=
 Selected=Kvizzy900\Kvizzy900.ino
 [Kvizzy900\Kvizzy900.ino]
-TopLine=98
-Caret=1,118
+TopLine=1
+Caret=14,20
 [Kvizzy900\Old\sketch_sep30a.ino]
 TopLine=425
 Caret=1,446
 [Kvizzy900\s16_Kvizzy900.h]
 TopLine=47
-Caret=25,76
+Caret=2,76
