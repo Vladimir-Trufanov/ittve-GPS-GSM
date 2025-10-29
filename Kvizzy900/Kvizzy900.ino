@@ -26,6 +26,8 @@
 SoftwareSerial VKEL_TTL(2,3); // синий на 2 - будет RX; зеленый на 3 - будет TX
 SoftwareSerial   SIM900(7,8); // SIM900 
 
+#include <MemoryFree.h>
+
 // Подключаем список 16-символьных сообщений приложения Kvizzy900
 // и функцию вывода сообщений
 #include "s16_Kvizzy900.h"
@@ -49,9 +51,32 @@ void setup()
   saymess(m1_CliBSIM900);
   // saymess(m1_Fill1);
 
+  Serial.print("0. freeMemory()=");
+  Serial.println(getFreeMemory());
+
   Serial.println("Ожидаем разговора с V.KEL-TTL ...");
 }
 
+/*
+Программный триггер Вы можете включать / выключать экран через вывод D9 Arduino, 
+добавив программный триггер в свою прошивку.
+
+В качестве синхронизации включения / выключения для запуска включения 
+требовался импульс длительностью >1 с, а для стабилизации синхронизации 
+требовалась задержка >3,2 с. 
+Следующий код в вашей прошивке необходим для включения / выключения экрана 
+без нажатия кнопки:
+*/
+void powerUpOrDown()
+{
+  pinMode(9, OUTPUT);
+  digitalWrite(9,LOW);
+  delay(1000);
+  digitalWrite(9,HIGH);
+  delay(2000);
+  digitalWrite(9,LOW);
+  delay(3000);
+}
 
 void loop()
 {
@@ -78,6 +103,11 @@ void loop()
     // Выполняем задержку перед очередным снятием показаний приёмника GPS
     delay(deltaGPS); 
     ncikl++;
+
+    Serial.print(ncikl);
+    Serial.print(". freeMemory()=");
+    Serial.println(getFreeMemory());
+
     // Прослушиваем приемник GPS V.KEL-TTL
     // (по умолчанию прослушивается последний инициализированный порт,
     // если требуется прослушивать другой, следует его явно указать)

@@ -398,3 +398,8 @@ Web-интерфейс -отображение на Яндекс. Картах �
 [GPS Tracker Using Arduino](https://justdoelectronics.com/gps-tracker-using-arduino/)
 
 [GPS трекер на базе GY-NEO6M своими руками - это просто](https://mysku.club/blog/aliexpress/62773.html)
+
+[Всё, что нужно знать о разъемах](https://mirex.ru/poleznaya_info/interesno-i-polezno/vsye-chto-nuzhno-znat-o-razemakh/?ysclid=mhaoiln2ik444087626)
+
+[Как называются разъемы и какие они бывают! Показываю с фото, пригодится каждому](https://dzen.ru/a/YD8stQY7ZFax_kHb?ysclid=mhaosqb7bu318736186)
+

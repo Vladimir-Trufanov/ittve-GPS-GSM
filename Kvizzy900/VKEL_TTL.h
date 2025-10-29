@@ -26,7 +26,7 @@ double lat,lng;                         // координаты текущей �
 double DistanceBetween;                 // расстояние между текущей и предыдущей точкой
 int gday,gmonth,gyear;                  // день, месяц, год
 int ghour,gmin,gsec;                    // час,минута,секунда
-int tTZ=3;                              // Корректировка времени на время Москвы
+const int timezone_hours=3;             // Корректировка времени на время Москвы
 
 // ****************************************************************************
 // *                Сформировать сообщение о задержке сигнала GPS             *
@@ -172,7 +172,10 @@ bool Talk_VKEL_TTL(unsigned long ncikl)
       // Определяем время
       if (gps.time.isValid())
       {
-        ghour=gps.time.hour()+tTZ; gmin=gps.time.minute(); gsec=gps.time.second(); 
+        ghour=gps.time.hour(); gmin=gps.time.minute(); gsec=gps.time.second();
+        ghour=ghour+timezone_hours;
+        if (ghour>=24) ghour=ghour-24;
+        else if (ghour<0) ghour=ghour+24;
         //saymest(DTimeToChar(gday,gmonth,ghour,gmin,gsec));
         saymest(DistTimeToChar(DistanceBetween,ghour,gmin,gsec)); 
       }
