@@ -44,6 +44,7 @@ _DS(m1_Delay99,       "Задержка >99 мин")    // "Задержка >99
 _DS(m1_TimeIsNot,     "Нет хода времени")    // "Не определяется время" - The time is not being determined
 _DS(m1_DateIsNot,     "Нет данных даты ")    // "Не определяется дата" - The date is not being determined
 _DS(m1_LocateIsNot,   "Не идёт локация ")    // "Не определяется локация" - "Location is not being determined"
+_DS(m1_TurnOnSIM900,  "Включаем SIM900 ")    // "Включаем SIM900" - "Turning on the SIM900"
 
 // ****************************************************************************
 // *         Вывести сообщение внутри приложения в последовательный порт      *

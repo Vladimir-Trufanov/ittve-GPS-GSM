@@ -46,8 +46,11 @@ void setup()
   VKEL_TTL.begin(9600); 
   SIM900.begin(9600);
   
-  delay(500);
   Serial.println(" ");
+  // Включаем SIM900
+  saymess(m1_TurnOnSIM900);
+  SIM900powerUp();
+
   // Очищаем буфер SIM900
   while (SIM900.available()) SIM900.read();
   saymess(m1_CliBSIM900);

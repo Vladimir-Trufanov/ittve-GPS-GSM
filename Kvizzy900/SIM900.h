@@ -11,27 +11,6 @@
 // Указываем, что данный файл нужно подключить только один раз
 #pragma once  
 
-/*
-Программный триггер Вы можете включать / выключать экран через вывод D9 Arduino, 
-добавив программный триггер в свою прошивку.
-
-В качестве синхронизации включения / выключения для запуска включения 
-требовался импульс длительностью >1 с, а для стабилизации синхронизации 
-требовалась задержка >3,2 с. 
-Следующий код в вашей прошивке необходим для включения / выключения экрана 
-без нажатия кнопки:
-*/
-void powerUpOrDown()
-{
-  pinMode(9, OUTPUT);
-  digitalWrite(9,LOW);
-  delay(1000);
-  digitalWrite(9,HIGH);
-  delay(2000);
-  digitalWrite(9,LOW);
-  delay(3000);
-}
-
 // ****************************************************************************
 // *               Отправить AT-командe на SIM900 и выбрать ответ             *
 // ****************************************************************************
@@ -106,7 +85,32 @@ uint8_t ATcom(char* ATcommand, char* expected_answer, unsigned int timeout)
   }
   return answer;
 }
-
+// ****************************************************************************
+// *  Включить/выключить (программный триггер) SIM900 через вывод D9 Arduino  *
+// *     (В качестве синхронизации включения/выключения требуется импульс     *
+// *    длительностью > 1 сек,  а для стабилизации синхронизации требуется    *
+// *                          задержка > 3,2 сек)                             *
+// ****************************************************************************
+void SIM900powerUpOrDown()
+{
+  pinMode(9, OUTPUT);
+  digitalWrite(9,LOW);
+  delay(1000);
+  digitalWrite(9,HIGH);
+  delay(2000);
+  digitalWrite(9,LOW);
+  delay(3000);
+}
+// ****************************************************************************
+// *                                   Включить SIM900                        *
+// ****************************************************************************
+void SIM900powerUp()
+{
+  delay(500);
+  // Посылая AT-команду, проверяем включен ли SIM900
+  uint8_t yesAT=ATcom("AT","OK",2000);
+  if (yesAT!=2) SIM900powerUpOrDown();
+}
 // ****************************************************************************
 // *                   Отправить набор AT-команд на SIM900                    *
 // ****************************************************************************
@@ -158,6 +162,41 @@ void Talk_SIM900(unsigned long ncikl)
     ATcom("AT+CBC","OK",2000);
   }
 }
+
+bool send_coords_at(long lat, long lng)
+{
+  // (!SendAT("AT+SAPBR=3,1,\"CONTYPE\",\"GPRS\"", "OK"))
+  if   (ATcom("AT+SAPBR=3,1,\"CONTYPE\",\"GPRS\"","OK",2000)!=2) return false;
+    
+  // (!SendAT("AT+SAPBR=3,1,\"APN\",\"internet.mts.ru\"", "OK"))
+  if   (ATcom("AT+SAPBR=3,1,\"APN\",\"internet.mts.ru\"","OK",2000)!=2) return false;
+  
+  // (!SendAT("AT+SAPBR=1,1", "OK"))
+  if   (ATcom("AT+SAPBR=1,1","OK",2000)!=2) 
+  {
+    // SendAT("AT+SAPBR=0,1", "OK"); //close bearer
+        ATcom("AT+SAPBR=0,1","OK",2000)
+    if (ATcom("AT+SAPBR=1,1","OK",2000)!=2) return false;
+  }
+
+  // (!SendAT("AT+HTTPINIT", "OK"))
+  if   (ATcom("AT+HTTPINIT","OK",2000)!=2) return false;
+
+  // (!SendAT("AT+HTTPPARA=\"CID\",1", "OK"))
+  if   (ATcom("AT+HTTPPARA=\"CID\",1","OK",2000)!=2) return false;
+
+  char url[1024];
+  //sprintf(url,"AT+HTTPPARA=\"URL\",\"http://gurux13.net84.net/GpsTracking/record.php?Lat=%ld&Lng=%ld\"", lat, lng);
+  sprintf(url,"AT+HTTPPARA=\"URL\",\"https://probatv.ru?Lat=%ld&Lng=%ld\"",lat,lng);
+
+  // (!SendAT(url, "OK"))
+  if   (ATcom(url,"OK",5000)!=2) return false;
+
+  // (!SendAT("AT+HTTPACTION=0", "OK"))
+  if   (ATcom("AT+HTTPACTION=0","OK",2000)!=2) return false;
+  return true;
+}
+
 
 #endif
 
