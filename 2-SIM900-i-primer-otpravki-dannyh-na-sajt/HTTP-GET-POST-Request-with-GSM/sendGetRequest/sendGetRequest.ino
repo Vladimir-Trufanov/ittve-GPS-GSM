@@ -8,7 +8,7 @@ void setup() {
   int baudRate=9600; // change the baud rate for your GSM modem eg: 9600, 115200
   gprsShield.begin(baudRate);          // gprsShield module
   delay(1000);
-  Serial.begin(baudRate);              // Serial monitor
+  Serial.begin(115200);              // Serial monitor
   String apn = "internet.mts.ru";      // Change this to the desired APN of cell provider
   String url = "http://google.com/";   // Change this to the desired URL
 

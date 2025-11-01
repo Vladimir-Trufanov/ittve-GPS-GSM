@@ -117,7 +117,8 @@ void SIM900powerUp()
 void Talk_SIM900(unsigned long ncikl)
 {
   int divisor=8;
-  Serial.print(ncikl); Serial.print(": "); 
+  Serial.print(ncikl); Serial.print(": Talk_SIM900="); Serial.println(ncikl % divisor); 
+
   if (ncikl % divisor == 1)
   {
     Serial.println(" ");
@@ -175,7 +176,7 @@ bool send_coords_at(long lat, long lng)
   if   (ATcom("AT+SAPBR=1,1","OK",2000)!=2) 
   {
     // SendAT("AT+SAPBR=0,1", "OK"); //close bearer
-        ATcom("AT+SAPBR=0,1","OK",2000)
+        ATcom("AT+SAPBR=0,1","OK",2000);
     if (ATcom("AT+SAPBR=1,1","OK",2000)!=2) return false;
   }
 

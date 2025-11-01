@@ -2,7 +2,7 @@
  * 
  * Обеспечить взаимодействие и выборку данных из приёмника GPS VKEL_TTL 
  * 
- * v1.1.0, 28.10.2025                                 Автор:      Труфанов В.Е.
+ * v1.1.1, 01.11.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
 **/
 
@@ -17,7 +17,6 @@ TinyGPSPlus gps;
 
 bool isVKEL_TTL=false;                  // "Приемник GPS не подает сигналы" = The GPS receiver does not send signals
 double lat0=61.801900, lng0=34.329700;  // координаты предыдущей точки
-uint32_t deltaGPS=1000;                 // интервал в мс между опросами GPS в цикле 
 uint32_t BdelayGPS=millis();            // начало отсчета задержки сигнала в опросе GPS 
 uint32_t delayGPS;                      // задержка сигнала в опросе GPS 
 
@@ -38,12 +37,11 @@ char* SecToChar(uint32_t MinSec, bool isSec=true)
   // "Задержка 23 сек."
   // "Задержка 99 мин."
   // "Задержка >99 мин"
-  static char charBuf[34];    
-  memset(charBuf,'\0',34); 
+  memset(charMess,'\0',34); 
   if (isSec) stringOne="Задержка "+String(MinSec)+" cек.\0";
   else stringOne="Задержка "+String(MinSec)+" мин.\0";
-  stringOne.toCharArray(charBuf,33);
-  return charBuf;  
+  stringOne.toCharArray(charMess,33);
+  return charMess;  
 }  
 // ****************************************************************************
 // *                     Сформировать сообщение о дате и времени              *
@@ -54,16 +52,13 @@ char* DTimeToChar(int gday, int gmonth, int ghour, int gmin, int gsec)
   // "1234567890123456"
   // "27.10.2025 16:27"
   // "27.10 - 16:27:31"
-  static char charBuf[18];    
-  memset(charBuf,'\0',18); 
-  
+  memset(charMess,'\0',18); 
   String chour; if (ghour<10) chour="0"+String(ghour); else chour=String(ghour);
   String cmin; if (gmin<10) cmin="0"+String(gmin); else cmin=String(gmin);
   String csec; if (gsec<10) csec="0"+String(gsec); else csec=String(gsec);
-
   stringOne=String(gday)+"."+=String(gmonth)+" - "+chour+":"+cmin+":"+csec;
-  stringOne.toCharArray(charBuf,17);
-  return charBuf;  
+  stringOne.toCharArray(charMess,17);
+  return charMess;  
 }  
 // ****************************************************************************
 // *               Сформировать сообщение о перемещении и времени             *
@@ -77,20 +72,17 @@ char* DistTimeToChar(double DistanceBetween, int ghour, int gmin, int gsec)
   // "Движение 110.8 м"
   // "16:27:31 110.8 м"
   // "16:27:31 >1000 м"
-  static char charBuf[34];    
-  memset(charBuf,'\0',34); 
-  
+  memset(charMess,'\0',34); 
   String chour; if (ghour<10) chour="0"+String(ghour); else chour=String(ghour);
   String cmin; if (gmin<10) cmin="0"+String(gmin); else cmin=String(gmin);
   String csec; if (gsec<10) csec="0"+String(gsec); else csec=String(gsec);
-  
   String cdis; char chardis[6]; 
   if (DistanceBetween<100)         {dtostrf(DistanceBetween,2,2,chardis); cdis=chardis;} 
   else if (DistanceBetween<999.99) {dtostrf(DistanceBetween,3,1,chardis); cdis=chardis;}   
   else cdis=">1000";
   stringOne=chour+":"+cmin+":"+csec+" "+cdis+" м.";
-  stringOne.toCharArray(charBuf,33);
-  return charBuf;  
+  stringOne.toCharArray(charMess,33);
+  return charMess;  
 }  
 // ****************************************************************************
 // *                       Сформировать сообщение о локации                   *
@@ -100,13 +92,12 @@ char* LocationToChar(double lat, double lng)
   String stringOne,stringlat,stringlng;
   // "1234567890123456"
   // "61.80191-34.3298"
-  static char charBuf[18];    
-  memset(charBuf,'\0',18); 
+  memset(charMess,'\0',18); 
   char charlat[12]; dtostrf(lat,2,5,charlat); stringlat=charlat;
   char charlng[12]; dtostrf(lng,2,4,charlng); stringlng=charlng;
   stringOne=stringlat+"-"+stringlng;
-  stringOne.toCharArray(charBuf,17);
-  return charBuf;  
+  stringOne.toCharArray(charMess,17);
+  return charMess;  
 }  
 // ****************************************************************************
 // *      Считать и расшифровать данные из буфера приёмника GPS V.KEL TTL     *
@@ -136,10 +127,12 @@ bool readgps()
   return false;
 }
 // ****************************************************************************
-// *            Выбрать данные навигации из приёмника GPS V.KEL TTL           *
+// *         Выбрать данные навигации из буфера приёмника GPS V.KEL TTL,      *
+// *                в случае неудачи вывести сообщение об ошибке              *
 // ****************************************************************************
 bool Talk_VKEL_TTL(unsigned long ncikl)
 {
+  Serial.print(ncikl); Serial.println(": Talk_VKEL_TTL"); 
   // Инициируем данные приёмника GPS
   ghour=0; gmin=0; gsec=0; 
   gday=0; gmonth=0; gyear=0; 
@@ -148,7 +141,6 @@ bool Talk_VKEL_TTL(unsigned long ncikl)
   bool newdata = readgps();
   if (newdata)
   {
-    Serial.print(ncikl); Serial.println(". "); 
     // Определяем координаты и перемещение от предыдущей точки
     if (gps.location.isValid())
     {

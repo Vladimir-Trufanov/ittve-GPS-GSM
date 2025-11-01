@@ -1,8 +1,8 @@
 /** Arduino C/C++ ******************************************* Kvizzy900.ino ***
  *
- * Выводить данные GPS на сайт - ознакомительный вариант,                  
- * ориентировочно - от окна гостинной:  по гармину = 61.80193,  34.32983   
- *                                      по яндекс  = 61.802082, 34.329586  
+ * Выводить данные GPS на сайт                  
+ * (ориентировочно - от окна гостинной:  по гармину = 61.80193,  34.32983   
+ *                                       по яндекс  = 61.802082, 34.329586)  
  * По материалам сайтов:
  * https://github.com/arduino/ArduinoCore-primo/blob/master/libraries/SoftwareSerial/examples/TwoPortReceive/TwoPortReceive.ino
  * https://docs.arduino.cc/tutorials/communication/TwoPortReceive/
@@ -17,7 +17,7 @@
  *
  * Вместо устаревшей TinyGPS используется TinyGPSPlus.
  * 
- * v2.0.3, 28.10.2025                                 Автор:      Труфанов В.Е.
+ * v2.0.4, 01.11.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
  *
 **/
@@ -28,9 +28,15 @@ SoftwareSerial   SIM900( 7,8 ); // SIM900
 
 #include <MemoryFree.h>
 
+// Определяем интервал подачи координат в мс на сайт
+uint32_t deltaGPS=1000;             
+
 // Подключаем список 16-символьных сообщений приложения Kvizzy900
 // и функцию вывода сообщений
 #include "s16_Kvizzy900.h"
+// Резервируем буфер нефиксированных сообщений
+char charMess[34];    
+
 // Обеспечиваем взаимодействие и выборку данных из приёмника GPS VKEL_TTL 
 #include "VKEL_TTL.h"     
 // Обеспечиваем взаимодействие с SIM900 и передачу данных на сайт  
@@ -38,27 +44,25 @@ SoftwareSerial   SIM900( 7,8 ); // SIM900
 
 bool isSIM900=false;                    // "Не работает SIM900" = SIM900 does not work
 unsigned long ncikl=0;                  // счетчик циклов
-bool isFullCikl=true;                   // "Выполняем прослушивание" то есть не "Отрабатываем пустой цикл"
+bool isFullCikl=true;                   // true - "Выполняем прослушивание";     false - "Отрабатываем пустой цикл"
+bool isMemTrass=false;                  // true - "Показываем свободную память"; false - "Отменяем трассирование памяти"
 
 void setup()
 {
   Serial.begin(115200);
   VKEL_TTL.begin(9600); 
   SIM900.begin(9600);
-  
+  // Выводим сводку по памяти в начале программы
   Serial.println(" ");
+  saymest(FreeMemoryToChar());
   // Включаем SIM900
-  saymess(m1_TurnOnSIM900);
-  SIM900powerUp();
+  //saymess(m1_TurnOnSIM900);
+  //SIM900powerUp();
 
   // Очищаем буфер SIM900
   while (SIM900.available()) SIM900.read();
   saymess(m1_CliBSIM900);
   // saymess(m1_Fill1);
-
-  Serial.print("0. freeMemory()=");
-  Serial.println(getFreeMemory());
-
   Serial.println("Ожидаем разговора с V.KEL-TTL ...");
 }
 
@@ -67,6 +71,30 @@ void loop()
   // Отрабатываем управляющие команды из последовательного порта
   if (Serial.available())
   {
+    int ccom = Serial.read();
+    // Выполняем команду на пустое зацикливание
+    // (например для того, чтобы посмотреть предыдущие сообщения)
+    // или отменяем её
+    if (ccom == '9') 
+    {
+      if (isFullCikl) {isFullCikl=false; saymess(m1_EmptyLoop);}
+      else            {isFullCikl=true;  saymess(m1_anAudition);}
+    }
+    // Выполняем команду по трассировке утечек памяти
+    // (показывать оставшуюся свободную память)
+    // или отменяем её
+    if (ccom == '8') 
+    {
+      if (isMemTrass) 
+      {
+        isMemTrass=false; 
+        saymess(m1_NoMemoryTrace);
+        if (!isFullCikl) {isFullCikl=true;  saymess(m1_anAudition);}
+      }
+      else            {isMemTrass=true;  saymess(m1_FreeMemory);}
+    }
+
+    /*
     int c = Serial.read();
     // Выполняем команду на пустое зацикливание
     // (например для того, чтобы посмотреть предыдущие сообщения)
@@ -81,24 +109,22 @@ void loop()
       isFullCikl=true;
       saymess(m1_anAudition);
     }
+    */
   }
+  // При необходимости трассируем память
+  if (isMemTrass) saymest(FreeMemoryToChar());
+  // Начинаем прослушивать устройства, так как разрешено
   if (isFullCikl)
   {
-    // Выполняем задержку перед очередным снятием показаний приёмника GPS
-    delay(deltaGPS); 
     ncikl++;
-
-    Serial.print(ncikl);
-    Serial.print(". freeMemory()=");
-    Serial.println(getFreeMemory());
-
     // Прослушиваем приемник GPS V.KEL-TTL
     // (по умолчанию прослушивается последний инициализированный порт,
     // если требуется прослушивать другой, следует его явно указать)
     VKEL_TTL.listen();
-    // Делаем задержку в 1 секунду для того, чтобы буфер последовательного
-    // порта V.KEL-TTL заполнился данными с координатами
-    delay(1000);
+    // Очищаем буфер последовательного порта V.KEL-TTL и делаем 
+    // задержку чуть более секунды для того, чтобы он заполнился данными с координатами
+    while (VKEL_TTL.available()) VKEL_TTL.read();
+    delay(1100);
     // Выбираем данные навигации из приёмника GPS V.KEL TTL 
     isVKEL_TTL=Talk_VKEL_TTL(ncikl);
     // Если данные от приемника GPS есть, то
@@ -126,7 +152,22 @@ void loop()
       }  
     }  
   }
+  // Делаем заглушку 2 сек, чтобы не по-человечески реагировать на другие команды 
+  else delay(2000);
 }
+// ****************************************************************************
+// *                       Сформировать сообщение по памяти                   *
+// ****************************************************************************
+char* FreeMemoryToChar() 
+{
+  String stringOne;
+  // "1234567890123456"
+  // "Память 1017 байт"
+  memset(charMess,'\0',34); 
+  stringOne="Память "+String(getFreeMemory())+" байт";
+  stringOne.toCharArray(charMess,33);
+  return charMess;  
+}  
 
 // Arduino C/C++ ******************************************** Kvizzy900.ino ***
                                                                                                                                                                                                   
