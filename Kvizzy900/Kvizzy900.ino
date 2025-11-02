@@ -37,15 +37,16 @@ uint32_t deltaGPS=1000;
 // Резервируем буфер нефиксированных сообщений
 char charMess[34];    
 
+bool isSIM900=false;                    // "Не работает SIM900" = SIM900 does not work
+unsigned long ncikl=0;                  // счетчик циклов
+bool isFullCikl=true;                   // 9: true - "Выполняем прослушивание";        false - "Отрабатываем пустой цикл"
+bool isMemTrass=false;                  // 8: true - "Показываем свободную память";    false - "Отменяем трассирование памяти"
+bool isATTrass=false;                   // 7: true - "Показываем ответ на AT-команды"; false - "Отменяем трассирование AT-команд"
+
 // Обеспечиваем взаимодействие и выборку данных из приёмника GPS VKEL_TTL 
 #include "VKEL_TTL.h"     
 // Обеспечиваем взаимодействие с SIM900 и передачу данных на сайт  
 #include "SIM900.h"     
-
-bool isSIM900=false;                    // "Не работает SIM900" = SIM900 does not work
-unsigned long ncikl=0;                  // счетчик циклов
-bool isFullCikl=true;                   // true - "Выполняем прослушивание";     false - "Отрабатываем пустой цикл"
-bool isMemTrass=false;                  // true - "Показываем свободную память"; false - "Отменяем трассирование памяти"
 
 void setup()
 {
@@ -91,25 +92,19 @@ void loop()
         saymess(m1_NoMemoryTrace);
         if (!isFullCikl) {isFullCikl=true;  saymess(m1_anAudition);}
       }
-      else            {isMemTrass=true;  saymess(m1_FreeMemory);}
+      else {isMemTrass=true;  saymess(m1_FreeMemory);}
     }
-
-    /*
-    int c = Serial.read();
-    // Выполняем команду на пустое зацикливание
-    // (например для того, чтобы посмотреть предыдущие сообщения)
-    if (c == 'a') 
+    // Выполняем команды по трассировке AT-команд SIM900
+    if (ccom == '7') 
     {
-      isFullCikl=false;
-      saymess(m1_EmptyLoop);
+      if (isATTrass) 
+      {
+        isATTrass=false; 
+        saymess(m1_NoATtrass);
+        if (!isFullCikl) {isFullCikl=true;  saymess(m1_anAudition);}
+      }
+      else {isATTrass=true;  saymess(m1_ATcom);}
     }
-    // Отменяем команду на пустое зацикливание
-    else if (c == 's') 
-    {
-      isFullCikl=true;
-      saymess(m1_anAudition);
-    }
-    */
   }
   // При необходимости трассируем память
   if (isMemTrass) saymest(FreeMemoryToChar());

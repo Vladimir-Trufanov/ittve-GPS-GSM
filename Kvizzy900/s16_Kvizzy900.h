@@ -4,7 +4,7 @@
  * и вывод их в последовательный порт или другой интерфейс
  * без копирования в оперативную память
  * 
- * v2.0.3, 28.10.2025                                 Автор:      Труфанов В.Е.
+ * v2.0.4, 02.11.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
 **/
 
@@ -47,6 +47,12 @@ _DS(m1_LocateIsNot,   "Не идёт локация ")    // "Не опреде�
 _DS(m1_TurnOnSIM900,  "Включаем SIM900 ")    // "Включаем SIM900" - "Turning on the SIM900"
 _DS(m1_FreeMemory,    "Смотрим память  ")    // "Показываем свободную память" - Showing free memory
 _DS(m1_NoMemoryTrace, "Не глядим память")    // "Отменяем трассирование памяти" - Canceling memory tracing
+_DS(m1_ATcom,         "Есть AT-команды ")    // "Показываем ответ на AT-команды"
+_DS(m1_NoATtrass,     "Не трассируем AT")    // "Отменяем трассирование AT-команд"
+_DS(m1_ResponsExceed, "SIM900 > 149 cим")    // "Ответ SIM900 превышает 150 символов" - The SIM900 response exceeds 150 characters
+_DS(m1_NoReception,   "Нет приёма GPRS ")    // "За время тайм-аута не начат приём" - No reception is started during the timeout period
+_DS(m1_NoConfirmed,   "Не успешен GPRS ")    // "Oтвет на команду не подтвержден" - The response to the command has not been confirmed
+_DS(m1_NotCompleted,  "Не полный ответ ")    // "За время тайм-аута не завершён ответ" - The response was not completed during the timeout period
 
 // ****************************************************************************
 // *         Вывести сообщение внутри приложения в последовательный порт      *
