@@ -132,7 +132,7 @@ bool readgps()
 // ****************************************************************************
 bool Talk_VKEL_TTL(unsigned long ncikl)
 {
-  Serial.print(ncikl); Serial.println(": Talk_VKEL_TTL"); 
+  // Serial.print(ncikl); Serial.println(": Talk_VKEL_TTL"); 
   // Инициируем данные приёмника GPS
   ghour=0; gmin=0; gsec=0; 
   gday=0; gmonth=0; gyear=0; 

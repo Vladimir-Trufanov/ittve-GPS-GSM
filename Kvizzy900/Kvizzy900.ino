@@ -56,15 +56,7 @@ void setup()
   // Выводим сводку по памяти в начале программы
   Serial.println(" ");
   saymest(FreeMemoryToChar());
-  // Включаем SIM900
-  //saymess(m1_TurnOnSIM900);
-  //SIM900powerUp();
-
-  // Очищаем буфер SIM900
-  while (SIM900.available()) SIM900.read();
-  saymess(m1_CliBSIM900);
   // saymess(m1_Fill1);
-  Serial.println("Ожидаем разговора с V.KEL-TTL ...");
 }
 
 void loop()
@@ -130,8 +122,15 @@ void loop()
       BdelayGPS=millis();            
       // Работаем с SIM900
       SIM900.listen();
-      delay(500);
-      Talk_SIM900(ncikl);
+      // Talk_SIM900(ncikl);
+      // Проверяем, реагирует ли на команды SIM900
+      // и включаем GPRS, если нет ответа
+      if (ATcom("AT","OK",500)!=0)
+      { 
+        // Включаем SIM900
+        saymess(m1_TurnOnSIM900);
+        SIM900powerUpOrDown();
+     }
     }
     // Пересчитываем и указываем интервал отсутствия сигнала GPS
     else
@@ -147,7 +146,8 @@ void loop()
       }  
     }  
   }
-  // Делаем заглушку 2 сек, чтобы не по-человечески реагировать на другие команды 
+  // Если закрыто прослушивание, то делаем заглушку 2 сек, 
+  // чтобы по-человечески реагировать на другие команды 
   else delay(2000);
 }
 // ****************************************************************************
