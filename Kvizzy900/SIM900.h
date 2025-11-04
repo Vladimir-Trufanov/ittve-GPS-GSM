@@ -2,7 +2,7 @@
  * 
  * Обеспечить взаимодействие с SIM900 и передачу данных на сайт 
  * 
- * v1.1.2, 02.11.2025                                 Автор:      Труфанов В.Е.
+ * v1.1.3, 04.11.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
 **/
 
@@ -10,6 +10,8 @@
 #define SIM900_h
 // Указываем, что данный файл нужно подключить только один раз
 #pragma once  
+
+uint32_t glat,glon;     // Передаваемые на сайт значения координат 
 
 // ****************************************************************************
 // *                 Сформировать сообщения по ошибке AT-команды              *
@@ -45,8 +47,8 @@ uint8_t ATcom(char* ATcommand, char* expected_answer, unsigned int timeout)
   answer=2;                                // "за время тайм-аута не начат приём ответа"
   unsigned long previous;                  // время начала приема ответа от GPRS
   // Готовим буфер приёма ответа от GPRS
-  char response[150];                      // объявили буфер ответа GPRS
-  memset(response, '\0', 150);             // очистили буфер 
+  char response[256];                      // объявили буфер ответа GPRS
+  memset(response,'\0',256);               // очистили буфер 
   i = 0;                                   // установили начальную позицию заполнения буфера
   delay(100);                              // сделали начальную задержку перед подачей команды
   previous = millis();                     // зафиксировали начальное время для отсчета таймаута
@@ -63,7 +65,7 @@ uint8_t ATcom(char* ATcommand, char* expected_answer, unsigned int timeout)
       response[i] = SIM900.read();
       i++;
       // Проверяем, не вышли ли за границу буфера
-      if (i>149) {answer=1; break; }
+      if (i>255) {answer=1; break; }
     }
   }
   while((answer == 2) && ((millis() - previous) < timeout));
@@ -71,7 +73,7 @@ uint8_t ATcom(char* ATcommand, char* expected_answer, unsigned int timeout)
   if (isATTrass) saymest(response);
   if (isATTrass) saymest(ATcommand);
   // Если вышли ли за границу буфера, то возвращаем ошибку
-  // "ответ SIM900 превышает 150 символов"  
+  // "ответ SIM900 превышает 256 символов"  
   if (answer==1) goto by; 
   // Если остались в начальной позиции, то возвращаем ошибку
   // "за время тайм-аута не начат приём ответа"  
@@ -174,6 +176,9 @@ void Talk_SIM900(unsigned long ncikl)
     ATcom("AT+CBC","OK",500);
   }
 }
+// ****************************************************************************
+// *          Выполнить передачу последних принятых координат на сайт         *
+// ****************************************************************************
 
 // 2025-11-04 вид запроса, введенный вручную 
 // http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={"trkpt":{"lat":52518611,"lon":13376111,"color":"yellow"}}
@@ -188,28 +193,70 @@ void Talk_SIM900(unsigned long ncikl)
 // https://github.com/lbussy/LCBUrl
 // https://github.com/plageoj/urlencode
 
-bool send_coords_at(long lat, long lng)
+bool send_coords_at(uint32_t glat, uint32_t glon)
 {
-  // (!SendAT("AT+SAPBR=3,1,\"CONTYPE\",\"GPRS\"", "OK"))
-  if   (ATcom("AT+SAPBR=3,1,\"CONTYPE\",\"GPRS\"","OK",2000)!=2) return false;
-    
-  // (!SendAT("AT+SAPBR=3,1,\"APN\",\"internet.mts.ru\"", "OK"))
-  if   (ATcom("AT+SAPBR=3,1,\"APN\",\"internet.mts.ru\"","OK",2000)!=2) return false;
-  
-  // (!SendAT("AT+SAPBR=1,1", "OK"))
-  if   (ATcom("AT+SAPBR=1,1","OK",2000)!=2) 
+  // Проверяем "уровень сигнала" – первое значение это уровень сигнала в дБ, он должен быть выше 5. Чем выше, тем лучше, до 31.
+  if (ATcom("AT+CSQ","OK",500)!=0) return false;;
+  // Закрываем все соединения TCP/UDP, которые могли быть открыты на модуле. 
+  // Использование этой команды может быть полезно, например, при переустановке 
+  // соединения или для освобождения ресурсов, занятых предыдущими соединениями. 
+  if (ATcom("AT+CIPSHUT","OK",500)!=0) return false;
+  // Открываем контекст GPRS и устанавливаем GPRS-соединение
+  if (ATcom("AT+SAPBR=3,1,\"Contype\",\"GPRS\"","OK",500)!=0) return false;
+  // Определяем имя точки доступа Access Point Name (APN) — как “internet.mts.ru”.
+  if (ATcom("AT+SAPBR=3,1,\"APN\",\"internet.mts.ru\"","OK",500)!=0) return false;
+  // Устанавливаем соединение для профиля с идентификатором 1.
+  // Когда соединение будет установлено, можно получить параметры сеанса с помощью 
+  // команды AT+SAPBR=2,1. После установления соединения команда вернет адрес 
+  // IP из внутренней сети мобильного провайдера   
+  if (ATcom("AT+SAPBR=1,1","OK",2000)!=0) 
   {
-    // SendAT("AT+SAPBR=0,1", "OK"); //close bearer
-        ATcom("AT+SAPBR=0,1","OK",2000);
-    if (ATcom("AT+SAPBR=1,1","OK",2000)!=2) return false;
+    // Перезакрываем носитель контекста GPRS (сессию), если он был оставлен открытым
+    // (команда AT+SAPBR=0,1 используется для закрытия сессии и соединения TCP/IP, 
+    // чтобы не расходовать ресурсы мобильного провайдера. 
+    ATcom("AT+SAPBR=0,1","OK",1500);
+    if (ATcom("AT+SAPBR=1,1","OK",2000)!=0) return false;
   }
+  // Инициализируем сервис HTTP 
+  ATcom("AT+HTTPINIT","OK",500);
+  // Задаём идентификатор профиля сеанса
+  // sendCommand("AT+HTTPPARA=\"CID\",1","Задаём идентификатор профиля сеанса"); // set parameters for http session
+  if (ATcom("AT+HTTPPARA=\"CID\",1","OK",500)!=0) return false;
+  // Задаём URL сайта, к которому будет отправляться запрос HTTP GET.
+  //sendCommand("AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"","Задаём URL сайта http://probatv.ru/"); // Change the URL from google.com to the server you want to reach
+  ATcom("AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"","OK",2500);
+  // Вводим команду для выполнения запроса GET: AT+HTTPACTION=0.
+  // Параметр команды AT+HTTPACTION задает тип запроса HTTP: 0 — GET, 1 — POST, 2 — HEAD, 3 — DELETE.
+  // В нашем случае нулевое значение предписывает выполнить запрос GET.
+  // +HTTPACTION: 0,200,134
+  //sendCommand("AT+HTTPACTION=0","Вводим команду для выполнения запроса GET"); // send http request to specified URL, GET session start
+  ATcom("AT+HTTPACTION=0","OK",500);
 
-  // (!SendAT("AT+HTTPINIT", "OK"))
-  if   (ATcom("AT+HTTPINIT","OK",2000)!=2) return false;
+  Serial.println("Ждем 5 сек, чтобы запросить ответ");
+  delay(5000); 
+  
+  // Cчитываем результаты запроса, обычно содержит код состояния 200 в случае успеха
+  //sendCommand("AT+HTTPREAD", "Cчитываем результаты запроса, обычно содержит код состояния 200");
+  ATcom("AT+HTTPREAD","OK",2500);
 
-  // (!SendAT("AT+HTTPPARA=\"CID\",1", "OK"))
-  if   (ATcom("AT+HTTPPARA=\"CID\",1","OK",2000)!=2) return false;
 
+
+  // -
+ 
+ 
+  // Отключаем сервис HTTP
+  ATcom("AT+HTTPTERM","OK",500);
+  // Закрываем все соединения TCP/UDP, которые могли быть открыты на модуле. 
+  // Использование этой команды может быть полезно, например, при переустановке 
+  // соединения или для освобождения ресурсов, занятых предыдущими соединениями. 
+  if (ATcom("AT+CIPSHUT","OK",500)!=0) return false;
+  // Закрываем носитель контекста GPRS (сессию), если он был оставлен открытым
+  // (команда AT+SAPBR=0,1 используется для закрытия сессии и соединения TCP/IP, 
+  // чтобы не расходовать ресурсы мобильного провайдера. 
+  if (ATcom("AT+SAPBR=0,1","OK",500)!=0) return false;
+
+
+  /*
   char url[1024];
   //sprintf(url,"AT+HTTPPARA=\"URL\",\"http://gurux13.net84.net/GpsTracking/record.php?Lat=%ld&Lng=%ld\"", lat, lng);
   sprintf(url,"AT+HTTPPARA=\"URL\",\"https://probatv.ru?Lat=%ld&Lng=%ld\"",lat,lng);
@@ -219,9 +266,39 @@ bool send_coords_at(long lat, long lng)
 
   // (!SendAT("AT+HTTPACTION=0", "OK"))
   if   (ATcom("AT+HTTPACTION=0","OK",2000)!=2) return false;
+  */
+
+  /*
+
+  // Задаём URL сайта, к которому будет отправляться запрос HTTP GET.
+  // sendCommand("AT+HTTPPARA=\"URL\",\"http://probatv.ru/\"","Задаём URL сайта http://probatv.ru/"); // Change the URL from google.com to the server you want to reach
+  sendCommand("AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"","Задаём URL сайта http://probatv.ru/"); // Change the URL from google.com to the server you want to reach
+
+  // Вводим команду для выполнения запроса GET: AT+HTTPACTION=0.
+  // Параметр команды AT+HTTPACTION задает тип запроса HTTP: 0 — GET, 1 — POST, 2 — HEAD, 3 — DELETE.
+  // В нашем случае нулевое значение предписывает выполнить запрос GET.
+  // +HTTPACTION: 0,200,134
+  sendCommand("AT+HTTPACTION=0","Вводим команду для выполнения запроса GET"); // send http request to specified URL, GET session start
+
+  Serial.println("Ждем 3 сек, чтобы запросить ответ");
+  delay(9000); 
+  
+  // Cчитываем результаты запроса, обычно содержит код состояния 200 в случае успеха
+  sendCommand("AT+HTTPREAD", "Cчитываем результаты запроса, обычно содержит код состояния 200");
+  */
+
+  /*
+  sendCommand("AT+HTTPTERM");//close http connection
+  sendCommand("AT+CIPSHUT");//close or turn off network connection
+  sendCommand("AT+SAPBR=0,1");// close GPRS context bearer
+  */
+
+
+
+
+
   return true;
 }
-
 
 #endif
 

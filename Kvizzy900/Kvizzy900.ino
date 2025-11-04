@@ -41,7 +41,7 @@ bool isSIM900=false;                    // "Не работает SIM900" = SIM9
 unsigned long ncikl=0;                  // счетчик циклов
 bool isFullCikl=true;                   // 9: true - "Выполняем прослушивание";        false - "Отрабатываем пустой цикл"
 bool isMemTrass=false;                  // 8: true - "Показываем свободную память";    false - "Отменяем трассирование памяти"
-bool isATTrass=false;                   // 7: true - "Показываем ответ на AT-команды"; false - "Отменяем трассирование AT-команд"
+bool isATTrass=true;                    // 7: true - "Показываем ответ на AT-команды"; false - "Отменяем трассирование AT-команд"
 
 // Обеспечиваем взаимодействие и выборку данных из приёмника GPS VKEL_TTL 
 #include "VKEL_TTL.h"     
@@ -97,6 +97,18 @@ void loop()
       }
       else {isATTrass=true;  saymess(m1_ATcom);}
     }
+    // Выполняем принудительную передачу последних принятых координат на сайт
+    if (ccom == '1') 
+    {
+      SIM900.listen();
+      glat=lat*1000000; glon=lng*1000000;   
+      Serial.print("lat,lng: "); Serial.print(lat); Serial.print(","); Serial.println(lng); 
+      Serial.print("glat,glon: "); Serial.print(glat); Serial.print(","); Serial.println(glon); 
+      bool isSend=send_coords_at(glat,glon);
+      if (!isSend) Serial.println("Неудачная отправка координат"); 
+      VKEL_TTL.listen();
+    }
+
   }
   // При необходимости трассируем память
   if (isMemTrass) saymest(FreeMemoryToChar());
@@ -122,7 +134,6 @@ void loop()
       BdelayGPS=millis();            
       // Работаем с SIM900
       SIM900.listen();
-      // Talk_SIM900(ncikl);
       // Проверяем, реагирует ли на команды SIM900
       // и включаем GPRS, если нет ответа
       if (ATcom("AT","OK",500)!=0)
@@ -130,7 +141,8 @@ void loop()
         // Включаем SIM900
         saymess(m1_TurnOnSIM900);
         SIM900powerUpOrDown();
-     }
+      }
+      // Talk_SIM900(ncikl);
     }
     // Пересчитываем и указываем интервал отсутствия сигнала GPS
     else
