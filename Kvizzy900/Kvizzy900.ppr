@@ -18,7 +18,7 @@ Extensions=*.*
 [Project tree]
 Kvizzy900
 	+Kvizzy900
-		+Old
+		-Old
 			Old\sketch_sep30a.ino
 		Kvizzy900.ino
 		Kvizzy900.ppr
@@ -35,14 +35,14 @@ Kvizzy900
 Main=
 Selected=SIM900.h
 [Kvizzy900.ino]
-TopLine=118
+TopLine=5
 Caret=76,5
 [s16_Kvizzy900.h]
 TopLine=21
 Caret=1,47
 [SIM900.h]
-TopLine=35
-Caret=49,67
+TopLine=165
+Caret=1,190
 [Old\sketch_sep30a.ino]
 TopLine=368
 Caret=31,407

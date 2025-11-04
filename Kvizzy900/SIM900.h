@@ -175,6 +175,19 @@ void Talk_SIM900(unsigned long ncikl)
   }
 }
 
+// 2025-11-04 вид запроса, введенный вручную 
+// http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={"trkpt":{"lat":52518611,"lon":13376111,"color":"yellow"}}
+
+// 2025-11-04 вид запроса, считанный из URL сайта в Edge и Google Chrome
+// http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}
+
+// 2025-11-04 вид запроса, считанный из URL сайта в Yandex
+// http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson=%7B%22trkpt%22:%7B%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22%7D%7D
+
+// 2 репозитария, которые могут пригодиться в будущем
+// https://github.com/lbussy/LCBUrl
+// https://github.com/plageoj/urlencode
+
 bool send_coords_at(long lat, long lng)
 {
   // (!SendAT("AT+SAPBR=3,1,\"CONTYPE\",\"GPRS\"", "OK"))

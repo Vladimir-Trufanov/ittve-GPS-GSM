@@ -3,7 +3,8 @@
 // SoftwareSerial object for communication with SIM900
 SoftwareSerial gprsShield(7, 8); // RX, TX
 
-void setup() {
+void setup() 
+{
   //int baudRate=19200; // change the baud rate for your GSM modem eg: 9600, 115200
   int baudRate=9600; // change the baud rate for your GSM modem eg: 9600, 115200
   gprsShield.begin(baudRate);          // gprsShield module
@@ -57,6 +58,7 @@ void ShowSerialData()
   delay(1000);
 }
 
+/*
 void proba2()
 {
   // https://arduino.stackexchange.com/questions/43091/sending-post-request-to-https-aws-server-using-sim900a
@@ -92,7 +94,7 @@ void proba2()
   // AT+HTTPREAD
   sendCommand("AT+HTTPREAD","AT+HTTPREAD"); 
 
-  /*
+  / *
   // Проверяем, реагирует ли модуль, ожидаемое значение  OK
   sendCommand("AT","Проверяем, реагирует ли SIM900 на команды"); 
   sendCommand("AT+CIPSHUT","Закрываем все соединения TCP/UDP"); 
@@ -119,9 +121,11 @@ void proba2()
   sendCommand("AT+HTTPREAD", "Cчитываем результаты запроса, обычно содержит код состояния 200");
 
    sendCommand("AT+HTTPTERM", "Terminate https service");
-  */
+  * /
 }
+*/
 
+/*
 void probaSSL()
 {
   // Проверяем, реагирует ли модуль, ожидаемое значение  OK
@@ -151,6 +155,7 @@ void probaSSL()
 
    sendCommand("AT+HTTPTERM", "Terminate https service");
 }
+*/
 
 void sendGetRequest()
 {
@@ -222,23 +227,23 @@ void sendGetRequest()
   // sendCommand("AT+HTTPSSL?","AT+HTTPSSL?"); 
 
   // Инициализируем сервис HTTP (с 2025-08-02 считаем, что если включен протокол SSL для HTTP, инициализировать HTTP не нужно)
-  sendCommand("AT+HTTPINIT","Инициализируем сервис HTTP"); // initiate HTTP request
+  // sendCommand("AT+HTTPINIT","Инициализируем сервис HTTP"); // initiate HTTP request
 
   // Задаём идентификатор профиля сеанса
   sendCommand("AT+HTTPPARA=\"CID\",1","Задаём идентификатор профиля сеанса"); // set parameters for http session
-
-  // Задаём URL сайта, к которому будет отправляться запрос HTTP GET.
+ 
   // sendCommand("AT+HTTPPARA=\"URL\",\"http://google.com/\"","Задаём URL сайта http://google.com/"); // Change the URL from google.com to the server you want to reach
   // sendCommand("AT+HTTPPARA=\"URL\",\"http://my-json-server.typicode.com/typicode/demo/posts\"","Задаём URL демонстрационного сервера");
-     sendCommand("AT+HTTPPARA=\"URL\",\"http://probatv.ru/\"","Задаём URL сайта http://probatv.ru/"); // Change the URL from google.com to the server you want to reach
   // sendCommand("AT+HTTPPARA=\"URL\",\"http://87.242.70.183/\"","Задаём URL сайта https://probatv.ru/"); // Change the URL from google.com to the server you want to reach
-
   // xn--http://-2hga2ewc.xn--p1ai
   // sendCommand("AT+HTTPPARA=\"URL\",\"xn--http://-2hga2ewc.xn--p1ai\"","Задаём URL сайта http://пифи.рф"); // Change the URL from google.com to the server you want to reach
   // sendCommand("AT+HTTPPARA=\"URL\",\"http://пифи.рф/\"","Задаём URL сайта http://пифи.рф/"); // Change the URL from google.com to the server you want to reach
-  
-  //http://probatv.ru/
-  //https://probatv.ru/
+  // http://probatv.ru/
+  // https://probatv.ru/
+
+  // Задаём URL сайта, к которому будет отправляться запрос HTTP GET.
+  // sendCommand("AT+HTTPPARA=\"URL\",\"http://probatv.ru/\"","Задаём URL сайта http://probatv.ru/"); // Change the URL from google.com to the server you want to reach
+  sendCommand("AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"","Задаём URL сайта http://probatv.ru/"); // Change the URL from google.com to the server you want to reach
 
   // Вводим команду для выполнения запроса GET: AT+HTTPACTION=0.
   // Параметр команды AT+HTTPACTION задает тип запроса HTTP: 0 — GET, 1 — POST, 2 — HEAD, 3 — DELETE.
@@ -263,7 +268,8 @@ void sendGetRequest()
 
 
 
-void loop() {
+void loop() 
+{
   // Add your main program logic here if needed
 }
 
