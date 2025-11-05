@@ -193,14 +193,27 @@ void Talk_SIM900(unsigned long ncikl)
 // https://github.com/lbussy/LCBUrl
 // https://github.com/plageoj/urlencode
 
-bool send_coords_at(uint32_t glat, uint32_t glon)
+bool send_coords_at(uint32_t glat, uint32_t glon, uint32_t ncikl)
 {
+  // Готовим строку с URL-адресом 
+  char url[256];
+  memset(url,'\0',256);  
+
+  // s.length()=152 для cycle=7
+  String s="AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"";
+
+  Serial.print("s.length()="); Serial.println(s.length());
+  Serial.println(s);
+  s.toCharArray(url,s.length()+1);
+  Serial.println(url);
+
+  
   // Проверяем "уровень сигнала" – первое значение это уровень сигнала в дБ, он должен быть выше 5. Чем выше, тем лучше, до 31.
-  if (ATcom("AT+CSQ","OK",500)!=0) return false;;
+  // if (ATcom("AT+CSQ","OK",500)!=0) return false;;
   // Закрываем все соединения TCP/UDP, которые могли быть открыты на модуле. 
   // Использование этой команды может быть полезно, например, при переустановке 
   // соединения или для освобождения ресурсов, занятых предыдущими соединениями. 
-  if (ATcom("AT+CIPSHUT","OK",500)!=0) return false;
+  // if (ATcom("AT+CIPSHUT","OK",500)!=0) return false;
   // Открываем контекст GPRS и устанавливаем GPRS-соединение
   if (ATcom("AT+SAPBR=3,1,\"Contype\",\"GPRS\"","OK",500)!=0) return false;
   // Определяем имя точки доступа Access Point Name (APN) — как “internet.mts.ru”.
@@ -224,7 +237,8 @@ bool send_coords_at(uint32_t glat, uint32_t glon)
   if (ATcom("AT+HTTPPARA=\"CID\",1","OK",500)!=0) return false;
   // Задаём URL сайта, к которому будет отправляться запрос HTTP GET.
   //sendCommand("AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"","Задаём URL сайта http://probatv.ru/"); // Change the URL from google.com to the server you want to reach
-  ATcom("AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"","OK",2500);
+  //ATcom("AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"","OK",2500);
+  ATcom(url,"OK",2500);
   // Вводим команду для выполнения запроса GET: AT+HTTPACTION=0.
   // Параметр команды AT+HTTPACTION задает тип запроса HTTP: 0 — GET, 1 — POST, 2 — HEAD, 3 — DELETE.
   // В нашем случае нулевое значение предписывает выполнить запрос GET.
@@ -238,65 +252,17 @@ bool send_coords_at(uint32_t glat, uint32_t glon)
   // Cчитываем результаты запроса, обычно содержит код состояния 200 в случае успеха
   //sendCommand("AT+HTTPREAD", "Cчитываем результаты запроса, обычно содержит код состояния 200");
   ATcom("AT+HTTPREAD","OK",2500);
-
-
-
-  // -
- 
- 
   // Отключаем сервис HTTP
   ATcom("AT+HTTPTERM","OK",500);
   // Закрываем все соединения TCP/UDP, которые могли быть открыты на модуле. 
   // Использование этой команды может быть полезно, например, при переустановке 
   // соединения или для освобождения ресурсов, занятых предыдущими соединениями. 
-  if (ATcom("AT+CIPSHUT","OK",500)!=0) return false;
+  // if (ATcom("AT+CIPSHUT","OK",500)!=0) return false;
   // Закрываем носитель контекста GPRS (сессию), если он был оставлен открытым
   // (команда AT+SAPBR=0,1 используется для закрытия сессии и соединения TCP/IP, 
   // чтобы не расходовать ресурсы мобильного провайдера. 
   if (ATcom("AT+SAPBR=0,1","OK",500)!=0) return false;
-
-
-  /*
-  char url[1024];
-  //sprintf(url,"AT+HTTPPARA=\"URL\",\"http://gurux13.net84.net/GpsTracking/record.php?Lat=%ld&Lng=%ld\"", lat, lng);
-  sprintf(url,"AT+HTTPPARA=\"URL\",\"https://probatv.ru?Lat=%ld&Lng=%ld\"",lat,lng);
-
-  // (!SendAT(url, "OK"))
-  if   (ATcom(url,"OK",5000)!=2) return false;
-
-  // (!SendAT("AT+HTTPACTION=0", "OK"))
-  if   (ATcom("AT+HTTPACTION=0","OK",2000)!=2) return false;
-  */
-
-  /*
-
-  // Задаём URL сайта, к которому будет отправляться запрос HTTP GET.
-  // sendCommand("AT+HTTPPARA=\"URL\",\"http://probatv.ru/\"","Задаём URL сайта http://probatv.ru/"); // Change the URL from google.com to the server you want to reach
-  sendCommand("AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"","Задаём URL сайта http://probatv.ru/"); // Change the URL from google.com to the server you want to reach
-
-  // Вводим команду для выполнения запроса GET: AT+HTTPACTION=0.
-  // Параметр команды AT+HTTPACTION задает тип запроса HTTP: 0 — GET, 1 — POST, 2 — HEAD, 3 — DELETE.
-  // В нашем случае нулевое значение предписывает выполнить запрос GET.
-  // +HTTPACTION: 0,200,134
-  sendCommand("AT+HTTPACTION=0","Вводим команду для выполнения запроса GET"); // send http request to specified URL, GET session start
-
-  Serial.println("Ждем 3 сек, чтобы запросить ответ");
-  delay(9000); 
   
-  // Cчитываем результаты запроса, обычно содержит код состояния 200 в случае успеха
-  sendCommand("AT+HTTPREAD", "Cчитываем результаты запроса, обычно содержит код состояния 200");
-  */
-
-  /*
-  sendCommand("AT+HTTPTERM");//close http connection
-  sendCommand("AT+CIPSHUT");//close or turn off network connection
-  sendCommand("AT+SAPBR=0,1");// close GPRS context bearer
-  */
-
-
-
-
-
   return true;
 }
 

@@ -38,7 +38,7 @@ uint32_t deltaGPS=1000;
 char charMess[34];    
 
 bool isSIM900=false;                    // "Не работает SIM900" = SIM900 does not work
-unsigned long ncikl=0;                  // счетчик циклов
+uint32_t ncikl=0;                       // счетчик циклов
 bool isFullCikl=true;                   // 9: true - "Выполняем прослушивание";        false - "Отрабатываем пустой цикл"
 bool isMemTrass=false;                  // 8: true - "Показываем свободную память";    false - "Отменяем трассирование памяти"
 bool isATTrass=true;                    // 7: true - "Показываем ответ на AT-команды"; false - "Отменяем трассирование AT-команд"
@@ -104,7 +104,7 @@ void loop()
       glat=lat*1000000; glon=lng*1000000;   
       Serial.print("lat,lng: "); Serial.print(lat); Serial.print(","); Serial.println(lng); 
       Serial.print("glat,glon: "); Serial.print(glat); Serial.print(","); Serial.println(glon); 
-      bool isSend=send_coords_at(glat,glon);
+      bool isSend=send_coords_at(glat,glon,67);
       if (!isSend) Serial.println("Неудачная отправка координат"); 
       VKEL_TTL.listen();
     }
