@@ -193,21 +193,22 @@ void Talk_SIM900(unsigned long ncikl)
 // https://github.com/lbussy/LCBUrl
 // https://github.com/plageoj/urlencode
 
-bool send_coords_at(uint32_t glat, uint32_t glon, uint32_t ncikl)
+bool send_coords_at(uint32_t glat, uint32_t glon, uint32_t gcik)
 {
   // Готовим строку с URL-адресом 
   char url[256];
   memset(url,'\0',256);  
 
   // s.length()=152 для cycle=7
+  // Собственно в URL заменяем обратные слэши на %22, иначе URL сбрасывется
+  // String s="AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={\"trkpt\":{\"lat\":52518611,\"lon\":13376111,\"color\":\"yellow\"}}\"";
   String s="AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"";
 
   Serial.print("s.length()="); Serial.println(s.length());
   Serial.println(s);
   s.toCharArray(url,s.length()+1);
-  Serial.println(url);
-
-  
+  Serial.println(url);  
+   
   // Проверяем "уровень сигнала" – первое значение это уровень сигнала в дБ, он должен быть выше 5. Чем выше, тем лучше, до 31.
   // if (ATcom("AT+CSQ","OK",500)!=0) return false;;
   // Закрываем все соединения TCP/UDP, которые могли быть открыты на модуле. 
