@@ -11,6 +11,7 @@
 // Указываем, что данный файл нужно подключить только один раз
 #pragma once  
 
+#include <MemoryFree.h>
 uint32_t glat,glon;     // Передаваемые на сайт значения координат 
 
 // ****************************************************************************
@@ -193,22 +194,59 @@ void Talk_SIM900(unsigned long ncikl)
 // https://github.com/lbussy/LCBUrl
 // https://github.com/plageoj/urlencode
 
+
+char str31[10];
+void valtostr(uint32_t value)
+{
+  String c;
+  c=String(value);
+  memset(str31,'\0',10); 
+  c.toCharArray(str31,c.length()+1);
+  saymest(FreeMemoryToChar());
+}
+
+char url[170];
+const char str0[]="AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=";
+const char str1[]="&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:";
+const char str2[]=",%22lon%22:";
+const char str3[]=",%22color%22:%22yellow%22}}\"";
+
 bool send_coords_at(uint32_t glat, uint32_t glon, uint32_t gcik)
 {
-  // Готовим строку с URL-адресом 
-  char url[256];
-  memset(url,'\0',256);  
 
+  // v1
+  
+  // Готовим строку с URL-адресом, cобственно в URL заменяем обратные слэши на %22, иначе URL сбрасывается
+  //ATcom("AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"","OK",2500);
+  memset(url,'\0',170); 
+  strcat(url,str0); // ---Склеиваем str1 + str2
+  valtostr(gcik);
+  strcat(url,str31); // ---Склеиваем str1 + str2
+  strcat(url,str1); // ---Склеиваем str1 + str2
+  valtostr(glat);
+  strcat(url,str31); // ---Склеиваем str1 + str2
+  strcat(url,str2); // ---Склеиваем str1 + str2
+  valtostr(glon);
+  strcat(url,str31); // ---Склеиваем str1 + str2
+  strcat(url,str3); // ---Склеиваем str1 + str2
+  
+  Serial.print("sizeof(url)="); Serial.println(sizeof(url));
+  Serial.println(url);  
+
+
+  // v2
+  
   // s.length()=152 для cycle=7
   // Собственно в URL заменяем обратные слэши на %22, иначе URL сбрасывется
   // String s="AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={\"trkpt\":{\"lat\":52518611,\"lon\":13376111,\"color\":\"yellow\"}}\"";
+  /*
   String s="AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"";
-
   Serial.print("s.length()="); Serial.println(s.length());
   Serial.println(s);
   s.toCharArray(url,s.length()+1);
   Serial.println(url);  
-   
+  */
+
   // Проверяем "уровень сигнала" – первое значение это уровень сигнала в дБ, он должен быть выше 5. Чем выше, тем лучше, до 31.
   // if (ATcom("AT+CSQ","OK",500)!=0) return false;;
   // Закрываем все соединения TCP/UDP, которые могли быть открыты на модуле. 
@@ -234,24 +272,20 @@ bool send_coords_at(uint32_t glat, uint32_t glon, uint32_t gcik)
   // Инициализируем сервис HTTP 
   ATcom("AT+HTTPINIT","OK",500);
   // Задаём идентификатор профиля сеанса
-  // sendCommand("AT+HTTPPARA=\"CID\",1","Задаём идентификатор профиля сеанса"); // set parameters for http session
   if (ATcom("AT+HTTPPARA=\"CID\",1","OK",500)!=0) return false;
   // Задаём URL сайта, к которому будет отправляться запрос HTTP GET.
-  //sendCommand("AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"","Задаём URL сайта http://probatv.ru/"); // Change the URL from google.com to the server you want to reach
   //ATcom("AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"","OK",2500);
   ATcom(url,"OK",2500);
   // Вводим команду для выполнения запроса GET: AT+HTTPACTION=0.
   // Параметр команды AT+HTTPACTION задает тип запроса HTTP: 0 — GET, 1 — POST, 2 — HEAD, 3 — DELETE.
   // В нашем случае нулевое значение предписывает выполнить запрос GET.
   // +HTTPACTION: 0,200,134
-  //sendCommand("AT+HTTPACTION=0","Вводим команду для выполнения запроса GET"); // send http request to specified URL, GET session start
   ATcom("AT+HTTPACTION=0","OK",500);
 
   Serial.println("Ждем 5 сек, чтобы запросить ответ");
   delay(5000); 
   
   // Cчитываем результаты запроса, обычно содержит код состояния 200 в случае успеха
-  //sendCommand("AT+HTTPREAD", "Cчитываем результаты запроса, обычно содержит код состояния 200");
   ATcom("AT+HTTPREAD","OK",2500);
   // Отключаем сервис HTTP
   ATcom("AT+HTTPTERM","OK",500);
