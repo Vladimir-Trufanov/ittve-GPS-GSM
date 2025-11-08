@@ -30,10 +30,9 @@ const int timezone_hours=3;             // Корректировка време
 // ****************************************************************************
 // *                Сформировать сообщение о задержке сигнала GPS             *
 // ****************************************************************************
-const  char SecToCh1[18]="Задержка ";  
-const  char SecToCh2[10]=" cек.";  
-const  char SecToCh3[10]=" мин.";  
-
+const char SecToCh1[18]="Задержка ";  
+const char SecToCh2[10]=" cек.";  
+const char SecToCh3[10]=" мин.";  
 char* SecToChar(uint32_t MinSec, bool isSec=true) 
 {
   // "1234567890123456"
@@ -41,70 +40,71 @@ char* SecToChar(uint32_t MinSec, bool isSec=true)
   // "Задержка 99 мин."
   // "Задержка >99 мин"
   memset(charMess,'\0',34); 
-  //char SecToCh4[4];
-  //memset(SecToCh4,'\0',4); 
   strcat(charMess,SecToCh1); 
-  //String(MinSec).toCharArray(SecToCh4,4);
-  //strcat(charMess,SecToCh4);   
   strcat(charMess,IntToChar(MinSec));   
   if (isSec) strcat(charMess,SecToCh2); 
   else strcat(charMess,SecToCh3); 
   return charMess; 
 }  
 // ****************************************************************************
-// *                     Сформировать сообщение о дате и времени              *
-// ****************************************************************************
-char* DTimeToChar(int gday, int gmonth, int ghour, int gmin, int gsec) 
-{
-  String stringOne;
-  // "1234567890123456"
-  // "27.10.2025 16:27"
-  // "27.10 - 16:27:31"
-  memset(charMess,'\0',18); 
-  String chour; if (ghour<10) chour="0"+String(ghour); else chour=String(ghour);
-  String cmin; if (gmin<10) cmin="0"+String(gmin); else cmin=String(gmin);
-  String csec; if (gsec<10) csec="0"+String(gsec); else csec=String(gsec);
-  stringOne=String(gday)+"."+=String(gmonth)+" - "+chour+":"+cmin+":"+csec;
-  stringOne.toCharArray(charMess,17);
-  return charMess;  
-}  
-// ****************************************************************************
 // *               Сформировать сообщение о перемещении и времени             *
 // *         (перемещение это расстояние до предыдущей точке локации)         *
 // ****************************************************************************
+const char DistT1[6]=" м.";  
+const char DistT2[2]=":";  
+const char DistT3[2]="0";  
+const char DistT4[2]=" ";  
+const char DistT5[6]=">1000";  
 char* DistTimeToChar(double DistanceBetween, int ghour, int gmin, int gsec) 
 {
-  String stringOne;
   // "1234567890123456"
   // "Движение 10.86 м"
   // "Движение 110.8 м"
   // "16:27:31 110.8 м"
   // "16:27:31 >1000 м"
   memset(charMess,'\0',34); 
+  // v2: 16098 + 1463 => 585 => 481
+  if (ghour<10) {strcat(charMess,DistT3); strcat(charMess,IntToChar(ghour));}
+  else strcat(charMess,IntToChar(ghour)); 
+  strcat(charMess,DistT2); 
+  if (gmin<10) {strcat(charMess,DistT3); strcat(charMess,IntToChar(gmin));}
+  else strcat(charMess,IntToChar(gmin)); 
+  strcat(charMess,DistT2); 
+  if (gsec<10) {strcat(charMess,DistT3); strcat(charMess,IntToChar(gsec));}
+  else strcat(charMess,IntToChar(gsec)); 
+  strcat(charMess,DistT4); 
+  if (DistanceBetween<100)         {dtostrf(DistanceBetween,2,2,chardec); strcat(charMess,chardec);} 
+  else if (DistanceBetween<999.99) {dtostrf(DistanceBetween,3,1,chardec); strcat(charMess,chardec);}   
+  else strcat(charMess,DistT5);
+  strcat(charMess,DistT1); 
+  /*
+  // v1: 16620 + 1457 => 591 => 482
+  char chardis[6];
+  String stringOne;
   String chour; if (ghour<10) chour="0"+String(ghour); else chour=String(ghour);
   String cmin; if (gmin<10) cmin="0"+String(gmin); else cmin=String(gmin);
   String csec; if (gsec<10) csec="0"+String(gsec); else csec=String(gsec);
-  String cdis; char chardis[6]; 
+  String cdis;  
   if (DistanceBetween<100)         {dtostrf(DistanceBetween,2,2,chardis); cdis=chardis;} 
   else if (DistanceBetween<999.99) {dtostrf(DistanceBetween,3,1,chardis); cdis=chardis;}   
   else cdis=">1000";
   stringOne=chour+":"+cmin+":"+csec+" "+cdis+" м.";
   stringOne.toCharArray(charMess,33);
+  */
   return charMess;  
 }  
 // ****************************************************************************
 // *                       Сформировать сообщение о локации                   *
 // ****************************************************************************
+const char LocToCh[2]="-";  
 char* LocationToChar(double lat, double lng) 
 {
-  String stringOne,stringlat,stringlng;
   // "1234567890123456"
   // "61.80191-34.3298"
   memset(charMess,'\0',18); 
-  char charlat[12]; dtostrf(lat,2,5,charlat); stringlat=charlat;
-  char charlng[12]; dtostrf(lng,2,4,charlng); stringlng=charlng;
-  stringOne=stringlat+"-"+stringlng;
-  stringOne.toCharArray(charMess,17);
+  dtostrf(lat,2,5,chardec); strcat(charMess,chardec);
+  strcat(charMess,LocToCh); 
+  dtostrf(lat,2,4,chardec); strcat(charMess,chardec);
   return charMess;  
 }  
 // ****************************************************************************
@@ -176,7 +176,6 @@ bool Talk_VKEL_TTL(unsigned long ncikl)
         ghour=ghour+timezone_hours;
         if (ghour>=24) ghour=ghour-24;
         else if (ghour<0) ghour=ghour+24;
-        //saymest(DTimeToChar(gday,gmonth,ghour,gmin,gsec));
         saymest(DistTimeToChar(DistanceBetween,ghour,gmin,gsec)); 
       }
       // "Не определяется время"
