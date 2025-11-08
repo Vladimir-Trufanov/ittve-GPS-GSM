@@ -41,11 +41,12 @@ char* SecToChar(uint32_t MinSec, bool isSec=true)
   // "Задержка 99 мин."
   // "Задержка >99 мин"
   memset(charMess,'\0',34); 
-  char SecToCh4[4];
-  memset(SecToCh4,'\0',4); 
+  //char SecToCh4[4];
+  //memset(SecToCh4,'\0',4); 
   strcat(charMess,SecToCh1); 
-  String(MinSec).toCharArray(SecToCh4,4);
-  strcat(charMess,SecToCh4);   
+  //String(MinSec).toCharArray(SecToCh4,4);
+  //strcat(charMess,SecToCh4);   
+  strcat(charMess,IntToChar(MinSec));   
   if (isSec) strcat(charMess,SecToCh2); 
   else strcat(charMess,SecToCh3); 
   return charMess; 

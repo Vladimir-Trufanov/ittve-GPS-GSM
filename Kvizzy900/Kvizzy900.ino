@@ -43,6 +43,17 @@ bool isFullCikl=true;                   // 9: true - "Выполняем про�
 bool isMemTrass=false;                  // 8: true - "Показываем свободную память";    false - "Отменяем трассирование памяти"
 bool isATTrass=true;                    // 7: true - "Показываем ответ на AT-команды"; false - "Отменяем трассирование AT-команд"
 
+char charNumby[6]; // char[5]+'\0'
+char* IntToChar(uint32_t numbIn) 
+{
+  int numby=numbIn;
+  //static char charNumby[6]; // char[5]+'\0'
+  memset(charNumby,'\0',6); 
+  if (numby>99999) numby=99999;
+  String(numby).toCharArray(charNumby,6);
+  return charNumby;
+}
+
 // ****************************************************************************
 // *                       Сформировать сообщение по памяти                   *
 // *                      (кириллица занимает 2 байта а UTF8)                 *
@@ -57,11 +68,12 @@ char* FreeMemoryToChar()
   memset(charFree,'\0',28); 
   // "1234567890123456"
   // "Память 1017 байт"
-  char FreeM3[6];
-  memset(FreeM3,'\0',6); 
+  //char FreeM3[6];
+  //memset(FreeM3,'\0',6); 
   strcat(charFree,FreeM1); 
-  String(getFreeMemory()).toCharArray(FreeM3,6);
-  strcat(charFree,FreeM3);   
+  //String(getFreeMemory()).toCharArray(FreeM3,6);
+  //strcat(charFree,FreeM3);   
+  strcat(charFree,IntToChar(getFreeMemory()));   
   strcat(charFree,FreeM2);   
   return charFree; 
   // v1 => программа=16790, переменные=1457, для локальных 591, free=460  
