@@ -30,18 +30,25 @@ const int timezone_hours=3;             // Корректировка време
 // ****************************************************************************
 // *                Сформировать сообщение о задержке сигнала GPS             *
 // ****************************************************************************
+const  char SecToCh1[18]="Задержка ";  
+const  char SecToCh2[10]=" cек.";  
+const  char SecToCh3[10]=" мин.";  
+
 char* SecToChar(uint32_t MinSec, bool isSec=true) 
 {
-  String stringOne;
   // "1234567890123456"
   // "Задержка 23 сек."
   // "Задержка 99 мин."
   // "Задержка >99 мин"
   memset(charMess,'\0',34); 
-  if (isSec) stringOne="Задержка "+String(MinSec)+" cек.\0";
-  else stringOne="Задержка "+String(MinSec)+" мин.\0";
-  stringOne.toCharArray(charMess,33);
-  return charMess;  
+  char SecToCh4[4];
+  memset(SecToCh4,'\0',4); 
+  strcat(charMess,SecToCh1); 
+  String(MinSec).toCharArray(SecToCh4,4);
+  strcat(charMess,SecToCh4);   
+  if (isSec) strcat(charMess,SecToCh2); 
+  else strcat(charMess,SecToCh3); 
+  return charMess; 
 }  
 // ****************************************************************************
 // *                     Сформировать сообщение о дате и времени              *

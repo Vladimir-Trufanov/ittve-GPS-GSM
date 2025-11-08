@@ -180,16 +180,12 @@ void Talk_SIM900(unsigned long ncikl)
 // ****************************************************************************
 // *          Выполнить передачу последних принятых координат на сайт         *
 // ****************************************************************************
-
 // 2025-11-04 вид запроса, введенный вручную 
 // http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={"trkpt":{"lat":52518611,"lon":13376111,"color":"yellow"}}
-
 // 2025-11-04 вид запроса, считанный из URL сайта в Edge и Google Chrome
 // http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}
-
 // 2025-11-04 вид запроса, считанный из URL сайта в Yandex
 // http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson=%7B%22trkpt%22:%7B%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22%7D%7D
-
 // 2 репозитария, которые могут пригодиться в будущем
 // https://github.com/lbussy/LCBUrl
 // https://github.com/plageoj/urlencode
@@ -207,7 +203,7 @@ char url[170];
 const char str0[]="AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=";
 const char str1[]="&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:";
 const char str2[]=",%22lon%22:";
-const char str3[]=",%22color%22:%22yellow%22}}\"";
+const char str3[]=",%22color%22:%22blue%22}}\"";
 
 bool send_coords_at(uint32_t glat, uint32_t glon, uint32_t gcik)
 {
