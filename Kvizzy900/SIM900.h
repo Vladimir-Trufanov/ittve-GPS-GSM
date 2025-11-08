@@ -194,15 +194,13 @@ void Talk_SIM900(unsigned long ncikl)
 // https://github.com/lbussy/LCBUrl
 // https://github.com/plageoj/urlencode
 
-
-char str31[10];
 void valtostr(uint32_t value)
 {
   String c;
   c=String(value);
-  memset(str31,'\0',10); 
-  c.toCharArray(str31,c.length()+1);
-  saymest(FreeMemoryToChar());
+  memset(charMess,'\0',10); 
+  c.toCharArray(charMess,c.length()+1);
+  //saymest(FreeMemoryToChar());
 }
 
 char url[170];
@@ -221,13 +219,13 @@ bool send_coords_at(uint32_t glat, uint32_t glon, uint32_t gcik)
   memset(url,'\0',170); 
   strcat(url,str0); // ---Склеиваем str1 + str2
   valtostr(gcik);
-  strcat(url,str31); // ---Склеиваем str1 + str2
+  strcat(url,charMess); // ---Склеиваем str1 + str2
   strcat(url,str1); // ---Склеиваем str1 + str2
   valtostr(glat);
-  strcat(url,str31); // ---Склеиваем str1 + str2
+  strcat(url,charMess); // ---Склеиваем str1 + str2
   strcat(url,str2); // ---Склеиваем str1 + str2
   valtostr(glon);
-  strcat(url,str31); // ---Склеиваем str1 + str2
+  strcat(url,charMess); // ---Склеиваем str1 + str2
   strcat(url,str3); // ---Склеиваем str1 + str2
   
   Serial.print("sizeof(url)="); Serial.println(sizeof(url));

@@ -30,12 +30,12 @@ SoftwareSerial   SIM900( 7,8 ); // SIM900
 
 // Определяем интервал подачи координат в мс на сайт
 uint32_t deltaGPS=1000;             
+// Резервируем буфер нефиксированных сообщений
+char charMess[34];    
 
 // Подключаем список 16-символьных сообщений приложения Kvizzy900
 // и функцию вывода сообщений
 #include "s16_Kvizzy900.h"
-// Резервируем буфер нефиксированных сообщений
-char charMess[34];    
 
 bool isSIM900=false;                    // "Не работает SIM900" = SIM900 does not work
 uint32_t ncikl=0;                       // счетчик циклов
@@ -45,16 +45,33 @@ bool isATTrass=true;                    // 7: true - "Показываем от�
 
 // ****************************************************************************
 // *                       Сформировать сообщение по памяти                   *
+// *                      (кириллица занимает 2 байта а UTF8)                 *
 // ****************************************************************************
 char* FreeMemoryToChar() 
 {
-  String stringOne;
+  // v2 => программа=16814, переменные=1451, для локальных 597, free=474   
+  char FreeM1[14]="Память ";  
+  char FreeM2[10]=" байт";  
+  static char charFree[28];
+  memset(charFree,'\0',28); 
   // "1234567890123456"
   // "Память 1017 байт"
-  memset(charMess,'\0',34); 
+  char FreeM3[6];
+  memset(FreeM3,'\0',6); 
+  strcat(charFree,FreeM1); 
+  String(getFreeMemory()).toCharArray(FreeM3,6);
+  strcat(charFree,FreeM3);   
+  strcat(charFree,FreeM2);   
+  return charFree; 
+  // v1 => программа=16790, переменные=1457, для локальных 591, free=460  
+  /*
+  static char strFree[34];
+  memset(strFree,'\0',34); 
+  String stringOne;
   stringOne="Память "+String(getFreeMemory())+" байт";
-  stringOne.toCharArray(charMess,33);
-  return charMess;  
+  stringOne.toCharArray(strFree,33);
+  return strFree;
+  */  
 }  
 
 // Обеспечиваем взаимодействие и выборку данных из приёмника GPS VKEL_TTL 
@@ -69,7 +86,7 @@ void setup()
   SIM900.begin(9600);
   // Выводим сводку по памяти в начале программы
   Serial.println(" ");
-  //saymest(FreeMemoryToChar());
+  saymest(FreeMemoryToChar());
   // saymess(m1_Fill1);
 }
 
@@ -116,8 +133,6 @@ void loop()
     {
       SIM900.listen();
       glat=lat*1000000; glon=lng*1000000;   
-      //Serial.print("lat,lng: "); Serial.print(lat); Serial.print(","); Serial.println(lng); 
-      //Serial.print("glat,glon: "); Serial.print(glat); Serial.print(","); Serial.println(glon); 
       bool isSend=send_coords_at(glat,glon,67);
       if (!isSend) Serial.println("Неудачная отправка координат"); 
       VKEL_TTL.listen();
