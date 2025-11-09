@@ -47,16 +47,21 @@ uint8_t ATcom(char* ATcommand, char* expected_answer, unsigned int timeout)
   uint8_t i;                               // позиция в заполняемом буфере ответа GPRS(SIM900)
   answer=2;                                // "за время тайм-аута не начат приём ответа"
   unsigned long previous;                  // время начала приема ответа от GPRS
-  // Готовим буфер приёма ответа от GPRS
-  char response[256];                      // объявили буфер ответа GPRS
-  memset(response,'\0',256);               // очистили буфер 
   i = 0;                                   // установили начальную позицию заполнения буфера
   delay(100);                              // сделали начальную задержку перед подачей команды
   previous = millis();                     // зафиксировали начальное время для отсчета таймаута
   // Очищаем возможно оставшийся прежний ответ от GPRS
   while (SIM900.available()>0) SIM900.read(); 
-  // Отправляем AT-команду   
-  SIM900.println(ATcommand);    
+  
+  // В единственном случае, когда передается команда на передачу 
+  // данных на сайт, сама команда находится в буфере приема ответа, 
+  // поэтому буфер чистится строго после отправки команды
+  
+  // 1 шаг: Отправляем AT-команду   
+  SIM900.println(ATcommand);  
+  // 2 шаг: Чистим буфер для приема ответа
+  memset(response,'\0',170);               // очистили буфер 
+  
   // Циклимся, пока не выберем весь ответ за время тайм-аута
   do
   {
@@ -189,40 +194,12 @@ void Talk_SIM900(unsigned long ncikl)
 // 2 репозитария, которые могут пригодиться в будущем
 // https://github.com/lbussy/LCBUrl
 // https://github.com/plageoj/urlencode
-char url[170];
 const char str0[]="AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=";
 const char str1[]="&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:";
 const char str2[]=",%22lon%22:";
 const char str3[]=",%22color%22:%22blue%22}}\"";
 bool send_coords_at(uint32_t glat, uint32_t glon, uint32_t gcik)
 {
-  // v1
-  // Готовим строку с URL-адресом, cобственно в URL заменяем обратные слэши на %22, иначе URL сбрасывается
-  //ATcom("AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"","OK",2500);
-  memset(url,'\0',170); 
-  strcat(url,str0); // ---Склеиваем str1 + str2
-  strcat(url,IntToChar(gcik)); 
-  strcat(url,str1); // ---Склеиваем str1 + str2
-  strcat(url,IntToChar(glat)); 
-  strcat(url,str2); // ---Склеиваем str1 + str2
-  strcat(url,IntToChar(glon)); 
-  strcat(url,str3); // ---Склеиваем str1 + str2
-  
-  Serial.print("sizeof(url)="); Serial.println(sizeof(url));
-  Serial.println(url);  
-
-  // v2
-  // s.length()=152 для cycle=7
-  // Собственно в URL заменяем обратные слэши на %22, иначе URL сбрасывется
-  // String s="AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={\"trkpt\":{\"lat\":52518611,\"lon\":13376111,\"color\":\"yellow\"}}\"";
-  /*
-  String s="AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"";
-  Serial.print("s.length()="); Serial.println(s.length());
-  Serial.println(s);
-  s.toCharArray(url,s.length()+1);
-  Serial.println(url);  
-  */
-
   // Проверяем "уровень сигнала" – первое значение это уровень сигнала в дБ, он должен быть выше 5. Чем выше, тем лучше, до 31.
   // if (ATcom("AT+CSQ","OK",500)!=0) return false;;
   // Закрываем все соединения TCP/UDP, которые могли быть открыты на модуле. 
@@ -251,7 +228,42 @@ bool send_coords_at(uint32_t glat, uint32_t glon, uint32_t gcik)
   if (ATcom("AT+HTTPPARA=\"CID\",1","OK",500)!=0) return false;
   // Задаём URL сайта, к которому будет отправляться запрос HTTP GET.
   //ATcom("AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"","OK",2500);
-  ATcom(url,"OK",2500);
+
+  // Готовим строку с URL-адресом, cобственно в URL заменяем обратные слэши на %22, иначе URL сбрасывается
+  //ATcom("AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"","OK",2500);
+  
+  /*
+  memset(url,'\0',170); 
+  strcat(url,str0); // ---Склеиваем str1 + str2
+  strcat(url,IntToChar(gcik)); 
+  strcat(url,str1); // ---Склеиваем str1 + str2
+  strcat(url,IntToChar(glat)); 
+  strcat(url,str2); // ---Склеиваем str1 + str2
+  strcat(url,IntToChar(glon)); 
+  strcat(url,str3); // ---Склеиваем str1 + str2
+  
+  Serial.print("sizeof(url)="); Serial.println(sizeof(url));
+  Serial.println(url);  
+  */
+
+  memset(response,'\0',170); 
+  strcat(response,str0); // ---Склеиваем str1 + str2
+  strcat(response,IntToChar(gcik)); 
+  strcat(response,str1); // ---Склеиваем str1 + str2
+  strcat(response,IntToChar(glat)); 
+  strcat(response,str2); // ---Склеиваем str1 + str2
+  strcat(response,IntToChar(glon)); 
+  strcat(response,str3); // ---Склеиваем str1 + str2
+  
+  Serial.print("sizeof(response)="); Serial.println(sizeof(response));
+  Serial.println(response);  
+
+
+
+
+  ATcom(response,"OK",2500);
+  //ATcom(url,"OK",2500);
+
   // Вводим команду для выполнения запроса GET: AT+HTTPACTION=0.
   // Параметр команды AT+HTTPACTION задает тип запроса HTTP: 0 — GET, 1 — POST, 2 — HEAD, 3 — DELETE.
   // В нашем случае нулевое значение предписывает выполнить запрос GET.
