@@ -38,10 +38,10 @@ Selected=s16_Kvizzy900.h
 TopLine=16
 Caret=1,33
 [s16_Kvizzy900.h]
-TopLine=161
-Caret=1,166
+TopLine=107
+Caret=11,114
 [SIM900.h]
-TopLine=182
+TopLine=186
 Caret=1,210
 [Old\sketch_sep30a.ino]
 TopLine=371

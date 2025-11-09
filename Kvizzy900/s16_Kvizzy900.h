@@ -111,7 +111,7 @@ void saymest(char mess[])
 char charNumby[10]; // char[9]+'\0'
 char* IntToChar(uint32_t numbIn) 
 {
-  int numby=numbIn;
+  uint32_t numby=numbIn;
   memset(charNumby,'\0',10); 
   if (numby>999999999) numby=999999999;
   String(numby).toCharArray(charNumby,10);
@@ -221,7 +221,7 @@ char* LocationToChar(double lat, double lng)
   memset(charMess,'\0',18); 
   dtostrf(lat,2,5,chardec); strcat(charMess,chardec);
   strcat(charMess,LocToCh); 
-  dtostrf(lat,2,4,chardec); strcat(charMess,chardec);
+  dtostrf(lng,2,4,chardec); strcat(charMess,chardec);
   return charMess;  
 }  
 
