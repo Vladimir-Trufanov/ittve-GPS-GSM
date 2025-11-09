@@ -189,47 +189,29 @@ void Talk_SIM900(unsigned long ncikl)
 // 2 репозитария, которые могут пригодиться в будущем
 // https://github.com/lbussy/LCBUrl
 // https://github.com/plageoj/urlencode
-
-void valtostr(uint32_t value)
-{
-  String c;
-  c=String(value);
-  memset(charMess,'\0',10); 
-  c.toCharArray(charMess,c.length()+1);
-  //saymest(FreeMemoryToChar());
-}
-
 char url[170];
 const char str0[]="AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=";
 const char str1[]="&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:";
 const char str2[]=",%22lon%22:";
 const char str3[]=",%22color%22:%22blue%22}}\"";
-
 bool send_coords_at(uint32_t glat, uint32_t glon, uint32_t gcik)
 {
-
   // v1
-  
   // Готовим строку с URL-адресом, cобственно в URL заменяем обратные слэши на %22, иначе URL сбрасывается
   //ATcom("AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"","OK",2500);
   memset(url,'\0',170); 
   strcat(url,str0); // ---Склеиваем str1 + str2
-  valtostr(gcik);
-  strcat(url,charMess); // ---Склеиваем str1 + str2
+  strcat(url,IntToChar(gcik)); 
   strcat(url,str1); // ---Склеиваем str1 + str2
-  valtostr(glat);
-  strcat(url,charMess); // ---Склеиваем str1 + str2
+  strcat(url,IntToChar(glat)); 
   strcat(url,str2); // ---Склеиваем str1 + str2
-  valtostr(glon);
-  strcat(url,charMess); // ---Склеиваем str1 + str2
+  strcat(url,IntToChar(glon)); 
   strcat(url,str3); // ---Склеиваем str1 + str2
   
   Serial.print("sizeof(url)="); Serial.println(sizeof(url));
   Serial.println(url);  
 
-
   // v2
-  
   // s.length()=152 для cycle=7
   // Собственно в URL заменяем обратные слэши на %22, иначе URL сбрасывется
   // String s="AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={\"trkpt\":{\"lat\":52518611,\"lon\":13376111,\"color\":\"yellow\"}}\"";
