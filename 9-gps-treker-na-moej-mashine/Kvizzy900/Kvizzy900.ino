@@ -17,7 +17,7 @@
  *
  * Вместо устаревшей TinyGPS используется TinyGPSPlus.
  * 
- * v2.0.5, 08.11.2025                                 Автор:      Труфанов В.Е.
+ * v2.0.6, 10.11.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
  *
 **/
@@ -27,8 +27,6 @@ SoftwareSerial VKEL_TTL(12,13); // синий на 12 - будет RX; зеле�
 SoftwareSerial   SIM900( 7,8 ); // SIM900 
 
 #include <MemoryFree.h>
-
-uint32_t deltaGPS=1000;  // интервал подачи координат в мс на сайт          
 
 // Подключаем список 16-символьных сообщений приложения Kvizzy900
 // и функцию вывода сообщений
@@ -58,6 +56,7 @@ void setup()
 
 void loop()
 {
+  bool isSend; // флаг успешности отправки координат
   // Отрабатываем управляющие команды из последовательного порта
   if (Serial.available())
   {
@@ -99,8 +98,9 @@ void loop()
     {
       SIM900.listen();
       glat=lat*1000000; glon=lng*1000000;   
-      bool isSend=send_coords_at(glat,glon,67);
+      isSend=send_coords_at(glat,glon,7);
       if (!isSend) Serial.println("Неудачная отправка координат"); 
+      else Serial.println("УШЛИ КООРДИНАТЫ!"); 
       VKEL_TTL.listen();
     }
 
@@ -125,8 +125,6 @@ void loop()
     // начинаем прослушивать и работать с портом SIM900
     if (isVKEL_TTL)
     {
-      // Начинаем отсчет интервал в мс до следующего опроса GPS 
-      BdelayGPS=millis();            
       // Работаем с SIM900
       SIM900.listen();
       // Проверяем, реагирует ли на команды SIM900
@@ -136,8 +134,25 @@ void loop()
         // Включаем SIM900
         saymess(m1_TurnOnSIM900);
         SIM900powerUpOrDown();
+        // Начинаем новый отсчет времени для передачи на сайт 
+        BdelaySIM=millis();   
       }
-      // Talk_SIM900(ncikl);
+      // Отсчитываем время и отправляем данные положения на сайт
+      else
+      {
+        delaySIM=millis()-BdelaySIM; 
+        if (delaySIM>dTimeSIM) 
+        {
+          glat=lat*1000000; glon=lng*1000000;   
+          isSend=send_coords_at(glat,glon,ncikl);
+          if (!isSend) Serial.println("Неудачная отправка координат"); 
+          else Serial.println("УШЛИ КООРДИНАТЫ!"); 
+          // Начинаем новый отсчет времени для передачи на сайт 
+          BdelaySIM=millis();   
+        }
+      }
+      // Начинаем отсчет интервал в мс до следующего опроса GPS 
+      BdelayGPS=millis();            
     }
     // Пересчитываем и указываем интервал отсутствия сигнала GPS
     else
