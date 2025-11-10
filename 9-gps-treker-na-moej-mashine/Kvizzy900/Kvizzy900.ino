@@ -99,8 +99,6 @@ void loop()
       SIM900.listen();
       glat=lat*1000000; glon=lng*1000000;   
       isSend=send_coords_at(glat,glon,7);
-      if (!isSend) Serial.println("Неудачная отправка координат"); 
-      else Serial.println("УШЛИ КООРДИНАТЫ!"); 
       VKEL_TTL.listen();
     }
 
