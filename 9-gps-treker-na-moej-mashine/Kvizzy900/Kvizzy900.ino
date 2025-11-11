@@ -26,8 +26,6 @@
 SoftwareSerial VKEL_TTL(12,13); // синий на 12 - будет RX; зеленый на 13 - будет TX
 SoftwareSerial   SIM900( 7,8 ); // SIM900 
 
-#include <MemoryFree.h>
-
 // Подключаем список 16-символьных сообщений приложения Kvizzy900
 // и функцию вывода сообщений
 #include "s16_Kvizzy900.h"
@@ -51,7 +49,7 @@ void setup()
   // Выводим сводку по памяти в начале программы
   Serial.println(" ");
   saymest(FreeMemoryToChar());
-  // saymess(m1_Fill1);
+  //saymess(m1_Fill1);
 }
 
 void loop()
