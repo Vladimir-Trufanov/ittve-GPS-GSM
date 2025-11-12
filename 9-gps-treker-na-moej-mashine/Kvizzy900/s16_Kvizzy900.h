@@ -11,7 +11,9 @@
 #ifndef s16_Kvizzy900_h
 #define s16_Kvizzy900_h
 // Указываем, что данный файл нужно подключить только один раз
-#pragma once            
+#pragma once    
+
+#include <MemoryFree.h>
 
 // Готовим массивы символов для формирования сообщений
 char charMess[34];      // буфер нефиксированных сообщений   
