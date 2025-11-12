@@ -1,16 +1,28 @@
 /** Arduino UNO, SIM900 ************************************ mess_Lcd1602.h ***
  * 
  * Обеспечить вывод 16-символьных сообщений на дисплей LCD1602 из оперативной
- * и программной памяти в режиме выталкивания более старой строки сверху-вниз 
+ * и программной памяти в режиме выталкивания более старой строки снизу-вверх
+ * (или сверху-вниз) 
  * 
- * v1.0.1, 11.11.2025                                 Автор:      Труфанов В.Е.
+ * v1.0.2, 12.11.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 10.11.2025
-**/
+ *
+ * На дисплее не может находиться одновременно больше 8 уникальных русских букв! 
+ * Русской буквой считается буква, написание которой не совпадает с английской, 
+ * например "ы". Для уменьшения количества таких букв пишите КАПСОМ - в этом 
+ * случае похожих написаний в языках больше.
+ * https://alexgyver.ru/lessons/lcd1602/
+ **/
 
 #ifndef mess_Lcd1602_h
 #define mess_Lcd1602_h
 // Указываем, что данный файл нужно подключить только один раз
-#pragma once            
+#pragma once 
+
+// Подключаем библиотеку LCD_1602_RUS (наследницу LiquidCrystal_I2C.h)
+#include <LCD_1602_RUS.h> 
+// Создаём объект для LCD-дисплея
+LCD_1602_RUS lcd(0x27,16,2); 
 
 // Определяем макрос для размещения массива символов в программной памяти:
 // const char pstr[] PROGMEM = "Массив символов pgm в программной памяти, Flash вместо RAM";
@@ -25,16 +37,44 @@
   #define _FS(name) (const __FlashStringHelper*) name
 #endif
 
+bool isLcd1602first=true;
+
 //               "123456789012345678901234567890123"
 char oldmess[33]="                                 ";
+char newmess[33]="                                 ";
+
+void extfirstline()
+{
+  if (isLcd1602first)
+  {
+    lcd.init();                       // проинициализировали lcd    
+    lcd.backlight();                  // включили подсветку
+    isLcd1602first=false;
+  }
+  // Выводим старое сообщение
+  memset(oldmess,'\0',33); 
+  strncpy(oldmess, newmess, 33);
+  lcd.setCursor(0,0);               // установили курсор в начало 1 строки
+  lcd.print(oldmess);               // распечатали текст
+  // Чистим буфер нового сообщения
+  memset(newmess,'\0',33); 
+}
 
 void extmess(String _app1, char mess[])
 {
-  char newmess[33];
-  memset(newmess,'\0',33); 
+  // Выводим старое сообщение
+  //memset(oldmess,'\0',33); 
+  //strncpy(oldmess, newmess, 33);
+  //lcd.setCursor(0,0);               // установили курсор в начало 1 строки
+  //lcd.print(oldmess);               // распечатали текст
+  // Выводим новое сообщение
+  //memset(newmess,'\0',33); 
+  extfirstline();
   strncpy_P(newmess, (const char*)mess,33);  // _P is the version to read from program space
+  //delay(500); 
+  lcd.setCursor(0,1);               // установили курсор в начало 2 строки
+  lcd.print(newmess);               // распечатали текст
   Serial.println(newmess);  
-
   /*
   Функция strncpy() в Arduino позволяет скопировать ограниченную часть одной строки (source) 
   в другую строку (destination), указав максимальную длину символов для копирования. 
@@ -58,15 +98,23 @@ void extmess(String _app1, char mess[])
   char buf = "01234567"; strncpy(buf, "hello", 5) — buf == "hello567".
   strncpy(buf, "hello", 6) — buf == "hello".
   */
-
-
 }
 
 void extmest(String _app1,char mess[])
 {
-  Serial.println(mess);  
+  extfirstline();
+  // Выводим старое сообщение
+  //memset(oldmess,'\0',33); 
+  //strncpy(oldmess, newmess, 33);
+  //lcd.setCursor(0,0);               // установили курсор в начало 1 строки
+  //lcd.print(oldmess);               // распечатали текст
+  // Выводим новое сообщение
+  //memset(newmess,'\0',33); 
+  strncpy(newmess, mess, 33);
+  lcd.setCursor(0,1);               // установили курсор в начало 2 строки
+  lcd.print(newmess);               // распечатали текст
+  Serial.println(newmess);  
 }
-
 
 #endif
 

@@ -6,10 +6,6 @@
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
 **/
 
-// Подключаем библиотеку LCD_1602_RUS (наследницу LiquidCrystal_I2C.h)
-#include <LCD_1602_RUS.h> 
-// Создаём объект для LCD-дисплея
-LCD_1602_RUS lcd(0x27,16,2); 
 // Подключаем список 16-символьных сообщений приложения Kvizzy900
 // и функции подготовки и вывода сообщений
 #include <MemoryFree.h>
@@ -19,21 +15,22 @@ void setup()
 {
   Serial.begin(115200);
 
-  lcd.init();                       // проинициализировали lcd    
-  lcd.backlight();                  // включили подсветку
-  lcd.setCursor(0,0);               // установили курсор в начало 1 строки
-  lcd.print("Hello, world");        // вывели текст
-  lcd.setCursor(0,1);               // установили курсор в начало 2 строки
-  lcd.print("РУСИФИК-ация! 58");    // распечатали текст
+  //lcd.setCursor(0,0);               // установили курсор в начало 1 строки
+  //lcd.print("Hello, world");        // вывели текст
+  //lcd.setCursor(0,1);               // установили курсор в начало 2 строки
+  //lcd.print("РУСИФИК-ация! 58");    // распечатали текст
   
+  delay(2000);
   saymess(m1_anAudition);
-  delay(1000);
+  delay(2000);
   saymest("УШЛИ КООРДИНАТЫ!"); 
-  delay(1000);
+  
+  delay(2000);
   saymess(m1_ResponsExceed);
-  delay(1000);
+  delay(2000);
   saymest("Новое сообщение."); 
-  delay(1000);
+  delay(2000);
+  
 }
 
 void loop()
