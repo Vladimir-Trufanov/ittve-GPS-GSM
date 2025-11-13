@@ -58,6 +58,7 @@ _DS(m1_ResponsExceed, "SIM900 > 255 cим")    // "Ответ SIM900 превы�
 _DS(m1_NoReception,   "Нет приёма GPRS ")    // "За время тайм-аута не начат приём" - No reception is started during the timeout period
 _DS(m1_NoConfirmed,   "Не успешен GPRS ")    // "Oтвет на команду не подтвержден" - The response to the command has not been confirmed
 _DS(m1_NotCompleted,  "Не полный ответ ")    // "За время тайм-аута не завершён ответ" - The response was not completed during the timeout period
+_DS(m1_Wait5sek,      "Ждем ответ 5 сек")    // "Ждем 5 сек для получения ответа" - "Waiting for a response for 5 seconds"
 
 // ****************************************************************************
 // *         Вывести сообщение внутри приложения в последовательный порт      *

@@ -134,7 +134,7 @@ void loop()
       //memset(response,'\0',170);               // очистили буфер 
       //strcpy_P(response, AT_AT);           
       //if (AT_com(500)!=0)
-      if (AT_com(AT_AT,500)!=0)
+      if (AT_com(AT_AT)!=0)
       { 
         // Включаем SIM900
         saymess(m1_TurnOnSIM900);
@@ -145,19 +145,30 @@ void loop()
       // Отсчитываем время и отправляем данные положения на сайт
       else
       {
+        
+        
+        
         // Проверяем "уровень сигнала" – первое значение это уровень сигнала в дБ, он должен быть выше 5. Чем выше, тем лучше, до 31.
-        //memset(response,'\0',170);               // очистили буфер 
-        //strcpy_P(response, AT_CSQ);           
-        //AT_com(500);
-        AT_com(AT_CSQ,500);
+        //AT_com(AT_CSQ,500);
+        //AT_RAM("AT+CSQ",500);
+        
+        /*
+        uint32_t gc;
+        memset(response,'\0',170);               // очистили буфер 
+        strcpy_P(response, AT_L);           
+        //strcat(response,"ATL"); 
+        gc=3;
+        strcat(response,IntToChar(gc)); 
+        AT_(500);
+        */
 
         delaySIM=millis()-BdelaySIM; 
         if (delaySIM>dTimeSIM) 
         {
           glat=lat*1000000; glon=lng*1000000;   
           isSend=send_coords_at(glat,glon,ncikl);
-          if (!isSend) Serial.println("Неудачная отправка координат"); 
-          else Serial.println("УШЛИ КООРДИНАТЫ!"); 
+          //if (!isSend) Serial.println("Неудачная отправка координат"); 
+          //else Serial.println("УШЛИ КООРДИНАТЫ!"); 
           // Начинаем новый отсчет времени для передачи на сайт 
           BdelaySIM=millis();   
         }

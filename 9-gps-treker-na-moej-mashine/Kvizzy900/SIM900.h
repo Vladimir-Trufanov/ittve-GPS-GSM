@@ -16,7 +16,17 @@
 #include "s16_Kvizzy900.h"
 
 _DS(AT_AT,"AT") 
-_DS(AT_CSQ,"AT+CSQ") 
+//_DS(AT_CSQ,"AT+CSQ") 
+_DS(AT_L,"ATL") 
+_DS(AT_Contype,"AT+SAPBR=3,1,\"Contype\",\"GPRS\"") 
+_DS(AT_SAPBR,"AT+SAPBR=3,1,\"APN\",\"internet.mts.ru\"") 
+_DS(AT_SAPBR1,"AT+SAPBR=1,1")
+_DS(AT_SAPBR0,"AT+SAPBR=0,1")
+_DS(AT_HTTPINIT,"AT+HTTPINIT") 
+_DS(AT_HTTPPARA,"AT+HTTPPARA=\"CID\",1") 
+_DS(AT_HTTPACTION0,"AT+HTTPACTION=0") 
+_DS(AT_HTTPREAD,"AT+HTTPREAD") 
+_DS(AT_HTTPTERM,"AT+HTTPTERM") 
 
 uint32_t glat,glon;               // значения координат, передаваемые на сайт 
 
@@ -87,7 +97,7 @@ uint8_t ATcom(char* ATcommand, char* expected_answer, unsigned int timeout)
     }
   }
   while((answer == 2) && ((millis() - previous) < timeout));
-  Serial.print("i="); Serial.println(i); 
+  //Serial.print("i="); Serial.println(i); 
 
 
   // При необходимости трассируем ответ на AT-команду
@@ -130,15 +140,9 @@ uint8_t ATcom(char* ATcommand, char* expected_answer, unsigned int timeout)
   return answer;
 }
 
-
-uint8_t AT_com(const char ATcommand[],unsigned int timeout)
-//uint8_t AT_com(unsigned int timeout)
+//uint8_t AT_(const char ATcommand[],unsigned int timeout)
+uint8_t AT_(unsigned int timeout)
 {
-  // В функции используется один и тот же буфер для отправки команды и 
-  // приёма ответа, поэтому буфер готовится (чистится) дважды
-  memset(response,'\0',170);      // очистили буфер 
-  strcpy_P(response,ATcommand);   // перекинули в буфер команду из программной памяти    
-
   // Резервируем переменную результата функции
   static uint8_t answer;                  
   // Инициируем переменные
@@ -213,6 +217,26 @@ uint8_t AT_com(const char ATcommand[],unsigned int timeout)
   // Serial.print("answer="); Serial.println(answer); 
   return answer;
 }
+
+uint8_t AT_com(const char ATcommand[],unsigned int timeout=500)
+{
+  // При отправке AT-команды используется один и тот же буфер для отправки команды и 
+  // приёма ответа, поэтому буфер готовится (чистится) дважды
+  memset(response,'\0',170);      // очистили буфер 
+  strcpy_P(response,ATcommand);   // перекинули в буфер команду из программной памяти    
+  return AT_(timeout);  
+}
+
+uint8_t AT_RAM(const char ATcommand[],unsigned int timeout=500)
+{
+  // При отправке AT-команды используется один и тот же буфер для отправки команды и 
+  // приёма ответа, поэтому буфер готовится (чистится) дважды
+  memset(response,'\0',170);      // очистили буфер 
+  strcpy(response,ATcommand);     // перекинули в буфер команду из программной памяти    
+  return AT_(timeout);  
+}
+
+
 // ****************************************************************************
 // *  Включить/выключить (программный триггер) SIM900 через вывод D9 Arduino  *
 // *     (В качестве синхронизации включения/выключения требуется импульс     *
@@ -268,27 +292,31 @@ bool send_coords_at(uint32_t glat, uint32_t glon, uint32_t gcik)
   // соединения или для освобождения ресурсов, занятых предыдущими соединениями. 
   // if (ATcom("AT+CIPSHUT","OK",500)!=0) return false;
   // Открываем контекст GPRS и устанавливаем GPRS-соединение
-  //_DS(AT_Contype,"AT+SAPBR=3,1,\"Contype\",\"GPRS\"") 
-  //if (ATcom(AT_Contype,"OK",500)!=0) return false;
-  if (ATcom("AT+SAPBR=3,1,\"Contype\",\"GPRS\"","OK",500)!=0) return false;
+  //     if (ATcom("AT+SAPBR=3,1,\"Contype\",\"GPRS\"","OK",500)!=0) return false;
+  if (AT_com(AT_Contype)!=0) return false;
   // Определяем имя точки доступа Access Point Name (APN) — как “internet.mts.ru”.
-  if (ATcom("AT+SAPBR=3,1,\"APN\",\"internet.mts.ru\"","OK",500)!=0) return false;
+  //   if (ATcom("AT+SAPBR=3,1,\"APN\",\"internet.mts.ru\"","OK",500)!=0) return false;
+  if (AT_com(AT_SAPBR)!=0) return false;
   // Устанавливаем соединение для профиля с идентификатором 1.
   // Когда соединение будет установлено, можно получить параметры сеанса с помощью 
   // команды AT+SAPBR=2,1. После установления соединения команда вернет адрес 
   // IP из внутренней сети мобильного провайдера   
-  if (ATcom("AT+SAPBR=1,1","OK",2000)!=0) 
+  //  if (ATcom("AT+SAPBR=1,1","OK",2000)!=0) 
+  if (AT_com(AT_SAPBR1,2000)!=0) 
   {
     // Перезакрываем носитель контекста GPRS (сессию), если он был оставлен открытым
     // (команда AT+SAPBR=0,1 используется для закрытия сессии и соединения TCP/IP, 
     // чтобы не расходовать ресурсы мобильного провайдера. 
-    ATcom("AT+SAPBR=0,1","OK",1500);
-    if (ATcom("AT+SAPBR=1,1","OK",2000)!=0) return false;
+    //        ATcom("AT+SAPBR=0,1","OK",1500);
+    AT_com(AT_SAPBR0,1500);
+    if (AT_com(AT_SAPBR1,2000)!=0) return false;
   }
   // Инициализируем сервис HTTP 
-  ATcom("AT+HTTPINIT","OK",500);
+  //          ATcom("AT+HTTPINIT","OK",500);
+  AT_com(AT_HTTPINIT);
   // Задаём идентификатор профиля сеанса
-  if (ATcom("AT+HTTPPARA=\"CID\",1","OK",500)!=0) return false;
+  //      if (ATcom("AT+HTTPPARA=\"CID\",1","OK",500)!=0) return false;
+  if (AT_com(AT_HTTPPARA)!=0) return false;
   // Задаём URL сайта, к которому будет отправляться запрос HTTP GET и готовим строку с URL-адресом, 
   // cобственно в URL заменяем обратные слэши на %22, иначе URL сбрасывается
   //ATcom("AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"","OK",2500);
@@ -310,15 +338,19 @@ bool send_coords_at(uint32_t glat, uint32_t glon, uint32_t gcik)
   // Параметр команды AT+HTTPACTION задает тип запроса HTTP: 0 — GET, 1 — POST, 2 — HEAD, 3 — DELETE.
   // В нашем случае нулевое значение предписывает выполнить запрос GET.
   // +HTTPACTION: 0,200,134
-  ATcom("AT+HTTPACTION=0","OK",500);
+  //             ATcom("AT+HTTPACTION=0","OK",500);
+  AT_com(AT_HTTPACTION0);
 
-  Serial.println("Ждем 5 сек, чтобы запросить ответ");
+  // Ждем 5 сек для получения ответа
+  saymess(m1_Wait5sek);
   delay(5000); 
   
   // Cчитываем результаты запроса, обычно содержит код состояния 200 в случае успеха
-  ATcom("AT+HTTPREAD","OK",2500);
+  //          ATcom("AT+HTTPREAD","OK",2500);
+  AT_com(AT_HTTPREAD,2500);
   // Отключаем сервис HTTP
-  ATcom("AT+HTTPTERM","OK",500);
+  //          ATcom("AT+HTTPTERM","OK",500);
+  AT_com(AT_HTTPTERM);
   // Закрываем все соединения TCP/UDP, которые могли быть открыты на модуле. 
   // Использование этой команды может быть полезно, например, при переустановке 
   // соединения или для освобождения ресурсов, занятых предыдущими соединениями. 
@@ -326,8 +358,8 @@ bool send_coords_at(uint32_t glat, uint32_t glon, uint32_t gcik)
   // Закрываем носитель контекста GPRS (сессию), если он был оставлен открытым
   // (команда AT+SAPBR=0,1 используется для закрытия сессии и соединения TCP/IP, 
   // чтобы не расходовать ресурсы мобильного провайдера. 
-  if (ATcom("AT+SAPBR=0,1","OK",500)!=0) return false;
-  
+  //if (ATcom("AT+SAPBR=0,1","OK",500)!=0) return false;
+  if (AT_com(AT_SAPBR0)!=0) return false;
   return true;
 }
 
