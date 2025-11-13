@@ -131,16 +131,13 @@ uint8_t ATcom(char* ATcommand, char* expected_answer, unsigned int timeout)
 }
 
 
-//uint8_t AT_com(const char ATcommand[],unsigned int timeout)
-uint8_t AT_com(unsigned int timeout)
+uint8_t AT_com(const char ATcommand[],unsigned int timeout)
+//uint8_t AT_com(unsigned int timeout)
 {
   // В функции используется один и тот же буфер для отправки команды и 
   // приёма ответа, поэтому буфер готовится (чистится) дважды
-  //memset(response,'\0',170);      // очистили буфер 
-  //strcpy_P(response,ATcommand);   // перекинули в буфер команду из программной памяти    
-  //Serial.print("ATcommand="); Serial.print(ATcommand); Serial.println("="); 
-
-
+  memset(response,'\0',170);      // очистили буфер 
+  strcpy_P(response,ATcommand);   // перекинули в буфер команду из программной памяти    
 
   // Резервируем переменную результата функции
   static uint8_t answer;                  

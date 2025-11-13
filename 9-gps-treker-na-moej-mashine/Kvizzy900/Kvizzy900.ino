@@ -131,10 +131,10 @@ void loop()
       //Serial.print("sizeof(response)="); Serial.println(sizeof(response));
       //Serial.print("response="); Serial.print(response); Serial.println("="); 
 
-      //if (AT_com("AT",500)!=0)
-      memset(response,'\0',170);               // очистили буфер 
-      strcpy_P(response, AT_AT);           
-      if (AT_com(500)!=0)
+      //memset(response,'\0',170);               // очистили буфер 
+      //strcpy_P(response, AT_AT);           
+      //if (AT_com(500)!=0)
+      if (AT_com(AT_AT,500)!=0)
       { 
         // Включаем SIM900
         saymess(m1_TurnOnSIM900);
@@ -146,9 +146,10 @@ void loop()
       else
       {
         // Проверяем "уровень сигнала" – первое значение это уровень сигнала в дБ, он должен быть выше 5. Чем выше, тем лучше, до 31.
-        memset(response,'\0',170);               // очистили буфер 
-        strcpy_P(response, AT_CSQ);           
-        AT_com(500);
+        //memset(response,'\0',170);               // очистили буфер 
+        //strcpy_P(response, AT_CSQ);           
+        //AT_com(500);
+        AT_com(AT_CSQ,500);
 
         delaySIM=millis()-BdelaySIM; 
         if (delaySIM>dTimeSIM) 
