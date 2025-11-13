@@ -125,7 +125,16 @@ void loop()
       SIM900.listen();
       // Проверяем, реагирует ли на команды SIM900
       // и включаем GPRS, если нет ответа
-      if (ATcom("AT","OK",500)!=0)
+
+      //memset(response,'\0',170);               // очистили буфер 
+      //strcpy_P(response, AT_AT);           
+      //Serial.print("sizeof(response)="); Serial.println(sizeof(response));
+      //Serial.print("response="); Serial.print(response); Serial.println("="); 
+
+      //if (AT_com("AT",500)!=0)
+      memset(response,'\0',170);               // очистили буфер 
+      strcpy_P(response, AT_AT);           
+      if (AT_com(500)!=0)
       { 
         // Включаем SIM900
         saymess(m1_TurnOnSIM900);
@@ -136,6 +145,11 @@ void loop()
       // Отсчитываем время и отправляем данные положения на сайт
       else
       {
+        // Проверяем "уровень сигнала" – первое значение это уровень сигнала в дБ, он должен быть выше 5. Чем выше, тем лучше, до 31.
+        memset(response,'\0',170);               // очистили буфер 
+        strcpy_P(response, AT_CSQ);           
+        AT_com(500);
+
         delaySIM=millis()-BdelaySIM; 
         if (delaySIM>dTimeSIM) 
         {

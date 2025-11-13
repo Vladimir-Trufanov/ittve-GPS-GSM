@@ -11,12 +11,18 @@
 // Указываем, что данный файл нужно подключить только один раз
 #pragma once  
 
+// Подключаем список 16-символьных сообщений приложения Kvizzy900
+// и функцию вывода сообщений
+#include "s16_Kvizzy900.h"
+
+_DS(AT_AT,"AT") 
+_DS(AT_CSQ,"AT+CSQ") 
+
 uint32_t glat,glon;               // значения координат, передаваемые на сайт 
 
 uint32_t BdelaySIM=millis();      // начало отсчета времени до передачи на сайт 
 uint32_t  delaySIM;               // истекший интервал после передачи 
 uint32_t  dTimeSIM=180000;        // интервал подачи координат в мс на сайт (3 мин)          
-
 
 // ****************************************************************************
 // *                 Сформировать сообщения по ошибке AT-команды              *
@@ -44,6 +50,7 @@ void ATerrorMess(char* ATcommand, uint8_t answer)
   4 - "за время тайм-аута не завершён ответ"
 */
 uint8_t ATcom(char* ATcommand, char* expected_answer, unsigned int timeout)
+//uint8_t ATcom(char ATcommand[], char* expected_answer, unsigned int timeout)
 {
   // Резервируем переменную ответа
   static uint8_t answer;                  
@@ -63,6 +70,7 @@ uint8_t ATcom(char* ATcommand, char* expected_answer, unsigned int timeout)
   
   // 1 шаг: Отправляем AT-команду   
   SIM900.println(ATcommand);  
+  //SIM900.println(_FS(ATcommand));  
   // 2 шаг: Чистим буфер для приема ответа
   memset(response,'\0',170);               // очистили буфер 
   
@@ -79,6 +87,9 @@ uint8_t ATcom(char* ATcommand, char* expected_answer, unsigned int timeout)
     }
   }
   while((answer == 2) && ((millis() - previous) < timeout));
+  Serial.print("i="); Serial.println(i); 
+
+
   // При необходимости трассируем ответ на AT-команду
   if (isATTrass) saymest(response);
   if (isATTrass) saymest(ATcommand);
@@ -115,6 +126,93 @@ uint8_t ATcom(char* ATcommand, char* expected_answer, unsigned int timeout)
   // Завершаем работу функции и возвращаем ответ
   by:
   ATerrorMess(ATcommand,answer);
+  // Serial.print("answer="); Serial.println(answer); 
+  return answer;
+}
+
+
+//uint8_t AT_com(const char ATcommand[],unsigned int timeout)
+uint8_t AT_com(unsigned int timeout)
+{
+  // В функции используется один и тот же буфер для отправки команды и 
+  // приёма ответа, поэтому буфер готовится (чистится) дважды
+  //memset(response,'\0',170);      // очистили буфер 
+  //strcpy_P(response,ATcommand);   // перекинули в буфер команду из программной памяти    
+  //Serial.print("ATcommand="); Serial.print(ATcommand); Serial.println("="); 
+
+
+
+  // Резервируем переменную результата функции
+  static uint8_t answer;                  
+  // Инициируем переменные
+  uint8_t i;                               // позиция в заполняемом буфере ответа GPRS(SIM900)
+  answer=2;                                // "за время тайм-аута не начат приём ответа"
+  unsigned long previous;                  // время начала приема ответа от GPRS
+  delay(100);                              // сделали начальную задержку перед подачей команды
+  previous = millis();                     // зафиксировали начальное время для отсчета таймаута
+  // Очищаем возможно оставшийся прежний ответ от GPRS
+  while (SIM900.available()>0) SIM900.read(); 
+  
+  // 1 шаг: Отправляем AT-команду   
+  //SIM900.println(ATcommand);  
+  //Serial.print("sizeof(response)="); Serial.println(sizeof(response));
+  //Serial.print("response*"); Serial.print(response); Serial.println("*"); 
+  SIM900.println(response);  
+  // 2 шаг: Чистим буфер для приема ответа
+  memset(response,'\0',170);               // очистили буфер 
+  
+  // Циклимся, пока не выберем весь ответ за время тайм-аута
+  i = 0;                                   // установили начальную позицию заполнения буфера
+  do
+  {
+    // Если во входном буфере UART есть данные, считывает их 
+    if (SIM900.available() != 0)
+    {    
+      response[i] = SIM900.read();
+      i++;
+      // Проверяем, не вышли ли за границу буфера
+      if (i>169) {answer=1; break; }
+    }
+  }
+  while((answer == 2) && ((millis() - previous) < timeout));
+  // При необходимости трассируем ответ на AT-команду
+  //Serial.println("==="); 
+  if (isATTrass) saymest(response);
+  //Serial.println("==="); 
+  // Если вышли ли за границу буфера, то возвращаем ошибку
+  // "ответ SIM900 превышает 256 символов"  
+  if (answer==1) goto by; 
+  // Если остались в начальной позиции, то возвращаем ошибку
+  // "за время тайм-аута не начат приём ответа"  
+  else if (i==0) goto by;  
+  // Если еще есть символы в буфере SIM900, то возвращаем ошибку
+  // "за время тайм-аута не завершён ответ"
+  else if (SIM900.available()!=0) {answer=4; goto by;} 
+  // Проверяем, есть ли желаемый ответ в ответе модуля
+  //if (strstr(response, expected_answer) != NULL)    
+  if (strstr(response,"OK") != NULL)    
+  /* 
+    Функция strstr в C++ используется для поиска первого вхождения подстроки в строке. 
+    Она определена в стандартной библиотеке C, поэтому доступна и в C++.
+    Параметры: response — строка, в которой выполняется поиск; expected_answer — подстрока для поиска в строке response.
+    Возвращаемое значение: указатель на первое вхождение подстроки в строке; нулевой указатель (nullptr), если подстрока не найдена.
+    Важно: функция чувствительна к регистру — например, поиск по «hello» не соответствует «Hello». 
+    Синтаксис: char* strstr(const char* str1, const char* str2).
+    Чтобы использовать strstr, в начале кода нужно включить заголовочный файл <cstring> или <string.h> — 
+    это гарантирует, что компилятор распознаёт функцию.
+  */ 
+  {
+    // "передана команда SIM900, получен подтверждающий ответ"
+    answer = 0;
+  }
+  else 
+  {
+    // "ответ SIM900 на команду не подтвержден"
+    answer = 3;
+  }
+  // Завершаем работу функции и возвращаем ответ
+  by:
+  ATerrorMess(response,answer);
   // Serial.print("answer="); Serial.println(answer); 
   return answer;
 }
@@ -173,6 +271,8 @@ bool send_coords_at(uint32_t glat, uint32_t glon, uint32_t gcik)
   // соединения или для освобождения ресурсов, занятых предыдущими соединениями. 
   // if (ATcom("AT+CIPSHUT","OK",500)!=0) return false;
   // Открываем контекст GPRS и устанавливаем GPRS-соединение
+  //_DS(AT_Contype,"AT+SAPBR=3,1,\"Contype\",\"GPRS\"") 
+  //if (ATcom(AT_Contype,"OK",500)!=0) return false;
   if (ATcom("AT+SAPBR=3,1,\"Contype\",\"GPRS\"","OK",500)!=0) return false;
   // Определяем имя точки доступа Access Point Name (APN) — как “internet.mts.ru”.
   if (ATcom("AT+SAPBR=3,1,\"APN\",\"internet.mts.ru\"","OK",500)!=0) return false;
@@ -204,7 +304,7 @@ bool send_coords_at(uint32_t glat, uint32_t glon, uint32_t gcik)
   strcat(response,IntToChar(glon)); 
   strcat(response,str3); 
   
-  Serial.print("sizeof(response)="); Serial.println(sizeof(response));
+  //Serial.print("sizeof(response)="); Serial.println(sizeof(response));
   Serial.println(response);  
 
   ATcom(response,"OK",2500);
