@@ -2,7 +2,7 @@
  * 
  * Обеспечить взаимодействие с SIM900 и передачу данных на сайт 
  * 
- * v1.1.4, 10.11.2025                                 Автор:      Труфанов В.Е.
+ * v1.1.5, 40.11.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
 **/
 
@@ -15,6 +15,7 @@
 // и функцию вывода сообщений
 #include "s16_Kvizzy900.h"
 
+// Размещаем список команд в программной памяти
 _DS(AT_AT,"AT") 
 //_DS(AT_CSQ,"AT+CSQ") 
 _DS(AT_L,"ATL") 
@@ -27,9 +28,13 @@ _DS(AT_HTTPPARA,"AT+HTTPPARA=\"CID\",1")
 _DS(AT_HTTPACTION0,"AT+HTTPACTION=0") 
 _DS(AT_HTTPREAD,"AT+HTTPREAD") 
 _DS(AT_HTTPTERM,"AT+HTTPTERM") 
+// https://probatv.ru/State/?cycle=2&num=4&ctrl=203&sjson={"wpt":{"lat":52518611,"lon":13376111}} - путевая точка от Sim900 в автомобиле
+_DS(str0,"AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=")
+_DS(str1,"&num=5&ctrl=203&sjson={%22trkpt%22:{%22lat%22:")
+_DS(str2,",%22lon%22:")
+_DS(str3,",%22color%22:%22blue%22}}\"")
 
 uint32_t glat,glon;               // значения координат, передаваемые на сайт 
-
 uint32_t BdelaySIM=millis();      // начало отсчета времени до передачи на сайт 
 uint32_t  delaySIM;               // истекший интервал после передачи 
 uint32_t  dTimeSIM=180000;        // интервал подачи координат в мс на сайт (3 мин)          
@@ -59,6 +64,8 @@ void ATerrorMess(char* ATcommand, uint8_t answer)
   3 - "ответ на команду не подтвержден"
   4 - "за время тайм-аута не завершён ответ"
 */
+
+/*
 uint8_t ATcom(char* ATcommand, char* expected_answer, unsigned int timeout)
 //uint8_t ATcom(char ATcommand[], char* expected_answer, unsigned int timeout)
 {
@@ -114,7 +121,7 @@ uint8_t ATcom(char* ATcommand, char* expected_answer, unsigned int timeout)
   else if (SIM900.available()!=0) {answer=4; goto by;} 
   // Проверяем, есть ли желаемый ответ в ответе модуля
   if (strstr(response, expected_answer) != NULL)    
-  /* 
+  / * 
     Функция strstr в C++ используется для поиска первого вхождения подстроки в строке. 
     Она определена в стандартной библиотеке C, поэтому доступна и в C++.
     Параметры: response — строка, в которой выполняется поиск; expected_answer — подстрока для поиска в строке response.
@@ -123,7 +130,7 @@ uint8_t ATcom(char* ATcommand, char* expected_answer, unsigned int timeout)
     Синтаксис: char* strstr(const char* str1, const char* str2).
     Чтобы использовать strstr, в начале кода нужно включить заголовочный файл <cstring> или <string.h> — 
     это гарантирует, что компилятор распознаёт функцию.
-  */ 
+  * / 
   {
     // "передана команда SIM900, получен подтверждающий ответ"
     answer = 0;
@@ -139,6 +146,7 @@ uint8_t ATcom(char* ATcommand, char* expected_answer, unsigned int timeout)
   // Serial.print("answer="); Serial.println(answer); 
   return answer;
 }
+*/
 
 //uint8_t AT_(const char ATcommand[],unsigned int timeout)
 uint8_t AT_(unsigned int timeout)
@@ -279,10 +287,10 @@ void SIM900powerUpOrDown()
 // 2 репозитария, которые могут пригодиться в будущем
 // https://github.com/lbussy/LCBUrl
 // https://github.com/plageoj/urlencode
-const char str0[]="AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=";
-const char str1[]="&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:";
-const char str2[]=",%22lon%22:";
-const char str3[]=",%22color%22:%22blue%22}}\"";
+// const char str0[]="AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=";
+//const char str1[]="&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:";
+//const char str2[]=",%22lon%22:";
+//const char str3[]=",%22color%22:%22blue%22}}\"";
 bool send_coords_at(uint32_t glat, uint32_t glon, uint32_t gcik)
 {
   // Проверяем "уровень сигнала" – первое значение это уровень сигнала в дБ, он должен быть выше 5. Чем выше, тем лучше, до 31.
@@ -319,20 +327,21 @@ bool send_coords_at(uint32_t glat, uint32_t glon, uint32_t gcik)
   if (AT_com(AT_HTTPPARA)!=0) return false;
   // Задаём URL сайта, к которому будет отправляться запрос HTTP GET и готовим строку с URL-адресом, 
   // cобственно в URL заменяем обратные слэши на %22, иначе URL сбрасывается
-  //ATcom("AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=204&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"","OK",2500);
+  //ATcom("AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=7&num=5&ctrl=203&sjson={%22trkpt%22:{%22lat%22:52518611,%22lon%22:13376111,%22color%22:%22yellow%22}}\"","OK",2500);
   memset(response,'\0',170); 
-  strcat(response,str0); 
+  //strcat(response,str0); 
+  strcat_P(response,str0); 
   strcat(response,IntToChar(gcik)); 
-  strcat(response,str1); 
+  //strcat(response,str1); 
+  strcat_P(response,str1); 
   strcat(response,IntToChar(glat)); 
-  strcat(response,str2); 
+  //strcat(response,str2); 
+  strcat_P(response,str2); 
   strcat(response,IntToChar(glon)); 
-  strcat(response,str3); 
-  
-  //Serial.print("sizeof(response)="); Serial.println(sizeof(response));
-  Serial.println(response);  
-
-  ATcom(response,"OK",2500);
+  //strcat(response,str3); 
+  strcat_P(response,str3); 
+  AT_(2500);
+  //ATcom(response,"OK",2500);
 
   // Вводим команду для выполнения запроса GET: AT+HTTPACTION=0.
   // Параметр команды AT+HTTPACTION задает тип запроса HTTP: 0 — GET, 1 — POST, 2 — HEAD, 3 — DELETE.
