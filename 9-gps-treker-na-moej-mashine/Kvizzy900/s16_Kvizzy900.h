@@ -18,7 +18,6 @@
 // Готовим массивы символов для формирования сообщений
 char charMess[34];      // буфер нефиксированных сообщений   
 char chardec[8];        // буфер координат и дистанции, max 7 знаков и точка
-char response[170];     // буфер ответа GPRS и URL передачи данных
 
 // Готовим определения для вывода сообщений во внешнее приложение
 #define _app1    1      // Номер текущего приложения для внешнего приложения
@@ -54,7 +53,7 @@ _DS(m1_FreeMemory,    "Смотрим память  ")    // "Показывае
 _DS(m1_NoMemoryTrace, "Не глядим память")    // "Отменяем трассирование памяти" - Canceling memory tracing
 _DS(m1_ATcom,         "Есть AT-команды ")    // "Показываем ответ на AT-команды"
 _DS(m1_NoATtrass,     "Не трассируем AT")    // "Отменяем трассирование AT-команд"
-_DS(m1_ResponsExceed, "SIM900 > 255 cим")    // "Ответ SIM900 превышает 255 символов" - The SIM900 response exceeds 255 characters
+_DS(m1_ResponsExceed, "SIM900 > 169 cим")    // "Ответ SIM900 превышает 169 символов" - The SIM900 response exceeds 169 characters
 _DS(m1_NoReception,   "Нет приёма GPRS ")    // "За время тайм-аута не начат приём" - No reception is started during the timeout period
 _DS(m1_NoConfirmed,   "Не успешен GPRS ")    // "Oтвет на команду не подтвержден" - The response to the command has not been confirmed
 _DS(m1_NotCompleted,  "Не полный ответ ")    // "За время тайм-аута не завершён ответ" - The response was not completed during the timeout period

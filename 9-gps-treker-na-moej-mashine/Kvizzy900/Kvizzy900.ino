@@ -17,7 +17,7 @@
  *
  * Вместо устаревшей TinyGPS используется TinyGPSPlus.
  * 
- * v2.0.6, 10.11.2025                                 Автор:      Труфанов В.Е.
+ * v2.0.7, 14.11.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
  *
 **/
@@ -49,7 +49,6 @@ void setup()
   // Выводим сводку по памяти в начале программы
   Serial.println(" ");
   saymest(FreeMemoryToChar());
-  //saymess(m1_Fill1);
 }
 
 void loop()
@@ -125,15 +124,6 @@ void loop()
       SIM900.listen();
       // Проверяем, реагирует ли на команды SIM900
       // и включаем GPRS, если нет ответа
-
-      //memset(response,'\0',170);               // очистили буфер 
-      //strcpy_P(response, AT_AT);           
-      //Serial.print("sizeof(response)="); Serial.println(sizeof(response));
-      //Serial.print("response="); Serial.print(response); Serial.println("="); 
-
-      //memset(response,'\0',170);               // очистили буфер 
-      //strcpy_P(response, AT_AT);           
-      //if (AT_com(500)!=0)
       if (AT_com(AT_AT)!=0)
       { 
         // Включаем SIM900
@@ -145,23 +135,6 @@ void loop()
       // Отсчитываем время и отправляем данные положения на сайт
       else
       {
-        
-        
-        
-        // Проверяем "уровень сигнала" – первое значение это уровень сигнала в дБ, он должен быть выше 5. Чем выше, тем лучше, до 31.
-        //AT_com(AT_CSQ,500);
-        //AT_RAM("AT+CSQ",500);
-        
-        /*
-        uint32_t gc;
-        memset(response,'\0',170);               // очистили буфер 
-        strcpy_P(response, AT_L);           
-        //strcat(response,"ATL"); 
-        gc=3;
-        strcat(response,IntToChar(gc)); 
-        AT_(500);
-        */
-
         delaySIM=millis()-BdelaySIM; 
         if (delaySIM>dTimeSIM) 
         {

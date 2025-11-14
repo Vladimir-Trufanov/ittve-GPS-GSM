@@ -296,6 +296,8 @@ OK
 
 [https://m2msupport.net/m2msupport/at-command/](https://m2msupport.net/m2msupport/at-command/)
 
+### [Описание АТ-команд GSM/GPRS Shield](https://wiki.iarduino.ru/page/a6_gprs_at/)
+
 ### Проверка at команд sim900
 
 [https://we.easyelectronics.ru/part/gsm-gprs-modul-sim900-chast-vtoraya.html](https://we.easyelectronics.ru/part/gsm-gprs-modul-sim900-chast-vtoraya.html)
