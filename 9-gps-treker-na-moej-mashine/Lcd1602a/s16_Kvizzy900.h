@@ -4,62 +4,62 @@
  * и вывод их в последовательный порт или другой интерфейс
  * без копирования в оперативную память
  * 
- * v2.0.6, 10.11.2025                                 Автор:      Труфанов В.Е.
+ * v2.0.7, 15.11.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
 **/
 
 #ifndef s16_Kvizzy900_h
 #define s16_Kvizzy900_h
 // Указываем, что данный файл нужно подключить только один раз
-#pragma once            
+#pragma once    
+
+#include <MemoryFree.h>
 
 // Готовим массивы символов для формирования сообщений
 char charMess[34];        // буфер нефиксированных сообщений   
 char chardec[8];          // буфер координат и дистанции, max 7 знаков и точка
-char response[170];       // буфер ответа GPRS и URL передачи данных
 
 // Готовим определения для вывода сообщений во внешнее приложение
-#define _app "Kvizzy900"  // Номер текущего приложения для внешнего приложения
-#define _extmess_h      // Если определено, то передавать сообщение во внешнее приложение
+char app[]="Kvizzy900";   // имя текущего приложения для внешнего приложения
+#define _extmess_h        // если определено, то передавать сообщение во внешнее приложение
 #ifdef _extmess_h
   #include "mess_Lcd1602.h"
 #endif
 
 // Определяем макрос для размещения массива символов в программной памяти:
 // const char pstr[] PROGMEM = "Массив символов pgm в программной памяти, Flash вместо RAM";
-#ifndef _DS(name,value)
-  #define _DS(name,value) const char name[] PROGMEM = value;
-#endif
+#define _DS(name,value) const char name[] PROGMEM = value;
 // Определяем макрос для выборки массива символов из Flash 
 // напрямую, без копирования их в оперативную память RAM:
 // (const __FlashStringHelper*) pstr
-#ifndef _FS(name)
-  #define _FS(name) (const __FlashStringHelper*) name
-#endif
+#define _FS(name) (const __FlashStringHelper*) name
 
 // Определяем тестовые сообщения
 _DS(m1_Fill1,      "12")                                 // 2 байта
 _DS(m1_Fill2,      "12345678901234567890123456789012")   // 32 байта 
 
 // Представляем все сообщения 1 приложения "m1" (из 16 символов юникода)
+// (из-за особенностей драйвера для LCD1602 по максимуму русские буквы
+// представлены латинскими)
 _DS(m1_Fill,          "1234567890123456")    // 16 байт
-_DS(m1_NotSignGPS,    "Нет сигнала GPS ")    // "Приемник GPS не подает сигналы"
-_DS(m1_SIM900notWork, "Отключен SIM900 ")    // "Не работает SIM900"
-_DS(m1_anAudition,    "Прослушиваем GPS")    // "Выполняем прослушивание" - Performing an audition
-_DS(m1_EmptyLoop,     "Идет пустой цикл")    // "Отрабатываем пустой цикл" - Working out an empty loop
-_DS(m1_Delay99,       "Задержка >99 мин")    // "Задержка >99 мин"
-_DS(m1_TimeIsNot,     "Нет хода времени")    // "Не определяется время" - The time is not being determined
-_DS(m1_DateIsNot,     "Нет данных даты ")    // "Не определяется дата" - The date is not being determined
-_DS(m1_LocateIsNot,   "Не идёт локация ")    // "Не определяется локация" - "Location is not being determined"
-_DS(m1_TurnOnSIM900,  "Включаем SIM900 ")    // "Включаем SIM900" - "Turning on the SIM900"
-_DS(m1_FreeMemory,    "Смотрим память  ")    // "Показываем свободную память" - Showing free memory
-_DS(m1_NoMemoryTrace, "Не глядим память")    // "Отменяем трассирование памяти" - Canceling memory tracing
-_DS(m1_ATcom,         "Есть AT-команды ")    // "Показываем ответ на AT-команды"
-_DS(m1_NoATtrass,     "Не трассируем AT")    // "Отменяем трассирование AT-команд"
-_DS(m1_ResponsExceed, "SIM900 > 255 cим")    // "Ответ SIM900 превышает 255 символов" - The SIM900 response exceeds 255 characters
-_DS(m1_NoReception,   "Нет приёма GPRS ")    // "За время тайм-аута не начат приём" - No reception is started during the timeout period
-_DS(m1_NoConfirmed,   "Не успешен GPRS ")    // "Oтвет на команду не подтвержден" - The response to the command has not been confirmed
-_DS(m1_NotCompleted,  "Не полный ответ ")    // "За время тайм-аута не завершён ответ" - The response was not completed during the timeout period
+_DS(m1_NotSignGPS,    "HET CИГHAЛA GPS ")    // "Приемник GPS не подает сигналы"
+_DS(m1_SIM900notWork, "OTKЛЮЧEH SIM900 ")    // "Не работает SIM900"
+_DS(m1_anAudition,    "ПPOCЛУШИBAEM GPS")    // "Выполняем прослушивание" - Performing an audition
+_DS(m1_EmptyLoop,     "ИДET ПУCTOЙ ЦИKЛ")    // "Отрабатываем пустой цикл" - Working out an empty loop
+_DS(m1_Delay99,       "ЗAДEPЖKA >99 min")    // "Задержка >99 мин"
+_DS(m1_TimeIsNot,     "HET XOДA BPEMEHИ")    // "Не определяется время" - The time is not being determined
+_DS(m1_DateIsNot,     "HET ДAHHЫX ДATЫ ")    // "Не определяется дата" - The date is not being determined
+_DS(m1_LocateIsNot,   "HE ИДET ЛOKAЦИЯ ")    // "Не определяется локация" - "Location is not being determined"
+_DS(m1_TurnOnSIM900,  "BKЛЮЧAEM SIM900 ")    // "Включаем SIM900" - "Turning on the SIM900"
+_DS(m1_FreeMemory,    "CMOTPИM ПAMЯTЬ  ")    // "Показываем свободную память" - Showing free memory
+_DS(m1_NoMemoryTrace, "HE ГЛЯДИM ПAMЯTЬ")    // "Отменяем трассирование памяти" - Canceling memory tracing
+_DS(m1_ATcom,         "ECTЬ AT-KOMAHДЫ ")    // "Показываем ответ на AT-команды"
+_DS(m1_NoATtrass,     "HE TPACCИPУEM AT")    // "Отменяем трассирование AT-команд"
+_DS(m1_ResponsExceed, "SIM900 > 169 cим")    // "Ответ SIM900 превышает 169 символов" - The SIM900 response exceeds 169 characters
+_DS(m1_NoReception,   "HET ПPИEMA GPRS ")    // "За время тайм-аута не начат приём" - No reception is started during the timeout period
+_DS(m1_NoConfirmed,   "HE УCПEШEH GPRS ")    // "Oтвет на команду не подтвержден" - The response to the command has not been confirmed
+_DS(m1_NotCompleted,  "HE ПOЛHЫЙ OTBET ")    // "За время тайм-аута не завершён ответ" - The response was not completed during the timeout period
+_DS(m1_Wait5sek,      "ЖДEM OTBET 5 sek")    // "Ждем 5 сек для получения ответа" - "Waiting for a response for 5 seconds"
 
 // ****************************************************************************
 // *         Вывести сообщение внутри приложения в последовательный порт      *
@@ -98,9 +98,9 @@ void saymess(char mess[])
 {
   #ifdef _extmess_h
     // Передаем сообщение во внешнее приложение
-    extmess(_app,mess);
-  #else
-    // Передаем сообщение в аппаратный последовательный порт
+    extmess(app,mess);
+  #endif
+  #ifndef _extmess_h
     Serial.println(_FS(mess));  
   #endif
 }
@@ -108,13 +108,12 @@ void saymest(char mess[])
 {
   #ifdef _extmess_h
     // Передаем сообщение во внешнее приложение
-    extmest(_app,mess);
-  #else
-    // Передаем сообщение в аппаратный последовательный порт
+    extmest(app,mess);
+  #endif
+  #ifndef _extmess_h
     Serial.println(mess);
   #endif
 }
-
 // ****************************************************************************
 // *            Преобразовать беззнаковое  целое в строку символов            *
 // ****************************************************************************

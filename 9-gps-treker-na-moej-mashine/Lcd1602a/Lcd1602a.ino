@@ -20,17 +20,46 @@ void setup()
   //lcd.setCursor(0,1);               // установили курсор в начало 2 строки
   //lcd.print("РУСИФИК-ация! 58");    // распечатали текст
   
-  delay(2000);
-  saymess(m1_anAudition);
+  saymess(m1_NotSignGPS);
   delay(2000);
   saymest("УШЛИ КООРДИНАТЫ!"); 
-  
   delay(2000);
-  saymess(m1_ResponsExceed);
+  saymess(m1_SIM900notWork);
   delay(2000);
   saymest("Новое сообщение."); 
   delay(2000);
-  
+  saymess(m1_anAudition);
+  delay(2000);
+  saymess(m1_EmptyLoop);
+  delay(2000);
+  saymess(m1_Delay99);
+  delay(2000);
+  saymess(m1_TimeIsNot);
+  delay(2000);
+  saymess(m1_DateIsNot);
+  delay(2000);
+  saymess(m1_LocateIsNot);
+  delay(2000);
+  saymess(m1_TurnOnSIM900);
+  delay(2000);
+  saymess(m1_FreeMemory);
+  delay(2000);
+  saymess(m1_NoMemoryTrace);
+  delay(2000);
+  saymess(m1_ATcom);
+  delay(2000);
+  saymess(m1_NoATtrass);
+  delay(2000);
+  saymess(m1_ResponsExceed);
+  delay(2000);
+  saymess(m1_NoReception);
+  delay(2000);
+  saymess(m1_NoConfirmed);
+  delay(2000);
+  saymess(m1_NotCompleted);
+  delay(2000);
+  saymess(m1_Wait5sek);
+  delay(2000);
 }
 
 void loop()
