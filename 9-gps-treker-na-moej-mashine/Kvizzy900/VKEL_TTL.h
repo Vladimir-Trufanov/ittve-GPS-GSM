@@ -115,7 +115,9 @@ bool Talk_VKEL_TTL(unsigned long ncikl)
   else
   {
     // "Приемник GPS не подает сигналы"
-    saymess(m1_NotSignGPS);
+    //saymess(m1_NotSignGPS);
+    //charMess=_FS(m1_NotSignGPS);
+    DefToChar(m1_NotSignGPS); 
   }
   return newdata;
 }

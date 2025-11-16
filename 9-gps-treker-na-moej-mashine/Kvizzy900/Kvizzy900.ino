@@ -47,10 +47,14 @@ void setup()
   VKEL_TTL.begin(9600); 
   SIM900.begin(9600);
   // Выводим сводку по памяти в начале программы
-  Serial.println(" ");
-  saymest(FreeMemoryToChar());
-  extmest(app,app);
-}
+  DefToChar(m1_Fill); 
+  extmess(app,charMess);
+  Serial.println(charMess);
+  FreeMemoryToChar();
+  extmess(app,charMess);
+  Serial.println(charMess);
+  delay(1100);
+ }
 
 void loop()
 {
@@ -102,7 +106,7 @@ void loop()
 
   }
   // При необходимости трассируем память
-  if (isMemTrass) saymest(FreeMemoryToChar());
+  //if (isMemTrass) saymest(FreeMemoryToChar());
   // Начинаем прослушивать устройства, так как разрешено
   if (isFullCikl)
   {
@@ -155,26 +159,26 @@ void loop()
     // Пересчитываем и указываем интервал отсутствия сигнала GPS
     else
     {
+      // Выводим сообщение с причиной ошибки
+      extmess(app,charMess);
+      Serial.println(charMess);
+      // Формируем уточняющее сообщение о задержке
       delayGPS=millis()-BdelayGPS; 
       uint32_t deltaSec=delayGPS/1000;
-      if (deltaSec<100) saymest(SecToChar(deltaSec));
+      //if (deltaSec<100) saymest(SecToChar(deltaSec));
+      if (deltaSec<100) SecToChar(deltaSec);
       else 
       {
         uint32_t deltaMin=deltaSec/60;
-        if (deltaMin<100) saymest(SecToChar(deltaMin,false));
-        else saymess(m1_Delay99);
-      }  
+        //if (deltaMin<100) saymest(SecToChar(deltaMin,false));
+        if (deltaMin<100) SecToChar(deltaMin,false);
+        //else saymess(m1_Delay99);
+        else DefToChar(m1_Delay99); 
+      } 
+      // Выводим уточняющее сообщение о задержке
+      extmess(app,charMess);
+      Serial.println(charMess);
     }  
-
-    extmest(app,charMess);
-    //extmest(app,LocationToChar(lat,lng));
-    delay(250);
-    //extmest(app,FreeMemoryToChar());
-    //delay(250);
-    //extmest(app,DistTimeToChar(DistanceBetween,ghour,gmin,gsec));
-    //delay(250);
-
-
   }
   // Если закрыто прослушивание, то делаем заглушку 2 сек, 
   // чтобы по-человечески реагировать на другие команды 

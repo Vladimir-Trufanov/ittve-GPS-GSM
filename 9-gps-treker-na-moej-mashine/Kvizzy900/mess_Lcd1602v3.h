@@ -42,7 +42,6 @@ bool isLcd1602first=true;
 //               "1234567890123456789012345678901234"
 char oldmess[34]="                                  ";
 char newmess[34]="                                  ";
-char nEwmess[34]="Всем привет!\0                    ";
 
 void extfirstline()
 {
@@ -61,16 +60,23 @@ void extfirstline()
   memset(newmess,'\0',33); 
 }
 
+
 void extmess(char app[], char mess[])
 {
   // Выводим старое сообщение
   extfirstline();
   // Выводим новое сообщение
+  strncpy(newmess, mess, 33);
+  lcd.setCursor(0,1);               // установили курсор в начало 2 строки
+  lcd.print(newmess);               // распечатали текст
+
+  /*
   strncpy_P(newmess, (const char*)mess,33);  // _P is the version to read from program space
   //delay(500); 
   lcd.setCursor(0,1);               // установили курсор в начало 2 строки
   lcd.print(newmess);               // распечатали текст
   //Serial.println(newmess);  
+  */
   /*
   Функция strncpy() в Arduino позволяет скопировать ограниченную часть одной строки (source) 
   в другую строку (destination), указав максимальную длину символов для копирования. 
@@ -96,6 +102,8 @@ void extmess(char app[], char mess[])
   */
 }
 
+// !!! устарело - удалить
+/*
 void extmest(char app[], char mess[])
 {
   // Выводим старое сообщение
@@ -106,6 +114,7 @@ void extmest(char app[], char mess[])
   lcd.print(newmess);               // распечатали текст
   //Serial.println(newmess);  
 }
+*/
 
 #endif
 

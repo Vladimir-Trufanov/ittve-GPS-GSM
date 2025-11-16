@@ -4,7 +4,7 @@
  * и вывод их в последовательный порт или другой интерфейс
  * без копирования в оперативную память
  * 
- * v2.0.7, 15.11.2025                                 Автор:      Труфанов В.Е.
+ * v3.0.0, 16.11.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
 **/
 
@@ -34,14 +34,15 @@ char app[]="Kvizzy900";   // имя текущего приложения для
 // (const __FlashStringHelper*) pstr
 #define _FS(name) (const __FlashStringHelper*) name
 
-// Определяем тестовые сообщения
-_DS(m1_Fill1,      "12")                                 // 2 байта
-_DS(m1_Fill2,      "12345678901234567890123456789012")   // 32 байта 
+// Определяем тестовые сообщения - устарело !!!
+//_DS(m1_Fill1,      "12")                                 // 2 байта
+//_DS(m1_Fill2,      "12345678901234567890123456789012")   // 32 байта 
 
 // Представляем все сообщения 1 приложения "m1" (из 16 символов юникода)
 // (из-за особенностей драйвера для LCD1602 по максимуму русские буквы
 // представлены латинскими)
-_DS(m1_Fill,          "1234567890123456")    // 16 байт
+_DS(m1_Fill,          "                ")    // 16 байт
+_DS(m1_Full,          "1234567890123456")    // 16 байт
 
 // Сообщения при отсутствии сигнала GPS
 _DS(m1_NotSignGPS,    "HET CИГHAЛA GPS ")    // "Приемник GPS не подает сигналы"
@@ -98,25 +99,37 @@ void saymess(char str[])
   Serial.println(FPSTR(str));  
 }
 */
+
+// !!! устарело - удалить
 void saymess(char mess[])
 {
-  #ifdef _extmess_h
+  //#ifdef _extmess_h
     // Передаем сообщение во внешнее приложение
-    extmess(app,mess);
-  #endif
-  #ifndef _extmess_h
+  //  extmess(app,mess);
+  //#endif
+  //#ifndef _extmess_h
     Serial.println(_FS(mess));  
-  #endif
+  //#endif
 }
+
+// !!! устарело - удалить
 void saymest(char mess[])
 {
-  #ifdef _extmess_h
+  //#ifdef _extmess_h
     // Передаем сообщение во внешнее приложение
-    extmest(app,mess);
-  #endif
-  #ifndef _extmess_h
+    //extmest(app,mess);
+  //#endif
+  //#ifndef _extmess_h
     Serial.println(mess);
-  #endif
+  //#endif
+}
+// ****************************************************************************
+// *    Поместить в буфер для вывода на дисплей текст из программной памяти   *
+// ****************************************************************************
+void DefToChar(char mess[]) 
+{
+  memset(charMess,'\0',34); 
+  strcat_P(charMess,mess); 
 }
 // ****************************************************************************
 // *            Преобразовать беззнаковое  целое в строку символов            *
@@ -136,8 +149,10 @@ char* IntToChar(uint32_t numbIn)
 // ****************************************************************************
 const  char FreeM1[14]="Память ";  
 const  char FreeM2[10]=" байт";  
-char* FreeMemoryToChar() 
+//char* FreeMemoryToChar() 
+void FreeMemoryToChar() 
 {
+  /*
   // v2 => программа=16774, переменные=1451, для локальных 597, free=474   
   static char charFree[28];
   memset(charFree,'\0',28); 
@@ -145,8 +160,16 @@ char* FreeMemoryToChar()
   // "Память 1017 байт"
   strcat(charFree,FreeM1); 
   strcat(charFree,IntToChar(getFreeMemory()));   
-  strcat(charFree,FreeM2);   
-  return charFree; 
+  strcat(charFree,FreeM2);
+  */  
+ 
+  memset(charMess,'\0',34); 
+  // "1234567890123456"
+  // "Память 1017 байт"
+  strcat(charMess,FreeM1); 
+  strcat(charMess,IntToChar(getFreeMemory()));   
+  strcat(charMess,FreeM2); 
+  //return charFree; 
   // v1 => программа=16790, переменные=1457, для локальных 591, free=460  
   /*
   static char strFree[34];
