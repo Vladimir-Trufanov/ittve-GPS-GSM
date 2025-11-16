@@ -49,6 +49,7 @@ void setup()
   // Выводим сводку по памяти в начале программы
   Serial.println(" ");
   saymest(FreeMemoryToChar());
+  extmest(app,app);
 }
 
 void loop()
@@ -162,6 +163,16 @@ void loop()
         else saymess(m1_Delay99);
       }  
     }  
+
+    extmest(app,charMess);
+    //extmest(app,LocationToChar(lat,lng));
+    delay(250);
+    //extmest(app,FreeMemoryToChar());
+    //delay(250);
+    //extmest(app,DistTimeToChar(DistanceBetween,ghour,gmin,gsec));
+    //delay(250);
+
+
   }
   // Если закрыто прослушивание, то делаем заглушку 2 сек, 
   // чтобы по-человечески реагировать на другие команды 
