@@ -1,4 +1,4 @@
-/** Arduino UNO, SIM900 ************************************ mess_Lcd1602.h ***
+/** Arduino UNO, SIM900 ********************************** mess_Lcd1602v3.h ***
  * 
  * Обеспечить вывод 16-символьных сообщений на дисплей LCD1602 из оперативной
  * и программной памяти в режиме выталкивания более старой строки снизу-вверх
@@ -42,6 +42,7 @@ bool isLcd1602first=true;
 //               "1234567890123456789012345678901234"
 char oldmess[34]="                                  ";
 char newmess[34]="                                  ";
+char nEwmess[34]="Всем привет!\0                    ";
 
 void extfirstline()
 {
@@ -69,7 +70,7 @@ void extmess(char app[], char mess[])
   //delay(500); 
   lcd.setCursor(0,1);               // установили курсор в начало 2 строки
   lcd.print(newmess);               // распечатали текст
-  Serial.println(newmess);  
+  //Serial.println(newmess);  
   /*
   Функция strncpy() в Arduino позволяет скопировать ограниченную часть одной строки (source) 
   в другую строку (destination), указав максимальную длину символов для копирования. 
@@ -103,10 +104,10 @@ void extmest(char app[], char mess[])
   strncpy(newmess, mess, 33);
   lcd.setCursor(0,1);               // установили курсор в начало 2 строки
   lcd.print(newmess);               // распечатали текст
-  Serial.println(newmess);  
+  //Serial.println(newmess);  
 }
 
 #endif
 
-// ********************************************************* mess_Lcd1602.h ***
+// ******************************************************* mess_Lcd1602v3.h ***
 
