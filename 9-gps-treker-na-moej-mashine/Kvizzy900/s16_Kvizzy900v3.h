@@ -21,10 +21,10 @@ char chardec[8];          // буфер координат и дистанции
 
 // Готовим определения для вывода сообщений во внешнее приложение
 char app[]="Kvizzy900";   // имя текущего приложения для внешнего приложения
-//#define _extmess_h      // если определено, то передавать сообщение во внешнее приложение
-//#ifdef _extmess_h
+#define _extmess_h      // если определено, то передавать сообщение во внешнее приложение
+#ifdef _extmess_h
   #include "mess_Lcd1602v3.h"
-//#endif
+#endif
 
 // Определяем макрос для размещения массива символов в программной памяти:
 // const char pstr[] PROGMEM = "Массив символов pgm в программной памяти, Flash вместо RAM";
@@ -34,20 +34,12 @@ char app[]="Kvizzy900";   // имя текущего приложения для
 // (const __FlashStringHelper*) pstr
 #define _FS(name) (const __FlashStringHelper*) name
 
-// Определяем тестовые сообщения - устарело !!!
-//_DS(m1_Fill1,      "12")                                 // 2 байта
-//_DS(m1_Fill2,      "12345678901234567890123456789012")   // 32 байта 
-
 // Представляем все сообщения 1 приложения "m1" (из 16 символов юникода)
 // (из-за особенностей драйвера для LCD1602 по максимуму русские буквы
 // представлены латинскими)
 _DS(m1_Fill,          "                ")    // 16 байт
 _DS(m1_Full,          "1234567890123456")    // 16 байт
-
-// Сообщения при отсутствии сигнала GPS
 _DS(m1_NotSignGPS,    "HET CИГHAЛA GPS ")    // "Приемник GPS не подает сигналы"
-
-
 _DS(m1_SIM900notWork, "OTKЛЮЧEH SIM900 ")    // "Не работает SIM900"
 _DS(m1_anAudition,    "ПPOCЛУШИBAEM GPS")    // "Выполняем прослушивание" - Performing an audition
 _DS(m1_EmptyLoop,     "ИДET ПУCTOЙ ЦИKЛ")    // "Отрабатываем пустой цикл" - Working out an empty loop
@@ -94,42 +86,27 @@ const char pstr_g[] PROGMEM = "global pgm str";
 Serial.println(FPSTR(pstr_g));  // напечатает "global pgm str"
 saymess(pstr_g);
 
-void saymess(char str[])
-{
-  Serial.println(FPSTR(str));  
-}
-*/
-
-// !!! устарело - удалить
 void saymess(char mess[])
 {
-  //#ifdef _extmess_h
-    // Передаем сообщение во внешнее приложение
-  //  extmess(app,mess);
-  //#endif
-  //#ifndef _extmess_h
-    Serial.println(_FS(mess));  
-  //#endif
+  Serial.println(FPSTR(mess));  // v1
+  Serial.println(_FS(mess));    // v2
 }
-
-// !!! устарело - удалить
-void saymest(char mess[])
+*/
+void saymess(char mess[])
 {
-  //#ifdef _extmess_h
-    // Передаем сообщение во внешнее приложение
-    //extmest(app,mess);
-  //#endif
-  //#ifndef _extmess_h
-    Serial.println(mess);
-  //#endif
+  Serial.println(mess);
+  #ifdef _extmess_h
+    extmess(app,mess);
+  #endif
 }
 // ****************************************************************************
 // *    Поместить в буфер для вывода на дисплей текст из программной памяти   *
 // ****************************************************************************
-void DefToChar(char mess[]) 
+char* DefToChar(char mess[]) 
 {
   memset(charMess,'\0',34); 
   strcat_P(charMess,mess); 
+  return charMess; 
 }
 // ****************************************************************************
 // *            Преобразовать беззнаковое  целое в строку символов            *
@@ -149,36 +126,15 @@ char* IntToChar(uint32_t numbIn)
 // ****************************************************************************
 const  char FreeM1[14]="Память ";  
 const  char FreeM2[10]=" байт";  
-//char* FreeMemoryToChar() 
-void FreeMemoryToChar() 
+char* FreeMemoryToChar() 
 {
-  /*
-  // v2 => программа=16774, переменные=1451, для локальных 597, free=474   
-  static char charFree[28];
-  memset(charFree,'\0',28); 
-  // "1234567890123456"
-  // "Память 1017 байт"
-  strcat(charFree,FreeM1); 
-  strcat(charFree,IntToChar(getFreeMemory()));   
-  strcat(charFree,FreeM2);
-  */  
- 
   memset(charMess,'\0',34); 
   // "1234567890123456"
   // "Память 1017 байт"
   strcat(charMess,FreeM1); 
   strcat(charMess,IntToChar(getFreeMemory()));   
-  strcat(charMess,FreeM2); 
-  //return charFree; 
-  // v1 => программа=16790, переменные=1457, для локальных 591, free=460  
-  /*
-  static char strFree[34];
-  memset(strFree,'\0',34); 
-  String stringOne;
-  stringOne="Память "+String(getFreeMemory())+" байт";
-  stringOne.toCharArray(strFree,33);
-  return strFree;
-  */  
+  strcat(charMess,FreeM2);
+  return charMess; 
 }  
 // ****************************************************************************
 // *                Сформировать сообщение о задержке сигнала GPS             *

@@ -45,12 +45,12 @@ uint32_t  dTimeSIM=180000;     // интервал подачи координа
 void ATerrorMess(char* ATcommand, uint8_t answer) 
 {
   // Выводим текст AT команды
-  if (answer!=0) saymest(ATcommand);
+  //if (answer!=0) saymest(ATcommand);
   // Выводим сообщение об ошибке
-  if (answer==1) saymess(m1_ResponsExceed);
-  else if (answer==2) saymess(m1_NoReception);
-  else if (answer==3) saymess(m1_NoConfirmed);
-  else if (answer==4) saymess(m1_NotCompleted);
+  //if (answer==1) saymess(m1_ResponsExceed);
+  //else if (answer==2) saymess(m1_NoReception);
+  //else if (answer==3) saymess(m1_NoConfirmed);
+  //else if (answer==4) saymess(m1_NotCompleted);
 } 
 // ****************************************************************************
 // *               Отправить AT-команду на SIM900 и выбрать ответ             *
@@ -98,7 +98,7 @@ uint8_t AT_(unsigned int timeout)
   }
   while((answer == 2) && ((millis() - previous) < timeout));
   // При необходимости трассируем ответ на AT-команду
-  if (isATTrass) saymest(response);
+  //if (isATTrass) saymest(response);
   // Если вышли ли за границу буфера, то возвращаем ошибку
   // "ответ SIM900 превышает 169 символов"  
   if (answer==1) goto by; 
@@ -253,7 +253,7 @@ bool send_coords_at(uint32_t glat, uint32_t glon, uint32_t gcik)
   AT_com(AT_HTTPACTION0);
 
   // Ждем 5 сек для получения ответа
-  saymess(m1_Wait5sek);
+  //saymess(m1_Wait5sek);
   delay(5000); 
   
   // "AT+HTTPREAD" - cчитываем результаты запроса, обычно содержит код состояния 200 в случае успеха

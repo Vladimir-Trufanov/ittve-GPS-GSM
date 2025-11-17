@@ -17,7 +17,7 @@
  *
  * Вместо устаревшей TinyGPS используется TinyGPSPlus.
  * 
- * v3.0.0, 16.11.2025                                 Автор:      Труфанов В.Е.
+ * v3.0.1, 17.11.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
  *
 **/
@@ -47,13 +47,9 @@ void setup()
   VKEL_TTL.begin(9600); 
   SIM900.begin(9600);
   // Выводим сводку по памяти в начале программы
-  DefToChar(m1_Fill); 
-  extmess(app,charMess);
-  Serial.println(charMess);
-  FreeMemoryToChar();
-  extmess(app,charMess);
-  Serial.println(charMess);
-  delay(1100);
+  saymess(DefToChar(m1_Fill));
+  saymess(FreeMemoryToChar());
+  delay(1500);
  }
 
 void loop()
@@ -68,8 +64,8 @@ void loop()
     // или отменяем её
     if (ccom == '9') 
     {
-      if (isFullCikl) {isFullCikl=false; saymess(m1_EmptyLoop);}
-      else            {isFullCikl=true;  saymess(m1_anAudition);}
+      if (isFullCikl) {isFullCikl=false; saymess(DefToChar(m1_EmptyLoop));}
+      else            {isFullCikl=true;  saymess(DefToChar(m1_anAudition));}
     }
     // Выполняем команду по трассировке утечек памяти
     // (показывать оставшуюся свободную память)
@@ -79,10 +75,10 @@ void loop()
       if (isMemTrass) 
       {
         isMemTrass=false; 
-        saymess(m1_NoMemoryTrace);
-        if (!isFullCikl) {isFullCikl=true;  saymess(m1_anAudition);}
+        saymess(DefToChar(m1_NoMemoryTrace));
+        if (!isFullCikl) {isFullCikl=true; saymess(DefToChar(m1_anAudition));}
       }
-      else {isMemTrass=true;  saymess(m1_FreeMemory);}
+      else {isMemTrass=true; saymess(DefToChar(m1_FreeMemory));}
     }
     // Выполняем команды по трассировке AT-команд SIM900
     if (ccom == '7') 
@@ -90,10 +86,10 @@ void loop()
       if (isATTrass) 
       {
         isATTrass=false; 
-        saymess(m1_NoATtrass);
-        if (!isFullCikl) {isFullCikl=true;  saymess(m1_anAudition);}
+        //saymess(m1_NoATtrass);
+        if (!isFullCikl) {isFullCikl=true;  /*saymess(m1_anAudition);*/}
       }
-      else {isATTrass=true;  saymess(m1_ATcom);}
+      else {isATTrass=true;  /*saymess(m1_ATcom);*/}
     }
     // Выполняем принудительную передачу последних принятых координат на сайт
     if (ccom == '1') 
@@ -103,7 +99,6 @@ void loop()
       isSend=send_coords_at(glat,glon,7);
       VKEL_TTL.listen();
     }
-
   }
   // При необходимости трассируем память
   //if (isMemTrass) saymest(FreeMemoryToChar());
@@ -156,28 +151,21 @@ void loop()
       // Начинаем отсчет интервал в мс до следующего опроса GPS 
       BdelayGPS=millis();            
     }
-    // Пересчитываем и указываем интервал отсутствия сигнала GPS
+    // Выводим причину, пересчитываем и указываем интервал отсутствия сигнала GPS
     else
     {
-      // Выводим сообщение с причиной ошибки
-      extmess(app,charMess);
-      Serial.println(charMess);
       // Формируем уточняющее сообщение о задержке
       delayGPS=millis()-BdelayGPS; 
       uint32_t deltaSec=delayGPS/1000;
-      //if (deltaSec<100) saymest(SecToChar(deltaSec));
       if (deltaSec<100) SecToChar(deltaSec);
       else 
       {
         uint32_t deltaMin=deltaSec/60;
-        //if (deltaMin<100) saymest(SecToChar(deltaMin,false));
         if (deltaMin<100) SecToChar(deltaMin,false);
-        //else saymess(m1_Delay99);
         else DefToChar(m1_Delay99); 
       } 
       // Выводим уточняющее сообщение о задержке
-      extmess(app,charMess);
-      Serial.println(charMess);
+      saymess(charMess);
     }  
   }
   // Если закрыто прослушивание, то делаем заглушку 2 сек, 

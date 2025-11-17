@@ -2,7 +2,7 @@
  * 
  * Обеспечить взаимодействие и выборку данных из приёмника GPS VKEL_TTL 
  * 
- * v1.1.2, 04.11.2025                                 Автор:      Труфанов В.Е.
+ * v3.0.0, 17.11.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
 **/
 
@@ -77,47 +77,49 @@ bool Talk_VKEL_TTL(unsigned long ncikl)
       DistanceBetween = gps.distanceBetween(lat,lng,lat0,lng0);
       // Меняем прежнее положение для определения будущего расстояния между точками
       lat0=lat; lng0=lng;  
-      saymest(LocationToChar(lat,lng));
+      // Выводим 1 успешное сообщение в паре
+      // (сообщение о локации)     
+      saymess(LocationToChar(lat,lng));
+      // Определяем дату
+      if (gps.date.isValid())
+      {
+        gday=gps.date.day(); gmonth=gps.date.month(); gyear=gps.date.year(); 
+        // Определяем время
+        if (gps.time.isValid())
+        {
+          ghour=gps.time.hour(); gmin=gps.time.minute(); gsec=gps.time.second();
+          ghour=ghour+timezone_hours;
+          if (ghour>=24) ghour=ghour-24;
+          else if (ghour<0) ghour=ghour+24;
+          // Выводим 2 успешное сообщение в паре
+          // (сообщение о времени и смещении от предыдущей точки)     
+          saymess(DistTimeToChar(DistanceBetween,ghour,gmin,gsec)); 
+        }
+        // "Не определяется время"
+        else 
+        {
+          newdata = false;
+          saymess(DefToChar(m1_TimeIsNot));
+        }
+      }
+      // "Не определяется дата"
+      else
+      {
+        newdata = false;
+        saymess(DefToChar(m1_DateIsNot));
+      }
     }
     // "Не определяется локация" 
     else
     {
       newdata = false;
-      saymess(m1_LocateIsNot);
-    }
-    // Определяем дату
-    if (gps.date.isValid())
-    {
-      gday=gps.date.day(); gmonth=gps.date.month(); gyear=gps.date.year(); 
-      // Определяем время
-      if (gps.time.isValid())
-      {
-        ghour=gps.time.hour(); gmin=gps.time.minute(); gsec=gps.time.second();
-        ghour=ghour+timezone_hours;
-        if (ghour>=24) ghour=ghour-24;
-        else if (ghour<0) ghour=ghour+24;
-        saymest(DistTimeToChar(DistanceBetween,ghour,gmin,gsec)); 
-      }
-      // "Не определяется время"
-      else 
-      {
-        newdata = false;
-        saymess(m1_TimeIsNot);
-      }
-    }
-    // "Не определяется дата"
-    else
-    {
-      newdata = false;
-      saymess(m1_DateIsNot);
+      saymess(DefToChar(m1_LocateIsNot));
     }
   }
   else
   {
     // "Приемник GPS не подает сигналы"
-    //saymess(m1_NotSignGPS);
-    //charMess=_FS(m1_NotSignGPS);
-    DefToChar(m1_NotSignGPS); 
+    saymess(DefToChar(m1_NotSignGPS));
   }
   return newdata;
 }
