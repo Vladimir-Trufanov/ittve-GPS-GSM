@@ -56,7 +56,7 @@ _DS(m1_ResponsExceed, "SIM900 > 169 cим")    // "Ответ SIM900 превы�
 _DS(m1_NoReception,   "HET ПPИEMA GPRS ")    // "За время тайм-аута не начат приём" - No reception is started during the timeout period
 _DS(m1_NoConfirmed,   "HE УCПEШEH GPRS ")    // "Oтвет на команду не подтвержден" - The response to the command has not been confirmed
 _DS(m1_NotCompleted,  "HE ПOЛHЫЙ OTBET ")    // "За время тайм-аута не завершён ответ" - The response was not completed during the timeout period
-_DS(m1_Wait5sek,      "ЖДEM OTBET 5 sek")    // "Ждем 5 сек для получения ответа" - "Waiting for a response for 5 seconds"
+_DS(m1_Wait5sek,      "ЖДEM OTBET 5 sec")    // "Ждем 5 сек для получения ответа" - "Waiting for a response for 5 seconds"
 
 // ****************************************************************************
 // *         Вывести сообщение внутри приложения в последовательный порт      *
@@ -92,11 +92,18 @@ void saymess(char mess[])
   Serial.println(_FS(mess));    // v2
 }
 */
+// Здесь есть важный момент:
+// когда прослушивается SIM900, то не работают A4,A5,
+// поэтому переключаем прослушивание на VKEL_TTL
 void saymess(char mess[])
 {
   Serial.println(mess);
   #ifdef _extmess_h
+    VKEL_TTL.listen();
+    delay(500);
     extmess(app,mess);
+    delay(500);
+    SIM900.listen();
   #endif
 }
 // ****************************************************************************
@@ -124,8 +131,8 @@ char* IntToChar(uint32_t numbIn)
 // *                       Сформировать сообщение по памяти                   *
 // *                      (кириллица занимает 2 байта а UTF8)                 *
 // ****************************************************************************
-const  char FreeM1[14]="Память ";  
-const  char FreeM2[10]=" байт";  
+const  char FreeM1[14]="ПAMЯTЬ ";  
+const  char FreeM2[10]=" БAЙT";  
 char* FreeMemoryToChar() 
 {
   memset(charMess,'\0',34); 
@@ -139,9 +146,9 @@ char* FreeMemoryToChar()
 // ****************************************************************************
 // *                Сформировать сообщение о задержке сигнала GPS             *
 // ****************************************************************************
-const char SecToCh1[18]="Задержка ";  
-const char SecToCh2[10]=" cек.";  
-const char SecToCh3[10]=" мин.";  
+const char SecToCh1[18]="ЗAДEPЖKA ";  
+const char SecToCh2[10]=" sec.";  
+const char SecToCh3[10]=" min.";  
 char* SecToChar(uint32_t MinSec, bool isSec=true) 
 {
   // "1234567890123456"
@@ -159,7 +166,7 @@ char* SecToChar(uint32_t MinSec, bool isSec=true)
 // *               Сформировать сообщение о перемещении и времени             *
 // *         (перемещение это расстояние до предыдущей точке локации)         *
 // ****************************************************************************
-const char DistT1[6]=" м.";  
+const char DistT1[6]=" m.";  
 const char DistT2[2]=":";  
 const char DistT3[2]="0";  
 const char DistT4[2]=" ";  

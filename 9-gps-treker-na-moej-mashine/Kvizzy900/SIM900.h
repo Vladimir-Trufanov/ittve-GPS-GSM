@@ -2,7 +2,7 @@
  * 
  * Обеспечить взаимодействие с SIM900 и передачу данных на сайт 
  * 
- * v1.1.5, 14.11.2025                                 Автор:      Труфанов В.Е.
+ * v3.0.0, 19.11.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
 **/
 
@@ -44,13 +44,14 @@ uint32_t  dTimeSIM=180000;     // интервал подачи координа
 // ****************************************************************************
 void ATerrorMess(char* ATcommand, uint8_t answer) 
 {
+  //Serial.print("answer="); Serial.println(answer); 
   // Выводим текст AT команды
-  //if (answer!=0) saymest(ATcommand);
+  // if (answer==0) saymess(ATcommand);
   // Выводим сообщение об ошибке
-  //if (answer==1) saymess(m1_ResponsExceed);
-  //else if (answer==2) saymess(m1_NoReception);
-  //else if (answer==3) saymess(m1_NoConfirmed);
-  //else if (answer==4) saymess(m1_NotCompleted);
+  if (answer==1) saymess(DefToChar(m1_ResponsExceed));
+  else if (answer==2) saymess(DefToChar(m1_NoReception));
+  else if (answer==3) saymess(DefToChar(m1_NoConfirmed));
+  else if (answer==4) saymess(DefToChar(m1_NotCompleted));
 } 
 // ****************************************************************************
 // *               Отправить AT-команду на SIM900 и выбрать ответ             *
@@ -98,7 +99,7 @@ uint8_t AT_(unsigned int timeout)
   }
   while((answer == 2) && ((millis() - previous) < timeout));
   // При необходимости трассируем ответ на AT-команду
-  //if (isATTrass) saymest(response);
+  if (isATTrass) Serial.println(response);
   // Если вышли ли за границу буфера, то возвращаем ошибку
   // "ответ SIM900 превышает 169 символов"  
   if (answer==1) goto by; 
@@ -132,7 +133,6 @@ uint8_t AT_(unsigned int timeout)
   // Завершаем работу функции и возвращаем ответ
   by:
   ATerrorMess(response,answer);
-  // Serial.print("answer="); Serial.println(answer); 
   return answer;
 }
 // ****************************************************************************
@@ -149,6 +149,7 @@ uint8_t AT_com(const char ATcommand[],unsigned int timeout=500)
 // ****************************************************************************
 // *    Загрузить AT-команду в буфер из оперативной памяти и отправить её     *
 // ****************************************************************************
+/*
 uint8_t AT_RAM(const char ATcommand[],unsigned int timeout=500)
 {
   // При отправке AT-команды используется один и тот же буфер для отправки команды и 
@@ -157,6 +158,7 @@ uint8_t AT_RAM(const char ATcommand[],unsigned int timeout=500)
   strcpy(response,ATcommand);     // перекинули в буфер команду из программной памяти    
   return AT_(timeout);  
 }
+*/
 // ****************************************************************************
 // *  Включить/выключить (программный триггер) SIM900 через вывод D9 Arduino  *
 // *     (В качестве синхронизации включения/выключения требуется импульс     *

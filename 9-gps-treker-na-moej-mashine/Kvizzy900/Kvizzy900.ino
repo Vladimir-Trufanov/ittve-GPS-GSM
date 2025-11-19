@@ -86,10 +86,10 @@ void loop()
       if (isATTrass) 
       {
         isATTrass=false; 
-        //saymess(m1_NoATtrass);
-        if (!isFullCikl) {isFullCikl=true;  /*saymess(m1_anAudition);*/}
+        saymess(DefToChar(m1_NoATtrass));
+        if (!isFullCikl) {isFullCikl=true; saymess(DefToChar(m1_anAudition));}
       }
-      else {isATTrass=true;  /*saymess(m1_ATcom);*/}
+      else {isATTrass=true; saymess(DefToChar(m1_ATcom));}
     }
     // Выполняем принудительную передачу последних принятых координат на сайт
     if (ccom == '1') 
@@ -101,7 +101,7 @@ void loop()
     }
   }
   // При необходимости трассируем память
-  //if (isMemTrass) saymest(FreeMemoryToChar());
+  if (isMemTrass) saymess(FreeMemoryToChar());
   // Начинаем прослушивать устройства, так как разрешено
   if (isFullCikl)
   {
@@ -120,7 +120,6 @@ void loop()
     // начинаем прослушивать и работать с портом SIM900
     if (isVKEL_TTL)
     {
-      /*
       // Работаем с SIM900
       SIM900.listen();
       // Проверяем, реагирует ли на команды SIM900
@@ -128,7 +127,7 @@ void loop()
       if (AT_com(AT_AT)!=0)
       { 
         // Включаем SIM900
-        saymess(m1_TurnOnSIM900);
+        saymess(DefToChar(m1_TurnOnSIM900));
         SIM900powerUpOrDown();
         // Начинаем новый отсчет времени для передачи на сайт 
         BdelaySIM=millis();   
@@ -147,7 +146,6 @@ void loop()
           BdelaySIM=millis();   
         }
       }
-      */
       // Начинаем отсчет интервал в мс до следующего опроса GPS 
       BdelayGPS=millis();            
     }
