@@ -54,7 +54,6 @@ void setup()
 
 void loop()
 {
-  bool isSend; // флаг успешности отправки координат
   // Отрабатываем управляющие команды из последовательного порта
   if (Serial.available())
   {
@@ -95,8 +94,9 @@ void loop()
     if (ccom == '1') 
     {
       SIM900.listen();
-      glat=lat*1000000; glon=lng*1000000;   
-      isSend=send_coords_at(glat,glon,7);
+      CoordSend();
+      //glat=lat*1000000; glon=lng*1000000;   
+      //isSend=send_coords_at(glat,glon,7);
       VKEL_TTL.listen();
     }
   }
@@ -138,12 +138,19 @@ void loop()
         delaySIM=millis()-BdelaySIM; 
         if (delaySIM>dTimeSIM) 
         {
+          CoordSend();
+          /*
+          saymess(DefToChar(m1_Wait5sek));
+
           glat=lat*1000000; glon=lng*1000000;   
           isSend=send_coords_at(glat,glon,ncikl);
           //if (!isSend) Serial.println("Неудачная отправка координат"); 
           //else Serial.println("УШЛИ КООРДИНАТЫ!"); 
+          saymess(DefToChar(m1_Wait5sek));
+
           // Начинаем новый отсчет времени для передачи на сайт 
           BdelaySIM=millis();   
+          */
         }
       }
       // Начинаем отсчет интервал в мс до следующего опроса GPS 
@@ -169,6 +176,17 @@ void loop()
   // Если закрыто прослушивание, то делаем заглушку 2 сек, 
   // чтобы по-человечески реагировать на другие команды 
   else delay(2000);
+}
+
+void CoordSend()
+{
+  bool isSend;     // флаг успешности отправки координат
+  saymess(DefToChar(m1_SendCoordints));
+  glat=lat*1000000; glon=lng*1000000;   
+  isSend=send_coords_at(glat,glon,ncikl);
+  if (isSend) saymess(DefToChar(m1_CoordinatGone));
+  // Начинаем новый отсчет времени для передачи на сайт 
+  BdelaySIM=millis();   
 }
 
 // Arduino C/C++ ******************************************** Kvizzy900.ino ***

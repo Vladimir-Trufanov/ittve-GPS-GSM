@@ -4,7 +4,7 @@
  * и вывод их в последовательный порт или другой интерфейс
  * без копирования в оперативную память
  * 
- * v3.0.0, 16.11.2025                                 Автор:      Труфанов В.Е.
+ * v3.0.0, 19.11.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
 **/
 
@@ -57,6 +57,8 @@ _DS(m1_NoReception,   "HET ПPИEMA GPRS ")    // "За время тайм-ау
 _DS(m1_NoConfirmed,   "HE УCПEШEH GPRS ")    // "Oтвет на команду не подтвержден" - The response to the command has not been confirmed
 _DS(m1_NotCompleted,  "HE ПOЛHЫЙ OTBET ")    // "За время тайм-аута не завершён ответ" - The response was not completed during the timeout period
 _DS(m1_Wait5sek,      "ЖДEM OTBET 5 sec")    // "Ждем 5 сек для получения ответа" - "Waiting for a response for 5 seconds"
+_DS(m1_SendCoordints, "----> KOOPДИHATЫ")    // "Отправляем координаты" - "Sending the coordinates"
+_DS(m1_CoordinatGone, "KOOPДИHATЫ ====>")    // "Координаты ушли" - "The coordinates are gone"
 
 // ****************************************************************************
 // *         Вывести сообщение внутри приложения в последовательный порт      *
@@ -92,9 +94,11 @@ void saymess(char mess[])
   Serial.println(_FS(mess));    // v2
 }
 */
+// **************************************************
 // Здесь есть важный момент:
 // когда прослушивается SIM900, то не работают A4,A5,
 // поэтому переключаем прослушивание на VKEL_TTL
+// **************************************************
 void saymess(char mess[])
 {
   Serial.println(mess);
@@ -179,7 +183,6 @@ char* DistTimeToChar(double DistanceBetween, int ghour, int gmin, int gsec)
   // "16:27:31 110.8 м"
   // "16:27:31 >1000 м"
   memset(charMess,'\0',34); 
-  // v2: 16098 + 1463 => 585 => 481
   if (ghour<10) {strcat(charMess,DistT3); strcat(charMess,IntToChar(ghour));}
   else strcat(charMess,IntToChar(ghour)); 
   strcat(charMess,DistT2); 
@@ -193,20 +196,6 @@ char* DistTimeToChar(double DistanceBetween, int ghour, int gmin, int gsec)
   else if (DistanceBetween<999.99) {dtostrf(DistanceBetween,3,1,chardec); strcat(charMess,chardec);}   
   else strcat(charMess,DistT5);
   strcat(charMess,DistT1); 
-  /*
-  // v1: 16620 + 1457 => 591 => 482
-  char chardis[6];
-  String stringOne;
-  String chour; if (ghour<10) chour="0"+String(ghour); else chour=String(ghour);
-  String cmin; if (gmin<10) cmin="0"+String(gmin); else cmin=String(gmin);
-  String csec; if (gsec<10) csec="0"+String(gsec); else csec=String(gsec);
-  String cdis;  
-  if (DistanceBetween<100)         {dtostrf(DistanceBetween,2,2,chardis); cdis=chardis;} 
-  else if (DistanceBetween<999.99) {dtostrf(DistanceBetween,3,1,chardis); cdis=chardis;}   
-  else cdis=">1000";
-  stringOne=chour+":"+cmin+":"+csec+" "+cdis+" м.";
-  stringOne.toCharArray(charMess,33);
-  */
   return charMess;  
 }  
 // ****************************************************************************
