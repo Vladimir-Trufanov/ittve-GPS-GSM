@@ -1,7 +1,5 @@
 /** Arduino UNO, SIM900 ************************************* Measurex1.ino ***
  * 
- * 22.11.2025 СТАЛО ЯСНО, ЧТО ПОКА ТОК НА 2А ПОКА НЕ МОГУ ИЗМЕРЯТЬ !!! (только 0.8А)
- * 
  * Отладить подключение датчика постоянного тока INA226 к Arduino. 1 пример.
  * INA226 может измерять ток, напряжение и мощность, способен измерять напряжение до 36 В и ток до 20 А.
  * 
@@ -63,12 +61,14 @@ IN+ : этот контакт подключается к источнику п�
 */
 #include <Wire.h>
 #include <INA226_WE.h>
+#include <iarduino_VCC.h>
 #include <LiquidCrystal_I2C.h>
 #define INA226_I2C_ADDRESS 0x40
  
 INA226_WE ina226(INA226_I2C_ADDRESS);
 LiquidCrystal_I2C MyLCD(0x27, 16, 2);
 float current_mA = 0;
+float current_V = 0;
  
 void setup(void) 
 {
@@ -84,10 +84,25 @@ void loop(void)
   ina226.readAndClearFlags();
   current_mA = ina226.getCurrent_mA();
   MyLCD.setCursor(0, 0);
-  MyLCD.print("I = ");
+  MyLCD.print(" I = ");
   MyLCD.print(current_mA);
-  MyLCD.print(" mA");
+  MyLCD.print(" mA    ");
   delay(1000);
+
+  ina226.readAndClearFlags();
+  current_V = ina226.getBusVoltage_V();
+  MyLCD.setCursor(0, 1);
+  MyLCD.print("V2 = ");
+  MyLCD.print(current_V);
+  MyLCD.print(" V    ");
+  delay(1000);
+
+  float vi = analogRead_VCC();       // Читаем напряжение питания Arduino.
+  MyLCD.setCursor(0, 0);
+  MyLCD.print("V1 = ");
+  MyLCD.print(vi);
+  MyLCD.print(" V    ");
+  delay(1000); 
 }
 
 // ********************************************************** Measurex1.ino ***
