@@ -9,7 +9,7 @@
 // Подключаем список 16-символьных сообщений приложения Kvizzy900
 // и функции подготовки и вывода сообщений
 #include <MemoryFree.h>
-#include "s16_Kvizzy900.h"
+#include "s16_Kvizzy900v2.h"
  
 void setup()
 {
