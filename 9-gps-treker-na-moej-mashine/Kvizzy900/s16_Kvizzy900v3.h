@@ -4,7 +4,7 @@
  * и вывод их в последовательный порт или другой интерфейс
  * без копирования в оперативную память
  * 
- * v3.0.0, 19.11.2025                                 Автор:      Труфанов В.Е.
+ * v3.0.1, 23.11.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
 **/
 
@@ -17,7 +17,7 @@
 
 // Готовим массивы символов для формирования сообщений
 char charMess[34];        // буфер сообщений для вывода на дисплей  
-char chardec[8];          // буфер координат и дистанции, max 7 знаков и точка
+char chardec[8];          // буфер координат, дистанции, температуры, напряжения - max 7 знаков и точка (nt)
 
 // Готовим определения для вывода сообщений во внешнее приложение
 char app[]="Kvizzy900";   // имя текущего приложения для внешнего приложения
@@ -59,6 +59,7 @@ _DS(m1_NotCompleted,  "HE ПOЛHЫЙ OTBET ")    // "За время тайм-а
 _DS(m1_Wait5sek,      "ЖДEM OTBET 5 sec")    // "Ждем 5 сек для получения ответа" - "Waiting for a response for 5 seconds"
 _DS(m1_SendCoordints, "----> KOOPДИHATЫ")    // "Отправляем координаты" - "Sending the coordinates"
 _DS(m1_CoordinatGone, "KOOPДИHATЫ ====>")    // "Координаты ушли" - "The coordinates are gone"
+_DS(m1_TempAndVolt,   "t=25.22C,v=4.56V")    // "Температура и напряжение" - "Temperature and voltage"
 
 // ****************************************************************************
 // *         Вывести сообщение внутри приложения в последовательный порт      *
@@ -210,6 +211,22 @@ char* LocationToChar(double lat, double lng)
   dtostrf(lat,2,5,chardec); strcat(charMess,chardec);
   strcat(charMess,LocToCh); 
   dtostrf(lng,2,4,chardec); strcat(charMess,chardec);
+  return charMess;  
+}  
+// ****************************************************************************
+// *             Сформировать сообщение о температуре и напряжении            *
+// ****************************************************************************
+const char tEq[4]="t=";  
+const char vEq[6]="C,v=";  
+const char vvq[2]="V";  
+char* TempVoltToChar(float ti, float vi) 
+{
+  // "1234567890123456"
+  // "t=25.22C,v=4.56V"
+  memset(charMess,'\0',18); 
+  strcat(charMess,tEq); dtostrf(ti,2,2,chardec); strcat(charMess,chardec);
+  strcat(charMess,vEq); dtostrf(vi,1,2,chardec); strcat(charMess,chardec);
+  strcat(charMess,vvq); 
   return charMess;  
 }  
 
