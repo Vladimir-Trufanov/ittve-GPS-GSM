@@ -17,13 +17,25 @@
  *
  * Вместо устаревшей TinyGPS используется TinyGPSPlus.
  * 
- * v3.0.2, 23.11.2025                                 Автор:      Труфанов В.Е.
+ * v3.0.3, 24.11.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
  *
 **/
 
-#include <iarduino_VCC.h>
 #include <SoftwareSerial.h>
+#include "GyverWDT.h"
+#include <iarduino_VCC.h>
+#include <EEPROM.h>
+
+// Определяем переменную адреса для записи данных в EEPROM
+int address; 
+// Определяем переменную для записи даты перезагрузки
+// (после перезагрузки флаг устанавливается в значение true для того,
+// чтобы записать дату первого поступления координат после перезагрузки
+// для постоянного хранения)
+bool isReboot;       
+// Определяем переменные постоянного хранения
+uint16_t nReboot; // счетчик перезагрузок контроллера
 
 SoftwareSerial VKEL_TTL(12,13);  // синий на 12 - будет RX; зеленый на 13 - будет TX
 SoftwareSerial   SIM900( 7,8 );  // SIM900 
@@ -49,11 +61,33 @@ void setup()
   Serial.begin(115200);
   VKEL_TTL.begin(9600); 
   SIM900.begin(9600);
+  // Переопределяем счетчик перезагрузок контроллера
+  address=0; 
+  EEPROM.get(address, nReboot);
+  if (nReboot==65535) nReboot=0;
+  nReboot++;
+  EEPROM.put(address,nReboot);
+  Serial.print("nReboot="); Serial.println(nReboot);
+  // Устанавливаем флаг и определяем адрес для записи 
+  // даты первого поступления координат после перезагрузки
+  isReboot=true; 
+  address += sizeof(nReboot); 
+  // Запускаем watchdog с таймаутом ~8c
+  Watchdog.enable(INTERRUPT_RESET_MODE, WDT_PRESCALER_1024);  
   // Выводим сводку по памяти в начале программы
   saymess(DefToChar(m1_Fill));
   saymess(FreeMemoryToChar());
   delay(1500);
- }
+}
+
+
+// Первый тайм-аут вызовет прерывание и если Watchdog не будет перезапущен,
+// то на втором прерывании произойдет жёсткая перезагрузка контроллера
+ISR(WATCHDOG) 
+{
+  // Перезапускаем watchdog с таймаутом ~8c
+  Watchdog.enable(INTERRUPT_RESET_MODE, WDT_PRESCALER_1024); 
+}
 
 void loop()
 {

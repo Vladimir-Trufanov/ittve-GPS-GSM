@@ -198,7 +198,25 @@ char* DistTimeToChar(double DistanceBetween, int ghour, int gmin, int gsec)
   else strcat(charMess,DistT5);
   strcat(charMess,DistT1); 
   return charMess;  
-}  
+} 
+// ****************************************************************************
+// *         При необходимости записать для постоянного хранения              *
+// *                     дату поступления координат                           *
+// ****************************************************************************
+void DateToEEPROM(int gday, int gmonth, int gyear) 
+{
+  int oldaddress=address; 
+  // Пример записи строки (char array) в EEPROM
+  char str[] = "Hello, EEPROM!";
+  for (int i = 0; i < strlen(str); i++) 
+  {
+    //EEPROM.write(address, str[i]);
+    address += sizeof(char); // Увеличение адреса на размер char (1 байт) для каждого символа
+  }
+  address=oldaddress;
+  Serial.print("str="); Serial.println(str);
+} 
+
 // ****************************************************************************
 // *                       Сформировать сообщение о локации                   *
 // ****************************************************************************

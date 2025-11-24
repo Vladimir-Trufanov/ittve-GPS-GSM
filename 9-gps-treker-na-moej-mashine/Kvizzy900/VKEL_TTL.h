@@ -93,7 +93,9 @@ bool Talk_VKEL_TTL(unsigned long ncikl)
           else if (ghour<0) ghour=ghour+24;
           // Выводим 2 успешное сообщение в паре
           // (сообщение о времени и смещении от предыдущей точки)     
-          saymess(DistTimeToChar(DistanceBetween,ghour,gmin,gsec)); 
+          saymess(DistTimeToChar(DistanceBetween,ghour,gmin,gsec));
+          // ------
+          DateToEEPROM(gday,gmonth,gyear);
         }
         // "Не определяется время"
         else 
