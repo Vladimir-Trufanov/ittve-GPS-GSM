@@ -200,21 +200,83 @@ char* DistTimeToChar(double DistanceBetween, int ghour, int gmin, int gsec)
   return charMess;  
 } 
 // ****************************************************************************
-// *         При необходимости записать для постоянного хранения              *
-// *                     дату поступления координат                           *
+// *     Вывести данные о перезапусках, а при необходимости записать для      *
+// *            постоянного хранения дату поступления координат               *
 // ****************************************************************************
-void DateToEEPROM(int gday, int gmonth, int gyear) 
+const char Tires[2]="~";  
+const char Point[2]=".";  
+//        DistT4[2]=" ";  
+char* DateToEEPROM(int gday, int gmonth, int gyear) 
 {
-  int oldaddress=address; 
-  // Пример записи строки (char array) в EEPROM
-  char str[] = "Hello, EEPROM!";
-  for (int i = 0; i < strlen(str); i++) 
+  // Если установлен флаг перезагрузки, то записываем дату
+  // на постоянное хранение
+  if (isReboot)
   {
-    //EEPROM.write(address, str[i]);
-    address += sizeof(char); // Увеличение адреса на размер char (1 байт) для каждого символа
+    oldaddress=address; 
+    memset(charMess,'\0',34); 
+    if (gday<10) {strcat(charMess,DistT3); strcat(charMess,IntToChar(gday));}
+    else strcat(charMess,IntToChar(gday)); 
+    strcat(charMess,Point); 
+    if (gmonth<10) {strcat(charMess,DistT3); strcat(charMess,IntToChar(gmonth));}
+    else strcat(charMess,IntToChar(gmonth)); 
+    strcat(charMess,Point); 
+    strcat(charMess,IntToChar(gyear)); 
+    for (int i = 0; i < strlen(charMess); i++) 
+    {
+      EEPROM.put(address, charMess[i]);
+      address += sizeof(char); // Увеличение адреса на размер char (1 байт) для каждого символа
+    }
+    isReboot=false;
+    address=oldaddress;
+  }
+  oldaddress=address; 
+  // Извлекаем дату перезагрузки
+  //            123456789012
+  char str[12]="            ";  
+  memset(str,'\0',12); 
+  for (int i = 0; i < 10; i++) 
+  {
+    EEPROM.get(address,str[i]);
+    address += sizeof(char);
   }
   address=oldaddress;
-  Serial.print("str="); Serial.println(str);
+  //Serial.print(" address="); Serial.println(address);
+  //Serial.print("     str="); Serial.println(str);
+  // Выводим число перезагрузок 
+  // "1234567890123456"
+  // "12345~25.11.2025"
+  memset(charMess,'\0',34); 
+  EEPROM.get(0,nReboot);
+  if (nReboot>9999) strcat(charMess,IntToChar(nReboot));
+  else
+  {
+    // "4321"
+    strcat(charMess,DistT4);
+    if (nReboot>999) strcat(charMess,IntToChar(nReboot));
+    else
+    {
+      // "321"
+      strcat(charMess,DistT4);
+      if (nReboot>99) strcat(charMess,IntToChar(nReboot));
+      else
+      {
+        // "21"
+        strcat(charMess,DistT4);
+        if (nReboot>9) strcat(charMess,IntToChar(nReboot));
+        else
+        {
+          strcat(charMess,DistT4); strcat(charMess,IntToChar(nReboot));
+        }
+
+      }
+
+    }
+  }
+  // Выводим разделитель 
+  strcat(charMess,Tires);
+  // Выводим дату 
+  strcat(charMess,str);
+  return charMess;  
 } 
 
 // ****************************************************************************
