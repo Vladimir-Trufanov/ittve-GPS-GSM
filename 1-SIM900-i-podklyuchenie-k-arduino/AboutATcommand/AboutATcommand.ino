@@ -63,7 +63,7 @@ void setup()
   sendCommand("AT+CBC"," Получаем состояние батареи. Вторая цифра - это % заполнения, а третья цифра - фактическое напряжение в мВ"); 
   delay(1000);   
 
-  /*
+  
   // match state object
   MatchState ms;
 
@@ -84,8 +84,17 @@ void setup()
     }
   else
     Serial.println ("No match.");
-  */  
 
+
+  for (int j = ms.MatchStart; j < ms.MatchStart+ms.MatchLength; j++)
+  {
+    Serial.write(buf[j]);
+  }
+  Serial.println (" ");
+ 
+
+
+  /*
   Serial.println ();
   unsigned long count;
 
@@ -105,7 +114,7 @@ void setup()
   Serial.print ("Found ");
   Serial.print (count);            // 8 in this case
   Serial.println (" matches.");
- 
+  */
 
 
 }
