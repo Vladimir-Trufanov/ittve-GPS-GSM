@@ -96,7 +96,7 @@ bool Talk_VKEL_TTL(unsigned long ncikl)
           saymess(DistTimeToChar(DistanceBetween,ghour,gmin,gsec));
           // При необходимости записываем дату перезагрузки
           // и выводим сообщение по перезагрузкам 
-          saymess(DateToEEPROM(gday,gmonth,gyear));
+          // saymess(DateToEEPROM(gday,gmonth,gyear));
         }
         // "Не определяется время"
         else 
