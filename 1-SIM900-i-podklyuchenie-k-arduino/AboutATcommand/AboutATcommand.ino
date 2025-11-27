@@ -1,43 +1,23 @@
 /** Arduino C/C++ *************************************** AboutATcommand.ino ***
  * 
- * Познакомиться с AT-командами SIM900
+ * Познакомиться с AT-командами SIM900 и с выборкой данных с помощью regexp
  * 
- * v1.0.1, 10.11.2025                                  Автор:      Труфанов В.Е.
+ * v1.0.2, 27.11.2025                                  Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                                Дата создания: 26.07.2025
  *
 **/
 
 #include <Regexp.h>
+// match state object
+MatchState ms;
+// char bufi[16] = "The  quick brown";
+char bufi[16] = "The,1234brown";
 
 #include <SoftwareSerial.h>
-
 // Configure software serial port
 SoftwareSerial SIM900(7,8); 
-
-
-// called for each match
-void match_callback  (const char * match,          // matching string (not null-terminated)
-                      const unsigned int length,   // length of matching string
-                      const MatchState & ms)      // MatchState in use (to get captures)
-{
-char cap [10];   // must be large enough to hold captures
-  
-  Serial.print ("Matched: ");
-  Serial.write ((byte *) match, length);
-  Serial.println ();
-  
-  for (byte i = 0; i < ms.level; i++)
-    {
-    Serial.print ("Capture "); 
-    Serial.print (i, DEC);
-    Serial.print (" = ");
-    ms.GetCapture (cap, i);
-    Serial.println (cap); 
-    }  // end of for each capture
-
-}  // end of match_callback 
-
-
+// Резервируем буфер для записи ответного сообщения
+char answer[128]; 
 
 void setup() 
 {
@@ -48,6 +28,10 @@ void setup()
   // Если это сработает, далее вы будете видеть эхо-сигнал символов AT, а затем OK, сообщающий вам, что все в порядке и SIM900 правильно вас понимает!
   // Проверяем, реагирует ли модуль, ожидаемое значение  OK
   sendCommand("AT","Проверяем, реагирует ли SIM900 на команды"); 
+
+  // Выбираем первые 4 цифры в буфере
+  Proba(bufi,"%d%d%d%d");
+
   // AT+COPS? – Убедится, что вы подключены к сети и получить информацию об операторе
   sendCommand("AT+COPS?","Убеждаемся в подключении к сети и получаем информацию об операторе"); 
   // AT+CSQ – Проверить "уровень сигнала" – первое значение это уровень сигнала в дБ, он должен быть выше 5. Чем выше, тем лучше, до 31.
@@ -61,64 +45,29 @@ void setup()
   sendCommand("ATI","Получаем название платы и её редакцию"); 
   // AT+CBC – Получить состояние батареи lipo. Вторая цифра - это % заполнения, а третья цифра - фактическое напряжение в мВ
   sendCommand("AT+CBC"," Получаем состояние батареи. Вторая цифра - это % заполнения, а третья цифра - фактическое напряжение в мВ"); 
-  delay(1000);   
-
-  
-  // match state object
-  MatchState ms;
-
-  // what we are searching (the target)
-  char buf [100] = "The quick  brown fox jumps over the lazy wolf";
-  ms.Target (buf);  // set its address
-  Serial.println (buf);
-
-  //char result = ms.Match ("f.x");
-  char result = ms.Match ("%s%s(%a+)( )");
-  
-  if (result > 0)
-    {
-    Serial.print ("Found match at: ");
-    Serial.println (ms.MatchStart);        // 16 in this case     
-    Serial.print ("Match length: ");
-    Serial.println (ms.MatchLength);       // 3 in this case
-    }
-  else
-    Serial.println ("No match.");
-
-
-  for (int j = ms.MatchStart; j < ms.MatchStart+ms.MatchLength; j++)
-  {
-    Serial.write(buf[j]);
-  }
-  Serial.println (" ");
  
-
-
+  // Выбираем первые 4 цифры в ответе
+  Proba(answer,"%d%d%d%d");
+  delay(1000); 
   /*
-  Serial.println ();
-  unsigned long count;
-
-  // what we are searching (the target)
-  char buf [100] = "The quick brown fox jumps over the lazy wolf";
-
-  // match state object
-  MatchState ms (buf);
-
-  // original buffer
-  Serial.println (buf);
-
-  // search for three letters followed by a space (two captures)
-  count = ms.GlobalMatch ("(%a+)( )", match_callback);
-
-  // show results
-  Serial.print ("Found ");
-  Serial.print (count);            // 8 in this case
-  Serial.println (" matches.");
+  «АТ+IPR?»   — проверяем скорость порта;
+  «АТ+IFC?»   — проверяем, происходит ли контроль передачи информации;
+  «АТ+GSAP»   — проверяем, на что способен модем;
+  «АТ+GMM»    — запрашиваем идентификатор модема;
+  «АТ+GMR»    — запрашиваем идентификатор ревизии модема;
+  «АТ+GSN»    — запрашиваем IMEI устройства;
+  «АТ+COPS=?» — проверяем список всех доступных сотовых операторов;
+  «АТ+CPAS»   — проверяем рабочее состояние модема;
+  «АТ+CCLK?»  — проверяем текущие настройки времени и даты в устройстве;
+  «АТ+СМЕЕ=0,1или 2», где «0» — отключаем получение информации о возникающих ошибках в работе, «1» — просим присылать код ошибки, «2» — просим присылать описание ошибки;
+  «АТ+ССLK=»     - прописываем нужную дату и время»» — устанавливаем дату и время;
+  «АТ+СPIN»=ХХХХ - определяем ПИН-код для модема;
+  «ATZ0 или 1»   - сбрасываем настройки модема до определенного уровня, где «0» или «1» — это профили (уровни) настроек модема;
+  «AT&F»         - сбрасываем настройки до заводских;
+  «AT+COPN»      - запрашиваем список всех имен операторов из памяти модуля.
   */
-
-
 }
-
+  
 void loop() 
 {
 }
@@ -147,15 +96,49 @@ void sendCommand(const char* command, char* info)
 **/
 void ShowSerialData() 
 {
+  // Чистим буфер сообщения
+  memset(answer,'\0',128); 
   while (SIM900.available()) 
   {
     char c = SIM900.read();
     Serial.write(c);
+    strcat(answer,String(c).c_str()); 
   }
   Serial.println("");
   delay(1000);
 }
+/**
+ * Выбрать в буфере подстроку по запросу regexp
+**/ 
+void Proba(char buf[],char mch[]) 
+{
+  // what we are searching (the target)
+  ms.Target (buf);  // set its address
+  Serial.println (buf);
 
+  //char result = ms.Match ("f.x");
+  //char result = ms.Match ("%s%s(%a+)( )");
+  //char result = ms.Match ("%s%s(%a+)");
+  //char result = ms.Match("%d%d%d%d");
+  char result = ms.Match(mch);
+  
+  if (result > 0)
+    {
+    Serial.print ("Found match at: ");
+    Serial.println (ms.MatchStart);        // 16 in this case     
+    Serial.print ("Match length: ");
+    Serial.println (ms.MatchLength);       // 3 in this case
+    }
+  else
+    Serial.println ("No match.");
+
+
+  for (int j = ms.MatchStart; j < ms.MatchStart+ms.MatchLength; j++)
+  {
+    Serial.write(buf[j]);
+  }
+  Serial.println (" ");
+}
 
 // Arduino C/C++ **************************************** AboutATcommand.ino ***
                                                                                                                                                                                                   
