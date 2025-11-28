@@ -51,6 +51,7 @@ bool isFullCikl=true;                   // 9: true - "Выполняем про�
 bool isMemTrass=false;                  // 8: true - "Показываем свободную память";    false - "Отменяем трассирование памяти"
 bool isATTrass=true;                    // 7: true - "Показываем ответ на AT-команды"; false - "Отменяем трассирование AT-команд"
 
+
 // Обеспечиваем взаимодействие и выборку данных из приёмника GPS VKEL_TTL 
 #include "VKEL_TTL.h"     
 // Обеспечиваем взаимодействие с SIM900 и передачу данных на сайт  
@@ -67,7 +68,6 @@ void setup()
   if (nReboot==65535) nReboot=0;
   nReboot++;
   EEPROM.put(address,nReboot);
-  Serial.print("nReboot="); Serial.println(nReboot);
   // Устанавливаем флаг и определяем адрес для записи 
   // даты первого поступления координат после перезагрузки
   isReboot=true; 
@@ -132,8 +132,6 @@ void loop()
     {
       SIM900.listen();
       CoordSend();
-      //glat=lat*1000000; glon=lng*1000000;   
-      //isSend=send_coords_at(glat,glon,7);
       VKEL_TTL.listen();
     }
   }
@@ -157,9 +155,6 @@ void loop()
     ti = ti - 273.15;                                  // температура по Цельсию
     // Считываем напряжение питания
     float vi = analogRead_VCC();      
-    // Выводим сообщение о температуре и напряжении питания
-    saymess(TempVoltToChar(ti,vi));
-    delay(1000);
 
     // Прослушиваем приемник GPS V.KEL-TTL
     // (по умолчанию прослушивается последний инициализированный порт,
@@ -175,6 +170,20 @@ void loop()
     // начинаем прослушивать и работать с портом SIM900
     if (isVKEL_TTL)
     {
+      // Выводим сообщение о температуре и напряжении питания
+      saymess(TempVoltToChar(ti,vi,chardec));
+      delay(2000);
+      // При необходимости записываем дату перезагрузки
+      // и выводим сообщение по перезагрузкам 
+      saymess(DateToEEPROM(gday,gmonth,gyear));
+      delay(2000);
+      // Выводим сообщение о локации 
+      saymess(LocationToChar(lat,lng,chardec));
+      delay(2000);
+      // Выводим сообщение о времени и смещении от предыдущей точки     
+      saymess(DistTimeToChar(DistanceBetween,ghour,gmin,gsec,chardec));
+      delay(1000);
+
       // Работаем с SIM900
       SIM900.listen();
       // Проверяем, реагирует ли на команды SIM900

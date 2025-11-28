@@ -77,9 +77,6 @@ bool Talk_VKEL_TTL(unsigned long ncikl)
       DistanceBetween = gps.distanceBetween(lat,lng,lat0,lng0);
       // Меняем прежнее положение для определения будущего расстояния между точками
       lat0=lat; lng0=lng;  
-      // Выводим 1 успешное сообщение в паре
-      // (сообщение о локации)     
-      saymess(LocationToChar(lat,lng));
       // Определяем дату
       if (gps.date.isValid())
       {
@@ -91,12 +88,6 @@ bool Talk_VKEL_TTL(unsigned long ncikl)
           ghour=ghour+timezone_hours;
           if (ghour>=24) ghour=ghour-24;
           else if (ghour<0) ghour=ghour+24;
-          // Выводим 2 успешное сообщение в паре
-          // (сообщение о времени и смещении от предыдущей точки)     
-          saymess(DistTimeToChar(DistanceBetween,ghour,gmin,gsec));
-          // При необходимости записываем дату перезагрузки
-          // и выводим сообщение по перезагрузкам 
-          // saymess(DateToEEPROM(gday,gmonth,gyear));
         }
         // "Не определяется время"
         else 

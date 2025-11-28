@@ -16,12 +16,12 @@
 #include <MemoryFree.h>
 
 // Готовим массивы символов для формирования сообщений
-char charMess[34];        // буфер сообщений для вывода на дисплей  
-char chardec[8];          // буфер координат, дистанции, температуры, напряжения - max 7 знаков и точка (nt)
+char charMess[34];  // буфер сообщений для вывода на дисплей  
+char chardec[8];    // буфер координат, дистанции, температуры, напряжения - max 7 знаков и точка (nt)
 
 // Готовим определения для вывода сообщений во внешнее приложение
 char app[]="Kvizzy900";   // имя текущего приложения для внешнего приложения
-#define _extmess_h      // если определено, то передавать сообщение во внешнее приложение
+#define _extmess_h        // если определено, то передавать сообщение во внешнее приложение
 #ifdef _extmess_h
   #include "mess_Lcd1602v3.h"
 #endif
@@ -176,7 +176,7 @@ const char DistT2[2]=":";
 const char DistT3[2]="0";  
 const char DistT4[2]=" ";  
 const char DistT5[6]=">1000";  
-char* DistTimeToChar(double DistanceBetween, int ghour, int gmin, int gsec) 
+char* DistTimeToChar(double DistanceBetween, int ghour, int gmin, int gsec, char chardec[]) 
 {
   // "1234567890123456"
   // "Движение 10.86 м"
@@ -283,7 +283,7 @@ char* DateToEEPROM(int gday, int gmonth, int gyear)
 // *                       Сформировать сообщение о локации                   *
 // ****************************************************************************
 const char LocToCh[2]="-";  
-char* LocationToChar(double lat, double lng) 
+char* LocationToChar(double lat, double lng, char chardec[]) 
 {
   // "1234567890123456"
   // "61.80191-34.3298"
@@ -299,7 +299,7 @@ char* LocationToChar(double lat, double lng)
 const char tEq[4]="t=";  
 const char vEq[6]="C,v=";  
 const char vvq[2]="V";  
-char* TempVoltToChar(float ti, float vi) 
+char* TempVoltToChar(float ti, float vi, char chardec[]) 
 {
   // "1234567890123456"
   // "t=25.22C,v=4.56V"
