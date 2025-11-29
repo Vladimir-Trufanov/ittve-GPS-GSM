@@ -19,7 +19,8 @@
 _DS(AT_AT,"AT") 
 //_DS(AT_CSQ,"AT+CSQ") 
 _DS(AT_Contype,"AT+SAPBR=3,1,\"Contype\",\"GPRS\"") 
-_DS(AT_SAPBR,"AT+SAPBR=3,1,\"APN\",\"internet.mts.ru\"") 
+// _DS(AT_SAPBR,"AT+SAPBR=3,1,\"APN\",\"internet.mts.ru\"") 
+_DS(AT_SAPBR,"AT+SAPBR=3,1,\"APN\",\"internet\"") // Мегафон
 _DS(AT_SAPBR1,"AT+SAPBR=1,1")
 _DS(AT_SAPBR0,"AT+SAPBR=0,1")
 _DS(AT_HTTPINIT,"AT+HTTPINIT") 

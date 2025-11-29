@@ -10,7 +10,7 @@
    последовательное GPS-устройство со скоростью 9600 бод подключено к контактам 2 (rx) и 3 (tx).
 */
 
-static const int RXPin = 2, TXPin = 3; // синий на 2 - будет RX; зеленый на 3 - будет TX
+static const int RXPin = 12, TXPin = 13; // синий на 12 - будет RX; зеленый на 13 - будет TX
 static const uint32_t GPSBaud = 9600;
 
 

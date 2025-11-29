@@ -94,9 +94,9 @@ http://aprs.gids.nl/nmea/
 не получите никаких выходных данных от этой программы.
 */
 
-TinyGPSCustom pdop(gps, "GPGSA", 15); // $GPGSA sentence, 15th element
-TinyGPSCustom hdop(gps, "GPGSA", 16); // $GPGSA sentence, 16th element
-TinyGPSCustom vdop(gps, "GPGSA", 17); // $GPGSA sentence, 17th element
+//TinyGPSCustom pdop(gps, "GPGSA", 15); // $GPGSA sentence, 15th element
+//TinyGPSCustom hdop(gps, "GPGSA", 16); // $GPGSA sentence, 16th element
+//TinyGPSCustom vdop(gps, "GPGSA", 17); // $GPGSA sentence, 17th element
 
 // ****************************************************************************
 // *      Считать и расшифровать данные из буфера приёмника GPS V.KEL TTL     *
@@ -170,13 +170,14 @@ bool Talk_VKEL_TTL(unsigned long ncikl)
           }
 */
 
-
+/*
   if (gps.speed.isUpdated())
   {
     Serial.print(F("SPEED: "));
     Serial.print(F(" km/h="));
     Serial.println(gps.speed.kmph());
   }
+*/
 
 /*
 //if (gps.altitude.isUpdated())
@@ -190,6 +191,7 @@ bool Talk_VKEL_TTL(unsigned long ncikl)
 //  }
 */
 
+/*
 if (gps.satellites.isUpdated())
   {
     Serial.print(F("SATELLITES Fix Age="));
@@ -197,7 +199,7 @@ if (gps.satellites.isUpdated())
     Serial.print(F("ms Value="));
     Serial.println(gps.satellites.value());
   }
-
+*/
 
 
 
@@ -223,7 +225,7 @@ if (gps.satellites.isUpdated())
           if (ghour>=24) ghour=ghour-24;
           else if (ghour<0) ghour=ghour+24;
           
-          
+          /*
           // Every time anything is updated, print everything.
           if (gps.altitude.isUpdated() || gps.satellites.isUpdated() ||
           pdop.isUpdated() || hdop.isUpdated() || vdop.isUpdated())
@@ -236,6 +238,8 @@ if (gps.satellites.isUpdated())
             Serial.print(F(" SATS=")); Serial.println(gps.satellites.value());
 
           }
+          */
+
         }
         // "Не определяется время"
         else 

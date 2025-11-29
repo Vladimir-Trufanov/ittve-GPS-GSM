@@ -24,6 +24,25 @@ Installation - to use this library, follow these steps:
 
 #### [3. Точки доступа в интернет (APN) операторов мобильной связи России](https://prooperatorov.ru/likbez/all-apn/)
 
+```
+МТС	             МегаФон   Билайн               T2 (Теле2)	
+---------------  --------  -------------------  -----------------
+internet.mts.ru  internet  internet.beeline.ru  internet.tele2.ru	
+
+Yota	       Т-Мобайл (Тинькофф Мобайл)  СберМобайл  Газпромбанк Мобайл
+-------------  --------------------------  ----------  ------------------
+internet.yota  m.tinkoff.                  sberbank    gpb
+
+ВТБ Мобайл  Ростелеком       Просто      LycaMobile    
+----------  ---------------  ----------  ------------------  
+vtb         internet.rtk.ru  m.internet  data.lycamobile.ru 
+
+Крымтелеком        Мотив
+-----------------  -----------
+internet.ktkru.ru  inet.ycc.ru
+
+```
+
 #### [Описание АТ-команд GSM/GPRS Shield, модуль A9, A6 (GSM07.07,07.05;)](https://wiki.iarduino.ru/page/a6_gprs_at/)
 
 #### [Передача данных на веб-сервер с использованием Arduino и GPRS/GSM](https://microkontroller.ru/arduino-projects/peredacha-dannyh-na-veb-server-s-ispolzovaniem-arduino-i-gprs-gsm/)

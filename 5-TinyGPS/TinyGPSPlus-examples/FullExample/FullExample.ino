@@ -10,8 +10,8 @@
    последовательное GPS-устройство со скоростью 9600 бод подключено к контактам 2 (rx) и 3 (tx).
 */
 
-static const int RXPin = 2, TXPin = 3; // синий на 2 - будет RX; зеленый на 3 - будет TX
-static const uint32_t GPSBaud = 9600;
+static const int RXPin = 12, TXPin = 13; // синий на 2 - будет RX; зеленый на 3 - будет TX
+static const uint32_t GPSBaud = 115200;
 
 // The TinyGPSPlus object
 TinyGPSPlus gps;
@@ -20,7 +20,6 @@ TinyGPSPlus gps;
 SoftwareSerial ss(RXPin, TXPin);
 
 uint32_t nCikl=0;
-//int nCikl=0;
 
 void setup()
 {
@@ -43,7 +42,7 @@ void loop()
   if (nCikl<15)
   {
     Serial.print("nCikl="); Serial.println(nCikl);
-    /*
+    
     static const double LONDON_LAT = 51.508131, LONDON_LON = -0.128002;
 
     printInt(gps.satellites.value(), gps.satellites.isValid(), 5);
@@ -82,11 +81,11 @@ void loop()
     printInt(gps.sentencesWithFix(), true, 10);
     printInt(gps.failedChecksum(), true, 9);
     Serial.println();
-    */
+    
     smartDelay(1000);
     
-    //if (millis() > 5000 && gps.charsProcessed() < 10)
-    //  Serial.println(F("No GPS data received: check wiring"));
+    if (millis() > 5000 && gps.charsProcessed() < 10)
+      Serial.println(F("No GPS data received: check wiring"));
   }
 }
 
