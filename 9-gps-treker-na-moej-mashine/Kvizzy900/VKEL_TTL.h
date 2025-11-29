@@ -2,7 +2,7 @@
  * 
  * Обеспечить взаимодействие и выборку данных из приёмника GPS VKEL_TTL 
  * 
- * v3.0.0, 17.11.2025                                 Автор:      Труфанов В.Е.
+ * v3.0.1, 29.11.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
 **/
 
@@ -26,6 +26,77 @@ double DistanceBetween;                 // расстояние между те�
 int gday,gmonth,gyear;                  // день, месяц, год
 int ghour,gmin,gsec;                    // час,минута,секунда
 const int timezone_hours=3;             // Корректировка времени на время Москвы
+
+/*
+Выделяем 15-е, 16-е и 17-е поля в предложении $GPGSA, 
+соответственно PDOP (F("позиционное снижение точности")),
+HDOP (F("горизонтальная составляющая")) и VDOP (F("вертикальная составляющая")).
+
+HDOP (Horizontal Dilution of Precision)
+---------------------------------------
+
+HDOP — параметр в системах глобального позиционирования (GPS), 
+который отражает точность горизонтальной составляющей положения (широта и долгота). 
+Он указывает на то, насколько точно может быть определено горизонтальное положение 
+в данных условиях. 
+
+HDOP зависит от геометрического расположения спутников относительно приёмника: 
+Низкое значение — спутники расположены далеко друг от друга (широкое покрытие неба).
+Высокое значение — спутники сгруппированы в одной области, что снижает точность.
+
+HDOP показывает, насколько велика погрешность координат из-за геометрического 
+расположения спутников, даже если сигналы от каждого из них получены без ошибок. 
+
+Некоторые значения HDOP и их интерпретация:
+0–1 — идеальная точность, характерна для открытых пространств и качественного оборудования при отличных условиях приёма и большом количестве спутников. 
+Координаты имеют погрешность в пределах 2–5 метров.
+1–3 — высокая точность, подходит для большинства задач, включая мониторинг транспорта и расчёт пробега. 
+Погрешность обычно в диапазоне 5–10 метров.
+3–6 — средняя точность, погрешность может достигать 20–50 метров, особенно если спутники находятся низко над горизонтом 
+или сгруппированы в одной части неба.
+6 и более — низкая точность, погрешность превышает 
+100 метров, данные становятся бесполезными. Такой уровень HDOP наблюдается в условиях 
+плотной городской застройки, в туннелях или при плохом расположении спутников.
+
+VDOP (Vertical Dilution of Precision)
+-------------------------------------
+
+VDOP — это снижение точности в вертикальной плоскости (высота) в системах глобального позиционирования. 
+VDOP измеряет влияние геометрии спутников на точность высоты, которую определяет устройство GPS. Он показывает, 
+как ошибки в положении спутников относительно друг друга могут влиять на точность данных о вертикальном расположении. 
+Чем ниже значение VDOP, тем выше точность данных о высоте.
+
+PDOP (Position Dilution of Precision)
+-------------------------------------
+
+PDOP — параметр в спутниковой навигации, который учитывает геометрическое расположение спутников 
+относительно приёмника на Земле. Он показывает, насколько точно может быть определено положение, включая горизонтальную (широта и долгота) 
+и вертикальную (высота) составляющие. 
+
+Значение PDOP:
+Низкое значение (например, 1–3) указывает на высокую точность определения положения.
+Высокое значение (например, 5–10) указывает на более низкую точность.
+ 
+Формула: PDOP^2 = HDOP^2 + VDOP^2. 
+
+GPS Altitude
+------------
+
+GPS Altitude — это измерение высоты объекта над уровнем моря. 
+Значение GPS Altitude определяется с помощью технологии Глобальной системы позиционирования (GPS). Для расчёта используется эллипсоид всей Земли. 
+Важно учитывать, что значение GPS Altitude не всегда точно указывает на высоту объекта над землёй. На него могут влиять различные факторы, 
+такие как атмосферное давление, температура и точность сигнала. 
+
+Для получения дополнительной информации о предложениях NMEA: 
+http://aprs.gids.nl/nmea/
+
+Если ваш GPS-модуль не поддерживает предложение $GPGSA, то вы
+не получите никаких выходных данных от этой программы.
+*/
+
+TinyGPSCustom pdop(gps, "GPGSA", 15); // $GPGSA sentence, 15th element
+TinyGPSCustom hdop(gps, "GPGSA", 16); // $GPGSA sentence, 16th element
+TinyGPSCustom vdop(gps, "GPGSA", 17); // $GPGSA sentence, 17th element
 
 // ****************************************************************************
 // *      Считать и расшифровать данные из буфера приёмника GPS V.KEL TTL     *
@@ -61,6 +132,19 @@ bool readgps()
 bool Talk_VKEL_TTL(unsigned long ncikl)
 {
   // Serial.print(ncikl); Serial.println(": Talk_VKEL_TTL"); 
+
+
+
+
+
+
+
+
+
+
+
+
+
   // Инициируем данные приёмника GPS
   ghour=0; gmin=0; gsec=0; 
   gday=0; gmonth=0; gyear=0; 
@@ -69,6 +153,56 @@ bool Talk_VKEL_TTL(unsigned long ncikl)
   bool newdata = readgps();
   if (newdata)
   {
+
+
+/*
+          // Every time anything is updated, print everything.
+          if (gps.altitude.isUpdated() || gps.satellites.isUpdated() ||
+          pdop.isUpdated() || hdop.isUpdated() || vdop.isUpdated())
+          {
+
+            Serial.print(F("ALT="));   Serial.print(gps.altitude.meters()); 
+            Serial.print(F(" PDOP=")); Serial.print(pdop.value()); 
+            Serial.print(F(" HDOP=")); Serial.print(hdop.value()); 
+            Serial.print(F(" VDOP=")); Serial.print(vdop.value());
+            Serial.print(F(" SATS=")); Serial.println(gps.satellites.value());
+
+          }
+*/
+
+
+  if (gps.speed.isUpdated())
+  {
+    Serial.print(F("SPEED: "));
+    Serial.print(F(" km/h="));
+    Serial.println(gps.speed.kmph());
+  }
+
+/*
+//if (gps.altitude.isUpdated())
+//  {
+    Serial.print(F("ALTITUDE: "));
+    //Serial.print(gps.altitude.age());
+    //Serial.print(F("ms Raw="));
+    //Serial.print(gps.altitude.value());
+    Serial.print(F(" Meters="));
+    Serial.println(gps.altitude.meters());
+//  }
+*/
+
+if (gps.satellites.isUpdated())
+  {
+    Serial.print(F("SATELLITES Fix Age="));
+    Serial.print(gps.satellites.age());
+    Serial.print(F("ms Value="));
+    Serial.println(gps.satellites.value());
+  }
+
+
+
+
+
+
     // Определяем координаты и перемещение от предыдущей точки
     if (gps.location.isValid())
     {
@@ -88,6 +222,20 @@ bool Talk_VKEL_TTL(unsigned long ncikl)
           ghour=ghour+timezone_hours;
           if (ghour>=24) ghour=ghour-24;
           else if (ghour<0) ghour=ghour+24;
+          
+          
+          // Every time anything is updated, print everything.
+          if (gps.altitude.isUpdated() || gps.satellites.isUpdated() ||
+          pdop.isUpdated() || hdop.isUpdated() || vdop.isUpdated())
+          {
+
+            Serial.print(F("ALT="));   Serial.print(gps.altitude.meters()); 
+            Serial.print(F(" PDOP=")); Serial.print(pdop.value()); 
+            Serial.print(F(" HDOP=")); Serial.print(hdop.value()); 
+            Serial.print(F(" VDOP=")); Serial.print(vdop.value());
+            Serial.print(F(" SATS=")); Serial.println(gps.satellites.value());
+
+          }
         }
         // "Не определяется время"
         else 

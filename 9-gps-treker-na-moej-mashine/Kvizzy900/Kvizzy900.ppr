@@ -25,21 +25,17 @@ Kvizzy900
 		VKEL_TTL.h
 [Open project files]
 0=Kvizzy900.ino
-1=s16_Kvizzy900.h
-2=SIM900.h
-3=VKEL_TTL.h
+1=SIM900.h
+2=VKEL_TTL.h
 [Selected Project Files]
 Main=
-Selected=s16_Kvizzy900.h
+Selected=VKEL_TTL.h
 [Kvizzy900.ino]
-TopLine=7
+TopLine=1
 Caret=23,20
-[s16_Kvizzy900.h]
-TopLine=39
-Caret=40,62
 [SIM900.h]
-TopLine=5
+TopLine=3
 Caret=14,5
 [VKEL_TTL.h]
-TopLine=25
-Caret=1,30
+TopLine=145
+Caret=1,100
