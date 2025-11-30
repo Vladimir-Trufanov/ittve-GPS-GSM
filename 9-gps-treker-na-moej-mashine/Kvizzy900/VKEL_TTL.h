@@ -99,6 +99,7 @@ http://aprs.gids.nl/nmea/
 // ****************************************************************************
 // *      Считать и расшифровать данные из буфера приёмника GPS V.KEL TTL     *
 // ****************************************************************************
+/*
 bool readgps()
 {
   while (VKEL_TTL.available())
@@ -124,6 +125,7 @@ bool readgps()
   }
   return false;
 }
+*/
 // ****************************************************************************
 // *         Выбрать данные навигации из буфера приёмника GPS V.KEL TTL,      *
 // *                в случае неудачи вывести сообщение об ошибке              *
@@ -136,10 +138,11 @@ bool Talk_VKEL_TTL(unsigned long ncikl)
   gday=0; gmonth=0; gyear=0; 
   lat=0; lng=0; DistanceBetween=0;
   // Считываем и расшифроваем данные из буфера приёмника GPS V.KEL TTL 
-  Serial.println("*****");
-  bool newdata = readgps();
-  if (newdata)
-  {
+  //Serial.println("*****");
+  bool newdata = true;
+  //bool newdata = readgps();
+  //if (newdata)
+  //{
 
 
 
@@ -154,9 +157,9 @@ bool Talk_VKEL_TTL(unsigned long ncikl)
       // Меняем прежнее положение для определения будущего расстояния между точками
       lat0=lat; lng0=lng;  
 
-           if (gps.satellites.isValid()) SAT=gps.satellites.value(); 
-          if (gps.hdop.isValid()) HDOP=gps.hdop.hdop(); 
-          Serial.print("HDOP1="); Serial.println(SAT);
+        //   if (gps.satellites.isValid()) SAT=gps.satellites.value(); 
+        //  if (gps.hdop.isValid()) HDOP=gps.hdop.hdop(); 
+        //  Serial.print("HDOP1="); Serial.println(SAT);
 
      // Определяем дату
       if (gps.date.isValid())
@@ -194,12 +197,12 @@ bool Talk_VKEL_TTL(unsigned long ncikl)
       newdata = false;
       saymess(DefToChar(m1_LocateIsNot));
     }
-  }
-  else
-  {
+  //}
+  //else
+  //{
     // "Приемник GPS не подает сигналы"
-    saymess(DefToChar(m1_NotSignGPS));
-  }
+   // saymess(DefToChar(m1_NotSignGPS));
+  //}
   return newdata;
 }
 
