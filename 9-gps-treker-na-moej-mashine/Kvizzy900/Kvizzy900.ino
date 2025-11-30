@@ -142,7 +142,16 @@ void loop()
   if (isFullCikl)
   {
     ncikl++;
+    VKEL_TTL.listen();
 
+
+    while (VKEL_TTL.available())
+    {
+      int ib = VKEL_TTL.read();
+      Serial.print(char(ib));
+    }
+
+    /*
     // Проверяем температуру в коробке
     float R1 = 10000; // значение R1 на модуле
     float logR2,R2;
@@ -162,7 +171,11 @@ void loop()
     VKEL_TTL.listen();
     // Очищаем буфер последовательного порта V.KEL-TTL и делаем 
     // задержку чуть более секунды для того, чтобы он заполнился данными с координатами
-    while (VKEL_TTL.available()) VKEL_TTL.read();
+    Serial.println("=====");
+    while (VKEL_TTL.available())
+    {
+      Serial.print(char(VKEL_TTL.read()));
+    } 
     delay(1100);
     // Выбираем данные навигации из приёмника GPS V.KEL TTL 
     isVKEL_TTL=Talk_VKEL_TTL(ncikl);
@@ -176,6 +189,10 @@ void loop()
       // При необходимости записываем дату перезагрузки
       // и выводим сообщение по перезагрузкам 
       saymess(DateToEEPROM(gday,gmonth,gyear));
+      delay(2000);
+      // При ненулевых данных выводим сообщение о количестве спутников и точности измерений
+      Serial.print("HDOP2="); Serial.println(SAT);
+      if (HDOP>0) {if (SAT>0) saymess(SatHdopToChar(HDOP,SAT,chardec));}
       delay(2000);
       // Выводим сообщение о локации 
       saymess(LocationToChar(lat,lng,chardec));
@@ -224,7 +241,8 @@ void loop()
       } 
       // Выводим уточняющее сообщение о задержке
       saymess(charMess);
-    }  
+    } 
+    */ 
   }
   // Если закрыто прослушивание, то делаем заглушку 2 сек, 
   // чтобы по-человечески реагировать на другие команды 

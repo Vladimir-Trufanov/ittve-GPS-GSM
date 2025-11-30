@@ -2,7 +2,7 @@
  * 
  * Обеспечить взаимодействие и выборку данных из приёмника GPS VKEL_TTL 
  * 
- * v3.0.1, 29.11.2025                                 Автор:      Труфанов В.Е.
+ * v3.0.2, 30.11.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
 **/
 
@@ -25,6 +25,8 @@ double lat=lat0,lng=lng0;               // координаты текущей �
 double DistanceBetween;                 // расстояние между текущей и предыдущей точкой
 int gday,gmonth,gyear;                  // день, месяц, год
 int ghour,gmin,gsec;                    // час,минута,секунда
+int SAT=0;                              // количество спутников
+double HDOP;                            // погрешность координат
 const int timezone_hours=3;             // Корректировка времени на время Москвы
 
 /*
@@ -94,10 +96,6 @@ http://aprs.gids.nl/nmea/
 не получите никаких выходных данных от этой программы.
 */
 
-//TinyGPSCustom pdop(gps, "GPGSA", 15); // $GPGSA sentence, 15th element
-//TinyGPSCustom hdop(gps, "GPGSA", 16); // $GPGSA sentence, 16th element
-//TinyGPSCustom vdop(gps, "GPGSA", 17); // $GPGSA sentence, 17th element
-
 // ****************************************************************************
 // *      Считать и расшифровать данные из буфера приёмника GPS V.KEL TTL     *
 // ****************************************************************************
@@ -106,6 +104,7 @@ bool readgps()
   while (VKEL_TTL.available())
   {
     int b = VKEL_TTL.read();
+    Serial.print(char(b));
     // !!! Windows обратно совместима с MS-DOS (даже в агрессивной форме), а в MS-DOS использовалась комбинация CR-LF, 
     // потому что MS-DOS была совместима с CP/M-80 (в некоторой степени случайно), в которой использовалась комбинация CR-LF, 
     // потому что так работал принтер (ведь изначально принтеры были пишущими машинками с компьютерным управлением).
@@ -132,74 +131,15 @@ bool readgps()
 bool Talk_VKEL_TTL(unsigned long ncikl)
 {
   // Serial.print(ncikl); Serial.println(": Talk_VKEL_TTL"); 
-
-
-
-
-
-
-
-
-
-
-
-
-
   // Инициируем данные приёмника GPS
   ghour=0; gmin=0; gsec=0; 
   gday=0; gmonth=0; gyear=0; 
   lat=0; lng=0; DistanceBetween=0;
   // Считываем и расшифроваем данные из буфера приёмника GPS V.KEL TTL 
+  Serial.println("*****");
   bool newdata = readgps();
   if (newdata)
   {
-
-
-/*
-          // Every time anything is updated, print everything.
-          if (gps.altitude.isUpdated() || gps.satellites.isUpdated() ||
-          pdop.isUpdated() || hdop.isUpdated() || vdop.isUpdated())
-          {
-
-            Serial.print(F("ALT="));   Serial.print(gps.altitude.meters()); 
-            Serial.print(F(" PDOP=")); Serial.print(pdop.value()); 
-            Serial.print(F(" HDOP=")); Serial.print(hdop.value()); 
-            Serial.print(F(" VDOP=")); Serial.print(vdop.value());
-            Serial.print(F(" SATS=")); Serial.println(gps.satellites.value());
-
-          }
-*/
-
-/*
-  if (gps.speed.isUpdated())
-  {
-    Serial.print(F("SPEED: "));
-    Serial.print(F(" km/h="));
-    Serial.println(gps.speed.kmph());
-  }
-*/
-
-/*
-//if (gps.altitude.isUpdated())
-//  {
-    Serial.print(F("ALTITUDE: "));
-    //Serial.print(gps.altitude.age());
-    //Serial.print(F("ms Raw="));
-    //Serial.print(gps.altitude.value());
-    Serial.print(F(" Meters="));
-    Serial.println(gps.altitude.meters());
-//  }
-*/
-
-/*
-if (gps.satellites.isUpdated())
-  {
-    Serial.print(F("SATELLITES Fix Age="));
-    Serial.print(gps.satellites.age());
-    Serial.print(F("ms Value="));
-    Serial.println(gps.satellites.value());
-  }
-*/
 
 
 
@@ -213,7 +153,12 @@ if (gps.satellites.isUpdated())
       DistanceBetween = gps.distanceBetween(lat,lng,lat0,lng0);
       // Меняем прежнее положение для определения будущего расстояния между точками
       lat0=lat; lng0=lng;  
-      // Определяем дату
+
+           if (gps.satellites.isValid()) SAT=gps.satellites.value(); 
+          if (gps.hdop.isValid()) HDOP=gps.hdop.hdop(); 
+          Serial.print("HDOP1="); Serial.println(SAT);
+
+     // Определяем дату
       if (gps.date.isValid())
       {
         gday=gps.date.day(); gmonth=gps.date.month(); gyear=gps.date.year(); 
@@ -224,22 +169,10 @@ if (gps.satellites.isUpdated())
           ghour=ghour+timezone_hours;
           if (ghour>=24) ghour=ghour-24;
           else if (ghour<0) ghour=ghour+24;
-          
-          /*
-          // Every time anything is updated, print everything.
-          if (gps.altitude.isUpdated() || gps.satellites.isUpdated() ||
-          pdop.isUpdated() || hdop.isUpdated() || vdop.isUpdated())
-          {
-
-            Serial.print(F("ALT="));   Serial.print(gps.altitude.meters()); 
-            Serial.print(F(" PDOP=")); Serial.print(pdop.value()); 
-            Serial.print(F(" HDOP=")); Serial.print(hdop.value()); 
-            Serial.print(F(" VDOP=")); Serial.print(vdop.value());
-            Serial.print(F(" SATS=")); Serial.println(gps.satellites.value());
-
-          }
-          */
-
+          // Определяем количество спутников и погрешность
+          //if (gps.satellites.isValid()) SAT=gps.satellites.value(); 
+          //if (gps.hdop.isValid()) HDOP=gps.hdop.hdop(); 
+          //Serial.print("HDOP1="); Serial.println(HDOP);
         }
         // "Не определяется время"
         else 

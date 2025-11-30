@@ -4,7 +4,7 @@
  * и вывод их в последовательный порт или другой интерфейс
  * без копирования в оперативную память
  * 
- * v3.0.1, 23.11.2025                                 Автор:      Труфанов В.Е.
+ * v3.0.2, 30.11.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
 **/
 
@@ -59,7 +59,6 @@ _DS(m1_NotCompleted,  "HE ПOЛHЫЙ OTBET ")    // "За время тайм-а
 _DS(m1_Wait5sek,      "ЖДEM OTBET 5 sec")    // "Ждем 5 сек для получения ответа" - "Waiting for a response for 5 seconds"
 _DS(m1_SendCoordints, "----> KOOPДИHATЫ")    // "Отправляем координаты" - "Sending the coordinates"
 _DS(m1_CoordinatGone, "KOOPДИHATЫ ====>")    // "Координаты ушли" - "The coordinates are gone"
-_DS(m1_TempAndVolt,   "t=25.22C,v=4.56V")    // "Температура и напряжение" - "Temperature and voltage"
 
 // ****************************************************************************
 // *         Вывести сообщение внутри приложения в последовательный порт      *
@@ -197,6 +196,61 @@ char* DistTimeToChar(double DistanceBetween, int ghour, int gmin, int gsec, char
   else if (DistanceBetween<999.99) {dtostrf(DistanceBetween,3,1,chardec); strcat(charMess,chardec);}   
   else strcat(charMess,DistT5);
   strcat(charMess,DistT1); 
+  return charMess;  
+} 
+// ****************************************************************************
+// *    Сформировать сообщение о количестве спутников и точности измерений    *
+// ****************************************************************************
+
+/* Некоторые значения HDOP и их интерпретация:
+0–1 — идеальная точность,                             0.0 --> 2.0 метров 
+координаты имеют погрешность в пределах 2–5 метров.   1.0 --> 5.0 метров [3] => HDOPm=2+(3*HDOP);
+
+HDOP=0 => HDOPm=2;  HDOP=1 => HDOPm=5;  HDOP=0.5 => HDOPm=3.5 = 4;  
+
+1–3 — высокая точность,                v0=1 --> 5m.  deltaMax=2 --> 5.0 метров 
+погрешность обычно в диапазоне 5–10 метров.   (HDOP-1) = deltav --> x метров => x=(HDOP-1)*5/2 => HDOPm-5=(HDOP-1)*5/2 => HDOPm=(HDOP-1)*5/2+5;
+
+HDOP=1 => HDOPm=5;  HDOP=3 => HDOPm=10;  HDOP=2 => HDOPm=7.5 = 8;  
+
+3–6 — средняя точность,               v0=3 --> 10m.  deltaMax=3 --> 40.0 метров 
+погрешность может достигать 10–50 метров.     (HDOP-3) = deltav --> x метров => x=(HDOP-3)*40/3 => HDOPm-10=(HDOP-3)*40/3 => HDOPm=(HDOP-3)*40/3+10;
+
+HDOP=3 => HDOPm=10;  HDOP=6 => HDOPm=50;  HDOP=4.5 => HDOPm=30;  
+
+*/
+const char  Equ[6]="SAT=";  
+const char  Zpt[2]=",";  
+const char Zptp[4]=", ";
+const char  b50[6]=">50m";
+const char  Mto[4]="m.";  
+//  char DistT4[2]=" ";  
+char* SatHdopToChar(double HDOP, int SAT, char chardec[]) 
+{
+  // Высчитываем погрешность координат (точность) в метрах
+  int HDOPm;  
+  // "1234567890123456"
+  // "SAT=17, TOЧ=17m."
+  // "SAT=17,17m. 1.63"  1
+  // "SAT=7, 17m. 1.63"  2
+  // "SAT=7,  7m. 1.63"  3
+  // "SAT=7, >50m 1.63"  4
+  memset(charMess,'\0',34);
+  // Выводим количество спутников 
+  strcat(charMess,Equ); 
+  if (SAT<10) {strcat(charMess,IntToChar(SAT)); strcat(charMess,Zptp);}
+  else        {strcat(charMess,IntToChar(SAT)); strcat(charMess,Zpt);}
+  // Выводим погрешность координат (точность), пересчитанную в метры
+  if (HDOP>6) HDOPm=99;
+  else if (HDOP>3) HDOPm=round((HDOP-3)*40/3)+10;   
+  else if (HDOP>1) HDOPm=round((HDOP-1)*5/2)+5;  
+  else HDOPm=2+round((3*HDOP));
+  
+  if (HDOPm>50) strcat(charMess,b50);
+  else if (HDOPm>9) {strcat(charMess,IntToChar(HDOPm)); strcat(charMess,Mto);}   
+  else {strcat(charMess,DistT4); strcat(charMess,IntToChar(HDOPm)); strcat(charMess,Mto);}  
+  // Выводим HDOP
+  if (HDOP<10) {strcat(charMess,DistT4); dtostrf(HDOP,1,2,chardec); strcat(charMess,chardec);}
   return charMess;  
 } 
 // ****************************************************************************
