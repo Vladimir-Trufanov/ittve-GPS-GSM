@@ -97,49 +97,25 @@ http://aprs.gids.nl/nmea/
 */
 
 // ****************************************************************************
-// *      Считать и расшифровать данные из буфера приёмника GPS V.KEL TTL     *
-// ****************************************************************************
-/*
-bool readgps()
-{
-  while (VKEL_TTL.available())
-  {
-    int b = VKEL_TTL.read();
-    Serial.print(char(b));
-    // !!! Windows обратно совместима с MS-DOS (даже в агрессивной форме), а в MS-DOS использовалась комбинация CR-LF, 
-    // потому что MS-DOS была совместима с CP/M-80 (в некоторой степени случайно), в которой использовалась комбинация CR-LF, 
-    // потому что так работал принтер (ведь изначально принтеры были пишущими машинками с компьютерным управлением).
-    // В принтерах есть отдельная команда для перемещения бумаги на одну строку вверх и отдельная команда для возврата 
-    // каретки (на которой закреплена бумага) к левому краю.
-    // В современных устройствах по-прежнему есть эти команды, потому что они тоже обратно совместимы с более ранними принтерами
-    // и другими устройствами. (В частности, HP хорошо справляется с этим).
-    // В пишущих машинках тоже, сначала бумага поднимается ("LF" = "\n"), 
-    // а затем каретка возвращается в исходное положение   ("CR" = "\r"), 
-    // даже если это происходит одним движением. Звук «динг» сообщал, что конец строки близок и нужно подготовиться.
-
-    // Отлавливаем конец строки с \r и \n
-    if ('\r' != b)
-    {
-      if (gps.encode(b)) return true;
-    }
-  }
-  return false;
-}
-*/
-
-
-// ****************************************************************************
 // *       Загрузить и декодировать предложения NMEA в заданное время         *
 // *                  (по меньшей мере одно предложение)                      *
 // ****************************************************************************
-void smartDelay(unsigned long ms)
+bool smartDelay(unsigned long ms)
 {
+  static uint32_t charsProc=0;      // счетчик обработанных символов
+  bool newdata = false;             // счетчик не увеличился
+
   unsigned long start = millis();
   do 
   {
     while (VKEL_TTL.available()) gps.encode(VKEL_TTL.read());
   } 
   while (millis() - start < ms);
+  // Проверяем, увеличилось ли число обработанных символов
+  if (gps.charsProcessed()>charsProc) newdata = true;
+  //Serial.print("gps.charsProcessed()="); Serial.println(gps.charsProcessed());
+  charsProc=gps.charsProcessed();
+  return newdata;
 }
 // ****************************************************************************
 // *         Выбрать данные навигации из буфера приёмника GPS V.KEL TTL,      *
@@ -147,69 +123,63 @@ void smartDelay(unsigned long ms)
 // ****************************************************************************
 bool Talk_VKEL_TTL(unsigned long ncikl)
 {
-  // Serial.print(ncikl); Serial.println(": Talk_VKEL_TTL"); 
   // Инициируем данные приёмника GPS
   ghour=0; gmin=0; gsec=0; 
   gday=0; gmonth=0; gyear=0; 
   lat=0; lng=0; DistanceBetween=0;
-  bool newdata = true;
-  // Определяем координаты и перемещение от предыдущей точки
-  if (gps.location.isValid())
+  // Чуть более секунды считываем данные приёмника GPS
+  bool newdata = smartDelay(1100);
+  if (newdata)
   {
-    lat=gps.location.lat();
-    lng=gps.location.lng();
-    DistanceBetween = gps.distanceBetween(lat,lng,lat0,lng0);
-    // Меняем прежнее положение для определения будущего расстояния между точками
-    lat0=lat; lng0=lng;  
-    /* 
-        //   if (gps.satellites.isValid()) SAT=gps.satellites.value(); 
-        //  if (gps.hdop.isValid()) HDOP=gps.hdop.hdop(); 
-        //  Serial.print("HDOP1="); Serial.println(SAT);
-    */
-    // Определяем дату
-    if (gps.date.isValid())
+    // Определяем координаты и перемещение от предыдущей точки
+    if (gps.location.isValid())
     {
-      gday=gps.date.day(); gmonth=gps.date.month(); gyear=gps.date.year(); 
-      // Определяем время
-      if (gps.time.isValid())
+      lat=gps.location.lat();
+      lng=gps.location.lng();
+      DistanceBetween = gps.distanceBetween(lat,lng,lat0,lng0);
+      // Меняем прежнее положение для определения будущего расстояния между точками
+      lat0=lat; lng0=lng;  
+      // Определяем дату
+      if (gps.date.isValid())
       {
-        ghour=gps.time.hour(); gmin=gps.time.minute(); gsec=gps.time.second();
-        ghour=ghour+timezone_hours;
-        if (ghour>=24) ghour=ghour-24;
-        else if (ghour<0) ghour=ghour+24;
-        // Определяем количество спутников и погрешность
-        if (gps.satellites.isValid()) SAT=gps.satellites.value(); 
-        if (gps.hdop.isValid()) HDOP=gps.hdop.hdop(); 
-        Serial.print("HDOP1="); Serial.println(HDOP);
+        gday=gps.date.day(); gmonth=gps.date.month(); gyear=gps.date.year(); 
+        // Определяем время
+        if (gps.time.isValid())
+        {
+          ghour=gps.time.hour(); gmin=gps.time.minute(); gsec=gps.time.second();
+          ghour=ghour+timezone_hours;
+          if (ghour>=24) ghour=ghour-24;
+          else if (ghour<0) ghour=ghour+24;
+          // Определяем количество спутников и погрешность
+          if (gps.satellites.isValid()) SAT=gps.satellites.value(); 
+          if (gps.hdop.isValid()) HDOP=gps.hdop.hdop(); 
+        }
+        // "Не определяется время"
+        else 
+        {
+          newdata = false;
+          saymess(DefToChar(m1_TimeIsNot));
+        }
       }
-      // "Не определяется время"
-      else 
+      // "Не определяется дата"
+      else
       {
         newdata = false;
-        saymess(DefToChar(m1_TimeIsNot));
+        saymess(DefToChar(m1_DateIsNot));
       }
     }
-    // "Не определяется дата"
+    // "Не определяется локация" 
     else
     {
       newdata = false;
-      saymess(DefToChar(m1_DateIsNot));
+      saymess(DefToChar(m1_LocateIsNot));
     }
   }
-  // "Не определяется локация" 
   else
   {
-    newdata = false;
-    saymess(DefToChar(m1_LocateIsNot));
-  }
-  /*
-  //}
-  //else
-  //{
     // "Приемник GPS не подает сигналы"
-   // saymess(DefToChar(m1_NotSignGPS));
-  //}
-  */
+    saymess(DefToChar(m1_NotSignGPS));
+  }
   return newdata;
 }
 
