@@ -276,6 +276,21 @@ bool send_coords_at(uint32_t glat, uint32_t glon, uint32_t gcik)
   if (AT_com(AT_SAPBR0)!=0) return false;
   return true;
 }
+// ****************************************************************************
+// *                     Отправить данные положения на сайт и                 *
+// *              начать новый отсчет времени для передачи на сайт            *
+// ****************************************************************************
+void CoordSend()
+{
+  bool isSend;     // флаг успешности отправки координат
+  saymess(DefToChar(m1_SendCoordints));
+  glat=lat*1000000; glon=lng*1000000;   
+  isSend=send_coords_at(glat,glon,ncikl);
+  if (isSend) saymess(DefToChar(m1_CoordinatGone));
+  // Начинаем новый отсчет времени для передачи на сайт 
+  BdelaySIM=millis();   
+}
+
 
 #endif
 

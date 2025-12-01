@@ -89,18 +89,6 @@ ISR(WATCHDOG)
   Watchdog.enable(INTERRUPT_RESET_MODE, WDT_PRESCALER_1024); 
 }
 
-// This custom version of delay() ensures that the gps object
-// is being "fed".
-static void smartDelay(unsigned long ms)
-{
-  unsigned long start = millis();
-  do 
-  {
-    while (VKEL_TTL.available()) gps.encode(VKEL_TTL.read());
-  } 
-  while (millis() - start < ms);
-}
-
 static void printFloat(float val, bool valid, int len, int prec)
 {
   if (!valid)
@@ -242,10 +230,10 @@ void loop()
     // (по умолчанию прослушивается последний инициализированный порт,
     // если требуется прослушивать другой, следует его явно указать)
     VKEL_TTL.listen();
-    Serial.println("== beg ==");
-
+    
     smartDelay(1000);
 
+    /*
     printInt(gps.satellites.value(), gps.satellites.isValid(), 5);
     printFloat(gps.hdop.hdop(), gps.hdop.isValid(), 6, 1);
     printFloat(gps.location.lat(), gps.location.isValid(), 11, 6);
@@ -255,7 +243,81 @@ void loop()
     printFloat(gps.altitude.meters(), gps.altitude.isValid(), 7, 2);
     printFloat(gps.course.deg(), gps.course.isValid(), 7, 2);
     printFloat(gps.speed.kmph(), gps.speed.isValid(), 6, 2);
-    //printStr(gps.course.isValid() ? TinyGPSPlus::cardinal(gps.course.deg()) : "*** ", 6);
+    Serial.println("");
+    */
+
+
+
+
+
+
+
+
+    /*
+    while (VKEL_TTL.available())
+    {
+      int ib = VKEL_TTL.read();
+      Serial.print(char(ib));
+      // Отлавливаем конец строки с \r и \n
+      //if ('\r' != ib)
+      //{
+      //  if (gps.encode(ib)) break;
+      //}
+    }
+    */
+    /*
+    if (gps.location.isValid()) 
+    {
+      //Serial.println("=====");
+      Serial.println("gps.location.isValid()");
+    */
+
+    // Выбираем данные навигации из приёмника GPS V.KEL TTL 
+    isVKEL_TTL=Talk_VKEL_TTL(ncikl);
+    // Если данные от приемника GPS есть, то
+    // начинаем прослушивать и работать с портом SIM900
+    if (isVKEL_TTL)
+    {
+      //Serial.println("gps.location.isValid()");
+
+      // Выводим сообщение о температуре и напряжении питания
+      saymess(TempVoltToChar(ti,vi,chardec));
+      delay(2000);
+      // При необходимости записываем дату перезагрузки
+      // и выводим сообщение по перезагрузкам 
+      saymess(DateToEEPROM(gday,gmonth,gyear));
+      delay(2000);
+      // При ненулевых данных выводим сообщение о количестве спутников и точности измерений
+      Serial.print("HDOP2="); Serial.println(HDOP);
+      if (HDOP>0) {if (SAT>0) saymess(SatHdopToChar(HDOP,SAT,chardec));}
+      delay(2000);
+      // Выводим сообщение о локации 
+      saymess(LocationToChar(lat,lng,chardec));
+      delay(2000);
+      // Выводим сообщение о времени и смещении от предыдущей точки     
+      saymess(DistTimeToChar(DistanceBetween,ghour,gmin,gsec,chardec));
+      delay(1000);
+
+        /*  
+        // Выводим сообщение о температуре и напряжении питания
+        saymess(TempVoltToChar(ti,vi,chardec));
+        delay(2000);
+        // При необходимости записываем дату перезагрузки
+        // и выводим сообщение по перезагрузкам 
+        saymess(DateToEEPROM(gday,gmonth,gyear));
+        delay(2000);
+        // Выводим сообщение о локации 
+        saymess(LocationToChar(lat,lng,chardec));
+        delay(2000);
+        // Выводим сообщение о времени и смещении от предыдущей точки     
+        saymess(DistTimeToChar(DistanceBetween,ghour,gmin,gsec,chardec));
+        //delay(1000);
+
+        //Serial.println("-----");
+        */
+
+
+
 
 
       // Работаем с SIM900
@@ -282,56 +344,7 @@ void loop()
       }
       // Начинаем отсчет интервал в мс до следующего опроса GPS 
       BdelayGPS=millis();   
-
-
-
-
-
-    /*
-    while (VKEL_TTL.available())
-    {
-      int ib = VKEL_TTL.read();
-      Serial.print(char(ib));
-      // Отлавливаем конец строки с \r и \n
-      //if ('\r' != ib)
-      //{
-      //  if (gps.encode(ib)) break;
-      //}
     }
-    if (gps.location.isValid()) 
-    {
-      //Serial.println("=====");
-      Serial.println("gps.location.isValid()");
-      // Выбираем данные навигации из приёмника GPS V.KEL TTL 
-      //isVKEL_TTL=Talk_VKEL_TTL(ncikl);
-      // Если данные от приемника GPS есть, то
-      // начинаем прослушивать и работать с портом SIM900
-      / *
-      if (isVKEL_TTL)
-      {  
-        // Выводим сообщение о температуре и напряжении питания
-        saymess(TempVoltToChar(ti,vi,chardec));
-        delay(2000);
-        // При необходимости записываем дату перезагрузки
-        // и выводим сообщение по перезагрузкам 
-        saymess(DateToEEPROM(gday,gmonth,gyear));
-        delay(2000);
-        // При ненулевых данных выводим сообщение о количестве спутников и точности измерений
-        //if (HDOP>0) {if (SAT>0) saymess(SatHdopToChar(HDOP,SAT,chardec));}
-        //delay(2000);
-        // Выводим сообщение о локации 
-        saymess(LocationToChar(lat,lng,chardec));
-        delay(2000);
-        // Выводим сообщение о времени и смещении от предыдущей точки     
-        saymess(DistTimeToChar(DistanceBetween,ghour,gmin,gsec,chardec));
-        //delay(1000);
-
-        //Serial.println("-----");
-      }
-      * /
-    }
-    */
-
     /*
     if (gps.satellites.isValid()) 
     {
@@ -342,8 +355,6 @@ void loop()
       Serial.print("      HDOP="); HDOP=gps.hdop.hdop(); Serial.println(HDOP);
     }
     */
-    
-
     // При ненулевых данных выводим сообщение о количестве спутников и точности измерений
     //if (gps.satellites.isValid()) SAT=gps.satellites.value(); 
     //if (gps.hdop.isValid())  HDOP=gps.hdop.hdop();
@@ -369,19 +380,6 @@ void loop()
     // начинаем прослушивать и работать с портом SIM900
     if (isVKEL_TTL)
     {
-      // Выводим сообщение о температуре и напряжении питания
-      saymess(TempVoltToChar(ti,vi,chardec));
-      delay(2000);
-      // При необходимости записываем дату перезагрузки
-      // и выводим сообщение по перезагрузкам 
-      saymess(DateToEEPROM(gday,gmonth,gyear));
-      delay(2000);
-      // Выводим сообщение о локации 
-      saymess(LocationToChar(lat,lng,chardec));
-      delay(2000);
-      // Выводим сообщение о времени и смещении от предыдущей точки     
-      saymess(DistTimeToChar(DistanceBetween,ghour,gmin,gsec,chardec));
-      delay(1000);
 
       // Работаем с SIM900
       SIM900.listen();
@@ -429,20 +427,6 @@ void loop()
   // Если закрыто прослушивание, то делаем заглушку 2 сек, 
   // чтобы по-человечески реагировать на другие команды 
   else delay(2000);
-}
-// ****************************************************************************
-// *                     Отправить данные положения на сайт и                 *
-// *              начать новый отсчет времени для передачи на сайт            *
-// ****************************************************************************
-void CoordSend()
-{
-  bool isSend;     // флаг успешности отправки координат
-  saymess(DefToChar(m1_SendCoordints));
-  glat=lat*1000000; glon=lng*1000000;   
-  isSend=send_coords_at(glat,glon,ncikl);
-  if (isSend) saymess(DefToChar(m1_CoordinatGone));
-  // Начинаем новый отсчет времени для передачи на сайт 
-  BdelaySIM=millis();   
 }
 
 // Arduino C/C++ ******************************************** Kvizzy900.ino ***

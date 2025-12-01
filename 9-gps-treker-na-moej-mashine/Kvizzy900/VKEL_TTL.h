@@ -2,7 +2,7 @@
  * 
  * Обеспечить взаимодействие и выборку данных из приёмника GPS VKEL_TTL 
  * 
- * v3.0.2, 30.11.2025                                 Автор:      Труфанов В.Е.
+ * v5.0.0, 01.12.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
 **/
 
@@ -126,6 +126,21 @@ bool readgps()
   return false;
 }
 */
+
+
+// ****************************************************************************
+// *       Загрузить и декодировать предложения NMEA в заданное время         *
+// *                  (по меньшей мере одно предложение)                      *
+// ****************************************************************************
+void smartDelay(unsigned long ms)
+{
+  unsigned long start = millis();
+  do 
+  {
+    while (VKEL_TTL.available()) gps.encode(VKEL_TTL.read());
+  } 
+  while (millis() - start < ms);
+}
 // ****************************************************************************
 // *         Выбрать данные навигации из буфера приёмника GPS V.KEL TTL,      *
 // *                в случае неудачи вывести сообщение об ошибке              *
@@ -137,72 +152,64 @@ bool Talk_VKEL_TTL(unsigned long ncikl)
   ghour=0; gmin=0; gsec=0; 
   gday=0; gmonth=0; gyear=0; 
   lat=0; lng=0; DistanceBetween=0;
-  // Считываем и расшифроваем данные из буфера приёмника GPS V.KEL TTL 
-  //Serial.println("*****");
   bool newdata = true;
-  //bool newdata = readgps();
-  //if (newdata)
-  //{
-
-
-
-
-
-    // Определяем координаты и перемещение от предыдущей точки
-    if (gps.location.isValid())
-    {
-      lat=gps.location.lat();
-      lng=gps.location.lng();
-      DistanceBetween = gps.distanceBetween(lat,lng,lat0,lng0);
-      // Меняем прежнее положение для определения будущего расстояния между точками
-      lat0=lat; lng0=lng;  
-
+  // Определяем координаты и перемещение от предыдущей точки
+  if (gps.location.isValid())
+  {
+    lat=gps.location.lat();
+    lng=gps.location.lng();
+    DistanceBetween = gps.distanceBetween(lat,lng,lat0,lng0);
+    // Меняем прежнее положение для определения будущего расстояния между точками
+    lat0=lat; lng0=lng;  
+    /* 
         //   if (gps.satellites.isValid()) SAT=gps.satellites.value(); 
         //  if (gps.hdop.isValid()) HDOP=gps.hdop.hdop(); 
         //  Serial.print("HDOP1="); Serial.println(SAT);
-
-     // Определяем дату
-      if (gps.date.isValid())
+    */
+    // Определяем дату
+    if (gps.date.isValid())
+    {
+      gday=gps.date.day(); gmonth=gps.date.month(); gyear=gps.date.year(); 
+      // Определяем время
+      if (gps.time.isValid())
       {
-        gday=gps.date.day(); gmonth=gps.date.month(); gyear=gps.date.year(); 
-        // Определяем время
-        if (gps.time.isValid())
-        {
-          ghour=gps.time.hour(); gmin=gps.time.minute(); gsec=gps.time.second();
-          ghour=ghour+timezone_hours;
-          if (ghour>=24) ghour=ghour-24;
-          else if (ghour<0) ghour=ghour+24;
-          // Определяем количество спутников и погрешность
-          //if (gps.satellites.isValid()) SAT=gps.satellites.value(); 
-          //if (gps.hdop.isValid()) HDOP=gps.hdop.hdop(); 
-          //Serial.print("HDOP1="); Serial.println(HDOP);
-        }
-        // "Не определяется время"
-        else 
-        {
-          newdata = false;
-          saymess(DefToChar(m1_TimeIsNot));
-        }
+        ghour=gps.time.hour(); gmin=gps.time.minute(); gsec=gps.time.second();
+        ghour=ghour+timezone_hours;
+        if (ghour>=24) ghour=ghour-24;
+        else if (ghour<0) ghour=ghour+24;
+        // Определяем количество спутников и погрешность
+        if (gps.satellites.isValid()) SAT=gps.satellites.value(); 
+        if (gps.hdop.isValid()) HDOP=gps.hdop.hdop(); 
+        Serial.print("HDOP1="); Serial.println(HDOP);
       }
-      // "Не определяется дата"
-      else
+      // "Не определяется время"
+      else 
       {
         newdata = false;
-        saymess(DefToChar(m1_DateIsNot));
+        saymess(DefToChar(m1_TimeIsNot));
       }
     }
-    // "Не определяется локация" 
+    // "Не определяется дата"
     else
     {
       newdata = false;
-      saymess(DefToChar(m1_LocateIsNot));
+      saymess(DefToChar(m1_DateIsNot));
     }
+  }
+  // "Не определяется локация" 
+  else
+  {
+    newdata = false;
+    saymess(DefToChar(m1_LocateIsNot));
+  }
+  /*
   //}
   //else
   //{
     // "Приемник GPS не подает сигналы"
    // saymess(DefToChar(m1_NotSignGPS));
   //}
+  */
   return newdata;
 }
 
