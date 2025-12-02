@@ -4,7 +4,7 @@
  * и вывод их в последовательный порт или другой интерфейс
  * без копирования в оперативную память
  * 
- * v3.0.2, 30.11.2025                                 Автор:      Труфанов В.Е.
+ * v3.0.3, 02.12.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
 **/
 
@@ -133,26 +133,26 @@ char* IntToChar(uint32_t numbIn)
 }
 // ****************************************************************************
 // *                       Сформировать сообщение по памяти                   *
-// *                      (кириллица занимает 2 байта а UTF8)                 *
+// *                      (кириллица занимает 2 байта в UTF8)                 *
 // ****************************************************************************
-const  char FreeM1[14]="ПAMЯTЬ ";  
-const  char FreeM2[10]=" БAЙT";  
+_DS(FreeM1, "ПAMЯTЬ ")    
+_DS(FreeM2, " БAЙT")    
 char* FreeMemoryToChar() 
 {
   memset(charMess,'\0',34); 
   // "1234567890123456"
   // "Память 1017 байт"
-  strcat(charMess,FreeM1); 
+  strcat_P(charMess,FreeM1); 
   strcat(charMess,IntToChar(getFreeMemory()));   
-  strcat(charMess,FreeM2);
+  strcat_P(charMess,FreeM2);
   return charMess; 
 }  
 // ****************************************************************************
 // *                Сформировать сообщение о задержке сигнала GPS             *
 // ****************************************************************************
-const char SecToCh1[18]="ЗAДEPЖKA ";  
-const char SecToCh2[10]=" sec.";  
-const char SecToCh3[10]=" min.";  
+_DS(SecToCh1,"ЗAДEPЖKA ")    
+_DS(SecToCh2," sec.")    
+_DS(SecToCh3," min.")    
 char* SecToChar(uint32_t MinSec, bool isSec=true) 
 {
   // "1234567890123456"
@@ -160,21 +160,21 @@ char* SecToChar(uint32_t MinSec, bool isSec=true)
   // "Задержка 99 мин."
   // "Задержка >99 мин"
   memset(charMess,'\0',34); 
-  strcat(charMess,SecToCh1); 
+  strcat_P(charMess,SecToCh1); 
   strcat(charMess,IntToChar(MinSec));   
-  if (isSec) strcat(charMess,SecToCh2); 
-  else strcat(charMess,SecToCh3); 
+  if (isSec) strcat_P(charMess,SecToCh2); 
+  else strcat_P(charMess,SecToCh3); 
   return charMess; 
 }  
 // ****************************************************************************
 // *               Сформировать сообщение о перемещении и времени             *
 // *         (перемещение это расстояние до предыдущей точке локации)         *
 // ****************************************************************************
-const char DistT1[6]=" m.";  
-const char DistT2[2]=":";  
-const char DistT3[2]="0";  
-const char DistT4[2]=" ";  
-const char DistT5[6]=">1000";  
+_DS(DistT1," m.")    
+_DS(DistT2,":")    
+_DS(DistT3,"0")    
+_DS(DistT4," ")    
+_DS(DistT5,">1000")    
 char* DistTimeToChar(double DistanceBetween, int ghour, int gmin, int gsec, char chardec[]) 
 {
   // "1234567890123456"
@@ -183,19 +183,19 @@ char* DistTimeToChar(double DistanceBetween, int ghour, int gmin, int gsec, char
   // "16:27:31 110.8 м"
   // "16:27:31 >1000 м"
   memset(charMess,'\0',34); 
-  if (ghour<10) {strcat(charMess,DistT3); strcat(charMess,IntToChar(ghour));}
+  if (ghour<10) {strcat_P(charMess,DistT3); strcat(charMess,IntToChar(ghour));}
   else strcat(charMess,IntToChar(ghour)); 
-  strcat(charMess,DistT2); 
-  if (gmin<10) {strcat(charMess,DistT3); strcat(charMess,IntToChar(gmin));}
+  strcat_P(charMess,DistT2); 
+  if (gmin<10) {strcat_P(charMess,DistT3); strcat(charMess,IntToChar(gmin));}
   else strcat(charMess,IntToChar(gmin)); 
-  strcat(charMess,DistT2); 
-  if (gsec<10) {strcat(charMess,DistT3); strcat(charMess,IntToChar(gsec));}
+  strcat_P(charMess,DistT2); 
+  if (gsec<10) {strcat_P(charMess,DistT3); strcat(charMess,IntToChar(gsec));}
   else strcat(charMess,IntToChar(gsec)); 
-  strcat(charMess,DistT4); 
+  strcat_P(charMess,DistT4); 
   if (DistanceBetween<100)         {dtostrf(DistanceBetween,2,2,chardec); strcat(charMess,chardec);} 
   else if (DistanceBetween<999.99) {dtostrf(DistanceBetween,3,1,chardec); strcat(charMess,chardec);}   
-  else strcat(charMess,DistT5);
-  strcat(charMess,DistT1); 
+  else strcat_P(charMess,DistT5);
+  strcat_P(charMess,DistT1); 
   return charMess;  
 } 
 // ****************************************************************************
@@ -219,12 +219,12 @@ HDOP=1 => HDOPm=5;  HDOP=3 => HDOPm=10;  HDOP=2 => HDOPm=7.5 = 8;
 HDOP=3 => HDOPm=10;  HDOP=6 => HDOPm=50;  HDOP=4.5 => HDOPm=30;  
 
 */
-const char  Equ[6]="SAT=";  
-const char  Zpt[2]=",";  
-const char Zptp[4]=", ";
-const char  b50[6]=">50m";
-const char  Mto[4]="m.";  
-//  char DistT4[2]=" ";  
+_DS(Equ,"SAT=")    
+_DS(Zpt,",")    
+_DS(Zptp,", ")    
+_DS(b50,">50m")    
+_DS(Mto,"m.")    
+//_DS(DistT4," ")    
 char* SatHdopToChar(double HDOP, int SAT, char chardec[]) 
 {
   // Высчитываем погрешность координат (точность) в метрах
@@ -237,29 +237,29 @@ char* SatHdopToChar(double HDOP, int SAT, char chardec[])
   // "SAT=7, >50m 1.63"  4
   memset(charMess,'\0',34);
   // Выводим количество спутников 
-  strcat(charMess,Equ); 
-  if (SAT<10) {strcat(charMess,IntToChar(SAT)); strcat(charMess,Zptp);}
-  else        {strcat(charMess,IntToChar(SAT)); strcat(charMess,Zpt);}
+  strcat_P(charMess,Equ); 
+  if (SAT<10) {strcat(charMess,IntToChar(SAT)); strcat_P(charMess,Zptp);}
+  else        {strcat(charMess,IntToChar(SAT)); strcat_P(charMess,Zpt);}
   // Выводим погрешность координат (точность), пересчитанную в метры
   if (HDOP>6) HDOPm=99;
   else if (HDOP>3) HDOPm=round((HDOP-3)*40/3)+10;   
   else if (HDOP>1) HDOPm=round((HDOP-1)*5/2)+5;  
   else HDOPm=2+round((3*HDOP));
   
-  if (HDOPm>50) strcat(charMess,b50);
-  else if (HDOPm>9) {strcat(charMess,IntToChar(HDOPm)); strcat(charMess,Mto);}   
-  else {strcat(charMess,DistT4); strcat(charMess,IntToChar(HDOPm)); strcat(charMess,Mto);}  
+  if (HDOPm>50) strcat_P(charMess,b50);
+  else if (HDOPm>9) {strcat(charMess,IntToChar(HDOPm)); strcat_P(charMess,Mto);}   
+  else {strcat_P(charMess,DistT4); strcat(charMess,IntToChar(HDOPm)); strcat_P(charMess,Mto);}  
   // Выводим HDOP
-  if (HDOP<10) {strcat(charMess,DistT4); dtostrf(HDOP,1,2,chardec); strcat(charMess,chardec);}
+  if (HDOP<10) {strcat_P(charMess,DistT4); dtostrf(HDOP,1,2,chardec); strcat(charMess,chardec);}
   return charMess;  
 } 
 // ****************************************************************************
 // *     Вывести данные о перезапусках, а при необходимости записать для      *
 // *            постоянного хранения дату поступления координат               *
 // ****************************************************************************
-const char Tires[2]="~";  
-const char Point[2]=".";  
-//        DistT4[2]=" ";  
+_DS(Tires,"~")    
+_DS(Point,".")    
+//_DS(DistT4," ")    
 char* DateToEEPROM(int gday, int gmonth, int gyear) 
 {
   // Если установлен флаг перезагрузки, то записываем дату
@@ -268,12 +268,12 @@ char* DateToEEPROM(int gday, int gmonth, int gyear)
   {
     oldaddress=address; 
     memset(charMess,'\0',34); 
-    if (gday<10) {strcat(charMess,DistT3); strcat(charMess,IntToChar(gday));}
+    if (gday<10) {strcat_P(charMess,DistT3); strcat(charMess,IntToChar(gday));}
     else strcat(charMess,IntToChar(gday)); 
-    strcat(charMess,Point); 
-    if (gmonth<10) {strcat(charMess,DistT3); strcat(charMess,IntToChar(gmonth));}
+    strcat_P(charMess,Point); 
+    if (gmonth<10) {strcat_P(charMess,DistT3); strcat(charMess,IntToChar(gmonth));}
     else strcat(charMess,IntToChar(gmonth)); 
-    strcat(charMess,Point); 
+    strcat_P(charMess,Point); 
     strcat(charMess,IntToChar(gyear)); 
     for (int i = 0; i < strlen(charMess); i++) 
     {
@@ -305,21 +305,21 @@ char* DateToEEPROM(int gday, int gmonth, int gyear)
   else
   {
     // "4321"
-    strcat(charMess,DistT4);
+    strcat_P(charMess,DistT4);
     if (nReboot>999) strcat(charMess,IntToChar(nReboot));
     else
     {
       // "321"
-      strcat(charMess,DistT4);
+      strcat_P(charMess,DistT4);
       if (nReboot>99) strcat(charMess,IntToChar(nReboot));
       else
       {
         // "21"
-        strcat(charMess,DistT4);
+        strcat_P(charMess,DistT4);
         if (nReboot>9) strcat(charMess,IntToChar(nReboot));
         else
         {
-          strcat(charMess,DistT4); strcat(charMess,IntToChar(nReboot));
+          strcat_P(charMess,DistT4); strcat(charMess,IntToChar(nReboot));
         }
 
       }
@@ -327,7 +327,7 @@ char* DateToEEPROM(int gday, int gmonth, int gyear)
     }
   }
   // Выводим разделитель 
-  strcat(charMess,Tires);
+  strcat_P(charMess,Tires);
   // Выводим дату 
   strcat(charMess,str);
   return charMess;  
@@ -336,31 +336,31 @@ char* DateToEEPROM(int gday, int gmonth, int gyear)
 // ****************************************************************************
 // *                       Сформировать сообщение о локации                   *
 // ****************************************************************************
-const char LocToCh[2]="-";  
+_DS(LocToCh,"-")    
 char* LocationToChar(double lat, double lng, char chardec[]) 
 {
   // "1234567890123456"
   // "61.80191-34.3298"
   memset(charMess,'\0',18); 
   dtostrf(lat,2,5,chardec); strcat(charMess,chardec);
-  strcat(charMess,LocToCh); 
+  strcat_P(charMess,LocToCh); 
   dtostrf(lng,2,4,chardec); strcat(charMess,chardec);
   return charMess;  
 }  
 // ****************************************************************************
 // *             Сформировать сообщение о температуре и напряжении            *
 // ****************************************************************************
-const char tEq[4]="t=";  
-const char vEq[6]="C,v=";  
-const char vvq[2]="V";  
+_DS(tEq,"t=")    
+_DS(vEq,"C,v=")    
+_DS(vvq,"V")    
 char* TempVoltToChar(float ti, float vi, char chardec[]) 
 {
   // "1234567890123456"
   // "t=25.22C,v=4.56V"
   memset(charMess,'\0',18); 
-  strcat(charMess,tEq); dtostrf(ti,2,2,chardec); strcat(charMess,chardec);
-  strcat(charMess,vEq); dtostrf(vi,1,2,chardec); strcat(charMess,chardec);
-  strcat(charMess,vvq); 
+  strcat_P(charMess,tEq); dtostrf(ti,2,2,chardec); strcat(charMess,chardec);
+  strcat_P(charMess,vEq); dtostrf(vi,1,2,chardec); strcat(charMess,chardec);
+  strcat_P(charMess,vvq); 
   return charMess;  
 }  
 
