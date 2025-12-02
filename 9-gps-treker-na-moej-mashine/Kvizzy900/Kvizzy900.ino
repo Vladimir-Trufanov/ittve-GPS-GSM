@@ -17,7 +17,7 @@
  *
  * Вместо устаревшей TinyGPS используется TinyGPSPlus.
  * 
- * v3.0.4, 01.12.2025                                 Автор:      Труфанов В.Е.
+ * v3.0.5, 02.12.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
  *
 **/
@@ -140,6 +140,7 @@ void loop()
   if (isFullCikl)
   {
     ncikl++;
+
     // Проверяем температуру в коробке
     float R1 = 10000; // значение R1 на модуле
     float logR2,R2;
@@ -165,20 +166,20 @@ void loop()
     {
       // Выводим сообщение о температуре и напряжении питания
       saymess(TempVoltToChar(ti,vi,chardec));
-      delay(2000);
+      delay(1000);
       // При необходимости записываем дату перезагрузки
       // и выводим сообщение по перезагрузкам 
       saymess(DateToEEPROM(gday,gmonth,gyear));
-      delay(2000);
+      delay(1000);
       // При ненулевых данных выводим сообщение о количестве спутников и точности измерений
       if (HDOP>0) {if (SAT>0) saymess(SatHdopToChar(HDOP,SAT,chardec));}
-      delay(2000);
-      // Выводим сообщение о локации 
-      saymess(LocationToChar(lat,lng,chardec));
-      delay(2000);
+      delay(1000);
       // Выводим сообщение о времени и смещении от предыдущей точки     
       saymess(DistTimeToChar(DistanceBetween,ghour,gmin,gsec,chardec));
+      // Выводим сообщение о локации 
       delay(1000);
+      saymess(LocationToChar(lat,lng,chardec));
+      
       // Работаем с SIM900
       SIM900.listen();
       // Проверяем, реагирует ли на команды SIM900
@@ -221,9 +222,8 @@ void loop()
       saymess(charMess);
     } 
   }
-  // Если закрыто прослушивание, то делаем заглушку 2 сек, 
-  // чтобы по-человечески реагировать на другие команды 
-  else delay(2000);
+  // Если закрыто прослушивание, то делаем заглушку 1 сек 
+  else delay(1000);
 }
 
 // Arduino C/C++ ******************************************** Kvizzy900.ino ***

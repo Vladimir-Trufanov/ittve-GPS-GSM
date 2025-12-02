@@ -321,9 +321,7 @@ char* DateToEEPROM(int gday, int gmonth, int gyear)
         {
           strcat_P(charMess,DistT4); strcat(charMess,IntToChar(nReboot));
         }
-
       }
-
     }
   }
   // Выводим разделитель 
@@ -332,7 +330,6 @@ char* DateToEEPROM(int gday, int gmonth, int gyear)
   strcat(charMess,str);
   return charMess;  
 } 
-
 // ****************************************************************************
 // *                       Сформировать сообщение о локации                   *
 // ****************************************************************************

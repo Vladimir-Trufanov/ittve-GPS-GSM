@@ -113,7 +113,8 @@ bool smartDelay(unsigned long ms)
   while (millis() - start < ms);
   // Проверяем, увеличилось ли число обработанных символов
   if (gps.charsProcessed()>charsProc) newdata = true;
-  //Serial.print("gps.charsProcessed()="); Serial.println(gps.charsProcessed());
+  //Serial.print("    gps.charsProcessed()="); Serial.println(gps.charsProcessed());
+  //Serial.print("charsProcessed-charsProc="); Serial.println(gps.charsProcessed()-charsProc);
   charsProc=gps.charsProcessed();
   return newdata;
 }
