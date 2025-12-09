@@ -11,12 +11,17 @@
 // Указываем, что данный файл нужно подключить только один раз
 #pragma once  
 
+#include <Regexp.h>
+// match state object
+MatchState ms;
+
 // Подключаем список 16-символьных сообщений приложения Kvizzy900
 // и функцию вывода сообщений
 #include "s16_Kvizzy900v3.h"
 
 // Размещаем список команд в программной памяти
 _DS(AT_AT,"AT") 
+_DS(AT_CBC,"AT+CBC")        // Получить состояние батареи
 //_DS(AT_CSQ,"AT+CSQ") 
 _DS(AT_Contype,"AT+SAPBR=3,1,\"Contype\",\"GPRS\"") 
 // _DS(AT_SAPBR,"AT+SAPBR=3,1,\"APN\",\"internet.mts.ru\"") 
@@ -290,6 +295,43 @@ void CoordSend()
   // Начинаем новый отсчет времени для передачи на сайт 
   BdelaySIM=millis();   
 }
+
+/**
+ * Выбрать в буфере подстроку по запросу regexp
+**/ 
+void Proba(char buf[],char mch[]) 
+{
+  memset(chardec,'\0',8); 
+  // what we are searching (the target)
+  ms.Target (buf);  // set its address
+  //Serial.println (buf);
+
+  //char result = ms.Match ("f.x");
+  //char result = ms.Match ("%s%s(%a+)( )");
+  //char result = ms.Match ("%s%s(%a+)");
+  //char result = ms.Match("%d%d%d%d");
+  char result = ms.Match(mch);
+  
+  if (result > 0)
+    {
+    //Serial.print ("Found match at: ");
+    //Serial.println (ms.MatchStart);        // 16 in this case     
+    //Serial.print ("Match length: ");
+    //Serial.println (ms.MatchLength);       // 3 in this case
+    }
+  else Serial.println ("No match.");
+
+  int i=0;
+  for (int j = ms.MatchStart; j < ms.MatchStart+ms.MatchLength; j++)
+  {
+    chardec[i]=buf[j]; i++;
+  }
+  Serial.println(chardec);
+  Serial.println(atoi(chardec));
+  double lipo=double(atoi(chardec))/1000;
+  Serial.println(lipo);
+}
+
 
 #endif
 

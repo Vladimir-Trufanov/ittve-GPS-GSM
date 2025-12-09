@@ -202,6 +202,13 @@ void loop()
           CoordSend();
         }
       }
+
+      //---
+      AT_com(AT_CBC);
+      // Выбираем первые 4 цифры в ответе
+      Proba(response,"%d%d%d%d");
+      //---
+
       // Начинаем отсчет интервал в мс до следующего опроса GPS 
       BdelayGPS=millis();   
     }
