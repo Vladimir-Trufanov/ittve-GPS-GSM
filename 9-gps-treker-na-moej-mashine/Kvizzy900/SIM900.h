@@ -2,7 +2,7 @@
  * 
  * Обеспечить взаимодействие с SIM900 и передачу данных на сайт 
  * 
- * v3.0.0, 19.11.2025                                 Автор:      Труфанов В.Е.
+ * v3.0.1, 09.12.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
 **/
 
@@ -22,6 +22,7 @@ MatchState ms;
 // Размещаем список команд в программной памяти
 _DS(AT_AT,"AT") 
 _DS(AT_CBC,"AT+CBC")        // Получить состояние батареи
+_DS(AT_CSQ,"AT+CSQ")        // Проверить уровень сигнала
 //_DS(AT_CSQ,"AT+CSQ") 
 _DS(AT_Contype,"AT+SAPBR=3,1,\"Contype\",\"GPRS\"") 
 // _DS(AT_SAPBR,"AT+SAPBR=3,1,\"APN\",\"internet.mts.ru\"") 
@@ -43,7 +44,9 @@ char response[170];            // буфер ответа GPRS и URL перед
 uint32_t glat,glon;            // значения координат, передаваемые на сайт 
 uint32_t BdelaySIM=millis();   // начало отсчета времени до передачи на сайт 
 uint32_t delaySIM;             // истекший интервал после передачи 
-uint32_t dTimeSIM=180000;      // интервал подачи координат в мс на сайт (3 мин)          
+uint32_t dTimeSIM=180000;      // интервал подачи координат в мс на сайт (3 мин)  
+int lipo=0;                    // четырехзначное состояние батареи lipo
+int dB=0;                      // уровень сигнала GPRS в дБ (должен быть выше 5. Чем выше, тем лучше, до 31)
 
 // ****************************************************************************
 // *                 Сформировать сообщения по ошибке AT-команды              *
@@ -295,43 +298,33 @@ void CoordSend()
   // Начинаем новый отсчет времени для передачи на сайт 
   BdelaySIM=millis();   
 }
-
-/**
- * Выбрать в буфере подстроку по запросу regexp
-**/ 
-void Proba(char buf[],char mch[]) 
+// ****************************************************************************
+// *                Выбрать в буфере подстроку по запросу regexp              *
+// ****************************************************************************
+int getIntByMatch(char buf[],char mch[]) 
 {
-  memset(chardec,'\0',8); 
-  // what we are searching (the target)
-  ms.Target (buf);  // set its address
-  //Serial.println (buf);
-
-  //char result = ms.Match ("f.x");
-  //char result = ms.Match ("%s%s(%a+)( )");
-  //char result = ms.Match ("%s%s(%a+)");
-  //char result = ms.Match("%d%d%d%d");
-  char result = ms.Match(mch);
-  
-  if (result > 0)
-    {
-    //Serial.print ("Found match at: ");
-    //Serial.println (ms.MatchStart);        // 16 in this case     
-    //Serial.print ("Match length: ");
-    //Serial.println (ms.MatchLength);       // 3 in this case
-    }
-  else Serial.println ("No match.");
-
+  // Заводим целое число для возврата
   int i=0;
-  for (int j = ms.MatchStart; j < ms.MatchStart+ms.MatchLength; j++)
+  // Чистим буфер числа
+  memset(chardec,'\0',8); 
+  // Выполняем поиск
+  // char result = ms.Match ("f.x");
+  // char result = ms.Match ("%s%s(%a+)( )");
+  // char result = ms.Match ("%s%s(%a+)");
+  // char result = ms.Match("%d%d%d%d");
+  ms.Target (buf);  // set its address
+  char result = ms.Match(mch);
+  if (result > 0)
   {
-    chardec[i]=buf[j]; i++;
+    // Выбираем результат
+    for (int j = ms.MatchStart; j < ms.MatchStart+ms.MatchLength; j++)
+    {
+      chardec[i]=buf[j]; i++;
+    }
+    i=atoi(chardec);
   }
-  Serial.println(chardec);
-  Serial.println(atoi(chardec));
-  double lipo=double(atoi(chardec))/1000;
-  Serial.println(lipo);
+  return i;
 }
-
 
 #endif
 

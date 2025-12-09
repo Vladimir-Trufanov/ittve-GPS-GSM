@@ -17,7 +17,7 @@
  *
  * Вместо устаревшей TinyGPS используется TinyGPSPlus.
  * 
- * v3.0.5, 02.12.2025                                 Автор:      Труфанов В.Е.
+ * v3.0.6, 09.12.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
  *
 **/
@@ -204,9 +204,17 @@ void loop()
       }
 
       //---
+      // Получаем состояние батареи
       AT_com(AT_CBC);
       // Выбираем первые 4 цифры в ответе
-      Proba(response,"%d%d%d%d");
+      lipo=getIntByMatch(response,"%d%d%d%d");
+      Serial.println(double(lipo)/1000);
+      Serial.print("lipo="); Serial.println(lipo);
+      // Проверяем уровень сигнала
+      AT_com(AT_CSQ);
+      // Выбираем первые одну или более цифры в ответе
+      dB=getIntByMatch(response,"%d(%d*)");
+      Serial.print("дБ="); Serial.println(dB);
       //---
 
       // Начинаем отсчет интервал в мс до следующего опроса GPS 
