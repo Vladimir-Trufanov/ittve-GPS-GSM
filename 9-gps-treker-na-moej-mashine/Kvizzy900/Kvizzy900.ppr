@@ -27,19 +27,15 @@ Kvizzy900
 0=Kvizzy900.ino
 1=SIM900.h
 2=VKEL_TTL.h
-3=Новый1.txt
 [Selected Project Files]
 Main=
-Selected=Новый1.txt
+Selected=Kvizzy900.ino
 [Kvizzy900.ino]
 TopLine=1
-Caret=23,20
+Caret=4,20
 [SIM900.h]
-TopLine=3
-Caret=14,5
+TopLine=97
+Caret=18,111
 [VKEL_TTL.h]
-TopLine=100
-Caret=1,100
-[Новый1.txt]
-TopLine=1
-Caret=101,2
+TopLine=102
+Caret=5,116

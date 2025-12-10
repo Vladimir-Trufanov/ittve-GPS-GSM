@@ -204,16 +204,6 @@ void loop()
       // Получаем состояние батареи
       AT_com(AT_CBC);
       // Выбираем первые 4 цифры в ответе
-
-      /*
-      _DS(d4,"%d%d%d%d")    
-      memset(charMess,'\0',18); 
-      strcat_P(charMess,d4); 
-      lipo=getIntByMatch(response,charMess);
-      Serial.print("lipo="); Serial.println(lipo);
-      */
-
-
       lipo=getIntByMatch(response,"%d%d%d%d");
       // Проверяем уровень сигнала
       AT_com(AT_CSQ);
