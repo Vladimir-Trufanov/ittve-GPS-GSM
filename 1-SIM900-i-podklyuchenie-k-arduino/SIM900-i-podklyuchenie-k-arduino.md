@@ -1,5 +1,22 @@
 ## [SIM900 и подключение к Arduino](https://randomnerdtutorials.com/sim900-gsm-gprs-shield-arduino/)
 
+
+
+
+
+
+
+
+
+![](GPRS_GSM_Shield.jpg)
+
+
+
+
+
+
+
+
 ***Схема подключения:***
 
 - Выходы с модуля TX и RX подключить к пинам 2 и 3 на Arduino UNO.
@@ -290,7 +307,7 @@ OK
 
 Ссылки:
 
-[https://petterhj.no/notes/electronics/modules/sim900a/](https://petterhj.no/notes/electronics/modules/sim900a/)
+[https://petterhj.no/notes/electronics/modules/sim900a/](https://petterhj.no/notes/electronics/modules/sim900a/)file:///C:/Users/Евгеньевич/AppData/Local/Temp/ghostwriter-ulBvzR/SIM900.webp
 
 [https://www.espruino.com/datasheets/SIM900_AT.pdf](https://www.espruino.com/datasheets/SIM900_AT.pdf)
 
