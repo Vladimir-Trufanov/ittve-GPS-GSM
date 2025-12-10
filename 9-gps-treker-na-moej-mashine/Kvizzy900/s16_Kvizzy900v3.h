@@ -4,7 +4,7 @@
  * и вывод их в последовательный порт или другой интерфейс
  * без копирования в оперативную память
  * 
- * v3.0.3, 02.12.2025                                 Автор:      Труфанов В.Е.
+ * v3.0.4, 10.12.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
 **/
 
@@ -358,6 +358,25 @@ char* TempVoltToChar(float ti, float vi, char chardec[])
   strcat_P(charMess,tEq); dtostrf(ti,2,2,chardec); strcat(charMess,chardec);
   strcat_P(charMess,vEq); dtostrf(vi,1,2,chardec); strcat(charMess,chardec);
   strcat_P(charMess,vvq); 
+  return charMess;  
+}  
+// ****************************************************************************
+// *         Сформировать сообщение об уровне сигнала и батареи GPRS          *
+// ****************************************************************************
+_DS(gprs,"GPRS ")    
+_DS(dbzpt,"dB, ")
+//_DS(DistT4," ")    
+char* DbAndVoltToChar(int lipo, int dB, char chardec[]) 
+{
+  // "1234567890123456"
+  // "GPRS  5dB, 4.56V"
+  memset(charMess,'\0',18); 
+  strcat_P(charMess,gprs); 
+  if (dB<10) {strcat_P(charMess,DistT4); strcat(charMess,IntToChar(dB));}
+  else strcat(charMess,IntToChar(dB)); 
+  strcat_P(charMess,dbzpt); 
+  double vib=double(lipo)/1000;
+  dtostrf(vib,1,2,chardec); strcat(charMess,chardec);strcat_P(charMess,vvq); 
   return charMess;  
 }  
 

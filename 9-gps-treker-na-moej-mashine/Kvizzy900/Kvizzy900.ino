@@ -17,7 +17,7 @@
  *
  * Вместо устаревшей TinyGPS используется TinyGPSPlus.
  * 
- * v3.0.6, 09.12.2025                                 Автор:      Труфанов В.Е.
+ * v3.0.7, 10.12.2025                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
  *
 **/
@@ -176,10 +176,9 @@ void loop()
       delay(1000);
       // Выводим сообщение о времени и смещении от предыдущей точки     
       saymess(DistTimeToChar(DistanceBetween,ghour,gmin,gsec,chardec));
-      // Выводим сообщение о локации 
       delay(1000);
+      // Выводим сообщение о локации 
       saymess(LocationToChar(lat,lng,chardec));
-      
       // Работаем с SIM900
       SIM900.listen();
       // Проверяем, реагирует ли на команды SIM900
@@ -202,21 +201,26 @@ void loop()
           CoordSend();
         }
       }
-
-      //---
       // Получаем состояние батареи
       AT_com(AT_CBC);
       // Выбираем первые 4 цифры в ответе
-      lipo=getIntByMatch(response,"%d%d%d%d");
-      Serial.println(double(lipo)/1000);
+
+      /*
+      _DS(d4,"%d%d%d%d")    
+      memset(charMess,'\0',18); 
+      strcat_P(charMess,d4); 
+      lipo=getIntByMatch(response,charMess);
       Serial.print("lipo="); Serial.println(lipo);
+      */
+
+
+      lipo=getIntByMatch(response,"%d%d%d%d");
       // Проверяем уровень сигнала
       AT_com(AT_CSQ);
       // Выбираем первые одну или более цифры в ответе
       dB=getIntByMatch(response,"%d(%d*)");
-      Serial.print("дБ="); Serial.println(dB);
-      //---
-
+      // При ненулевых данных выводим сообщение об уровне сигнала и батареи 
+      if (lipo>0) {if (dB>0) saymess(DbAndVoltToChar(lipo,dB,chardec));}
       // Начинаем отсчет интервал в мс до следующего опроса GPS 
       BdelayGPS=millis();   
     }
