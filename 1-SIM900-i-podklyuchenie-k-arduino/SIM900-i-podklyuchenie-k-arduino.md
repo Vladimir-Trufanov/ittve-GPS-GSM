@@ -1,20 +1,7 @@
 ## [SIM900 и подключение к Arduino](https://randomnerdtutorials.com/sim900-gsm-gprs-shield-arduino/)
 
 
-
-
-
-
-
-
-
-![](GPRS_GSM_Shield.jpg)
-
-
-
-
-
-
+![](GPRS_GSM_Shield42.png)
 
 
 ***Схема подключения:***
