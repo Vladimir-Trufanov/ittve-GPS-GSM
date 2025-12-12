@@ -32,7 +32,7 @@ Main=
 Selected=Kvizzy900.ino
 [Kvizzy900.ino]
 TopLine=1
-Caret=4,20
+Caret=22,28
 [SIM900.h]
 TopLine=97
 Caret=18,111
