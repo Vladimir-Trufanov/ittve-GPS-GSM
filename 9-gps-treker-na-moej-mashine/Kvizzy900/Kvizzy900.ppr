@@ -31,11 +31,11 @@ Kvizzy900
 Main=
 Selected=Kvizzy900.ino
 [Kvizzy900.ino]
-TopLine=1
+TopLine=202
 Caret=22,28
 [SIM900.h]
-TopLine=97
-Caret=18,111
+TopLine=13
+Caret=50,42
 [VKEL_TTL.h]
 TopLine=102
 Caret=5,116

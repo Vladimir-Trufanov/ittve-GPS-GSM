@@ -2,7 +2,7 @@
  * 
  * Обеспечить взаимодействие с SIM900 и передачу данных на сайт 
  * 
- * v3.0.1, 09.12.2025                                 Автор:      Труфанов В.Е.
+ * v3.0.2, 06.04.2026                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
 **/
 
@@ -25,8 +25,10 @@ _DS(AT_CBC,"AT+CBC")        // Получить состояние батаре�
 _DS(AT_CSQ,"AT+CSQ")        // Проверить уровень сигнала
 //_DS(AT_CSQ,"AT+CSQ") 
 _DS(AT_Contype,"AT+SAPBR=3,1,\"Contype\",\"GPRS\"") 
-// _DS(AT_SAPBR,"AT+SAPBR=3,1,\"APN\",\"internet.mts.ru\"") 
-_DS(AT_SAPBR,"AT+SAPBR=3,1,\"APN\",\"internet\"") // Мегафон
+// ----------------------------------------------------------------------------
+//_DS(AT_SAPBR,"AT+SAPBR=3,1,\"APN\",\"internet.mts.ru\"")   // МТС
+  _DS(AT_SAPBR,"AT+SAPBR=3,1,\"APN\",\"internet\"")          // Мегафон
+// ----------------------------------------------------------------------------
 _DS(AT_SAPBR1,"AT+SAPBR=1,1")
 _DS(AT_SAPBR0,"AT+SAPBR=0,1")
 _DS(AT_HTTPINIT,"AT+HTTPINIT") 
@@ -34,8 +36,11 @@ _DS(AT_HTTPPARA,"AT+HTTPPARA=\"CID\",1")
 _DS(AT_HTTPACTION0,"AT+HTTPACTION=0") 
 _DS(AT_HTTPREAD,"AT+HTTPREAD") 
 _DS(AT_HTTPTERM,"AT+HTTPTERM") 
+// ----------------------------------------------------------------------------
 // https://probatv.ru/State/?cycle=2&num=4&ctrl=203&sjson={"wpt":{"lat":52518611,"lon":13376111}} - путевая точка от Sim900 в автомобиле
-_DS(str0,"AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=")
+//_DS(str0,"AT+HTTPPARA=\"URL\",\"http://probatv.ru/State/?cycle=")
+  _DS(str0,"AT+HTTPPARA=\"URL\",\"http://kwinflat.ru/State/?cycle=")
+// ----------------------------------------------------------------------------
 _DS(str1,"&num=5&ctrl=203&sjson={%22trkpt%22:{%22lat%22:")
 _DS(str2,",%22lon%22:")
 _DS(str3,",%22color%22:%22blue%22}}\"")

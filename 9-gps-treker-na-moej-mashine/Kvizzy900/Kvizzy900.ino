@@ -17,10 +17,17 @@
  *
  * Вместо устаревшей TinyGPS используется TinyGPSPlus.
  * 
- * v3.0.7, 10.12.2025                                 Автор:      Труфанов В.Е.
+ * v3.0.8, 06.04.2026                                 Автор:      Труфанов В.Е.
  * Copyright © 2025 tve                               Дата создания: 16.10.2025
- * 
- * v3.0.7:  26052 = 80% => 1544 => 504 [446]
+ *
+ * Скетч использует 25928 байт (80%) памяти устройства. Всего доступно 32256 байт.
+ * Глобальные переменные используют 1415 байт (69%) динамической памяти, оставляя 633 байт для локальных переменных. Максимум: 2048 байт.
+ * "C:\Users\Евгеньевич\AppData\Local\Arduino15\packages\arduino\tools\avrdude\8.0.0-arduino1/bin/avrdude" "-CC:\Users\Евгеньевич\AppData\Local\Arduino15\packages\arduino\tools\avrdude\8.0.0-arduino1/etc/avrdude.conf" -v -V -patmega328p -carduino "-PCOM15" -b115200 -D "-Uflash:w:C:\Users\Евгеньевич\AppData\Local\arduino\sketches\5EBB7E33EDD7F94B809681A5B41B83AC/Kvizzy900.ino.hex:i"
+ * Avrdude version 8.0-arduino.1
+ * Copyright see https://github.com/avrdudes/avrdude/blob/main/AUTHORS
+* 
+ * v3.0.7, 10.12.2025:  26052 = 80% => 1544 => 504 [446]
+ * v3.0.8, 06.04.2026:  25928 = 80% => 1415 => 633
  *
 **/
 
