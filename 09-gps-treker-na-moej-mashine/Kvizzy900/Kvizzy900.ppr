@@ -1,0 +1,45 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.CompileOnBackground=0
+Compilator.ProgSaveAll=0
+Compilator.ProgRunSelection=0
+Compilator.LogType=0
+Compilator.LogEncoding=0
+DefaultDir=C:\ittve-GPS-GSM\9-gps-treker-na-moej-mashine\Kvizzy900
+DefaultCP=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+HTServer=localhost
+Extensions=*.*
+[Project tree]
+Kvizzy900
+	+Kvizzy900
+		-build
+			-arduino.avr.uno
+				build\arduino.avr.uno\Kvizzy900.ino.eep
+				build\arduino.avr.uno\Kvizzy900.ino.elf
+				build\arduino.avr.uno\Kvizzy900.ino.hex
+				build\arduino.avr.uno\Kvizzy900.ino.with_bootloader.bin
+				build\arduino.avr.uno\Kvizzy900.ino.with_bootloader.hex
+		Kvizzy900.ino
+		Kvizzy900.ppr
+		mess_Lcd1602v3.h
+		s16_Kvizzy900v3.h
+		SIM900.h
+		VKEL_TTL.h
+[Open project files]
+0=s16_Kvizzy900v3.h
+1=SIM900.h
+[Selected Project Files]
+Main=
+Selected=SIM900.h
+[s16_Kvizzy900v3.h]
+TopLine=25
+Caret=19,56
+[SIM900.h]
+TopLine=289
+Caret=10,301
