@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Untitled</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.line-block{white-space: pre-line;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h2 id="sim900a"><a href="">SIM900A</a></h2>
+<p>SIM900A SIM900 MINI V4.0 беспроводной модуль передачи данных GSM GPRS комплект платы с антенной C83, получен от AliExpress 7 сентября 2023</p>
+<h3 id="как-заставить-работать-sim900a-в-наших-сетях"><a href="https://habr.com/ru/articles/391555/">Как заставить работать sim900a в наших сетях</a></h3>
+<h3 id="превращаем-sim900a-в-sim900-и-заставляем-работать-в-наших-сетях"><a href="https://yandex.ru/video/preview/5323166599610369011">Превращаем SIM900A в SIM900 и заставляем работать в наших сетях</a></h3>
+<h3 id="делаем-из-китайского-gsm-sim900a-расширенный-sim900"><a href="https://yandex.ru/video/preview/17710977013799739340">Делаем из китайского GSM SIM900A расширенный SIM900</a></h3>
+<p>Видео о том, как купив дешевый модуль SIM900A, сделать из него полноценный SIM900 и даже с расширенными возможностями как DTMF декодинг, пользовательские аудиофайлы на рингтоны, и прочие плюшки. Понадобится сам модуль на SIM900A и USB-TTL конвертер. Почему SIM900, а не SIM800L? Ответ прост - уж больно много проблем у ВАС возникает при работе с SIM800L и к тому же GPRS гораздо стабильнее на SIM900</p>
+<p>Прошивка и программа для прошивки тут: <a href="https://yadi.sk/d/vwWr2ODi3EEb5J" class="uri">https://yadi.sk/d/vwWr2ODi3EEb5J</a></p>
+<p>годится не каждый SIM900A, а ОБЯЗАТЕЛЬНО с 64МБ памяти, ссылка именно на него ниже</p>
+<p>SIM900A 64МБ http://ali.pub/guqyh USB TTL конвертер PL2303 http://ali.pub/8dctg</p>
+<p>Наша группа вконтакте: https://vk.com/arduino_nodemcu_esp8266</p>
+<h3 id="прошить-получилось"><a href="#">2024-05-27 Прошить получилось!</a></h3>
+<figure>
+<img src="delaem-iz-kitajskogo-gsm-sim900a-rasshirennyj-sim900/zapuskaem-programmu-proshivki.jpg" alt="Запускаем программу прошивки" /><figcaption>Запускаем программу прошивки</figcaption>
+</figure>
+<figure>
+<img src="delaem-iz-kitajskogo-gsm-sim900a-rasshirennyj-sim900/ustanavlivaem-parametry-pered-zagruzkoj.jpg" alt="Устанавливаем параметры перед загрузкой" /><figcaption>Устанавливаем параметры перед загрузкой</figcaption>
+</figure>
+<p>После прошивки перегружаем модем, ждем, когда он будет готов (смотрим через com-порт ардуино) и проверяем модем следующими командами:</p>
+<p>AT =&gt; OK</p>
+<p>AT+IPR=? =&gt; +IPR: (),(0,1200,2400,4800,9600,19200,38400,57600,115200) OK</p>
+<p>AT+GMR =&gt; Revision:1137B02SIM900M64_ST_ENHANCE OK - файл прошивки</p>
+<p>2024-05-27 Получилось!</p>
+<h3 id="получился-контакт-sim900a-и-terminal-v1.9b"><a href="#">2025-07-23 Получился контакт SIM900a и Terminal-v1.9b!</a></h3>
+<ul>
+<li>Разобрался с контактами SIM900a:</li>
+</ul>
+<figure>
+<img src="sim900a-v38.jpg" alt="SIM900A v3.8" /><figcaption>SIM900A v3.8</figcaption>
+</figure>
+<figure>
+<img src="sim900a.jpg" alt="sim900a" /><figcaption>sim900a</figcaption>
+</figure>
+<ul>
+<li>Сделал 5 вольтовое подключение к USB UART на основе следующего рисунка:</li>
+</ul>
+<p><img src="USB-UART-and-sim900a.png" /></p>
+<pre><code>+5V от блока питания на 18650  =&gt;  VCC/4-5V на SIM900a
+GND от блока питания на 18650  =&gt;  GND/0V на SIM900a
+
+TXD от USB UART  =&gt;  RXD 5V на SIM900a
+RXD от USB UART  =&gt;  TXD 5V на SIM900a
+GND от USB UART  =&gt;  GND при контактах 5V на SIM900a</code></pre>
+<ul>
+<li><p>Проверил работу светодиодных индикаторов. После подключения питания загорелся индикатор состояния D5 Status LED, а индикатор D6 Netstatus LED начал мигать каждые 800 мс, пока не была найдена сеть. После обнаружения сети индикатор D6 Netstatus LED начал мигать каждые три секунды.</p></li>
+<li><p>Сделал подключение SIM900a к Terminal-v1.9b на основе статьи <strong><em><a href="https://robotclass.ru/articles/gsm-sim900a-configure-and-use/">GSM модуль SIM900A. Прошивка и использование</a></em></strong></p></li>
+</ul>
+<p>Установил частоту передачи 9600 Baud rate и поставил галочку <strong><em>+CR</em></strong> для автоматического формирования “возврата каретки” и подсоединился к SIM900a.</p>
+<figure>
+<img src="Terminal-v1-9b.jpg" alt="9600 Baud rate и галочка +CR для “возврата каретки”" /><figcaption>9600 Baud rate и галочка +CR для “возврата каретки”</figcaption>
+</figure>
+<blockquote>
+<p>Ранее, работая c SIM900 через IDE Arduino, думал, что плата не работает, так как через последовательный порт видел только “эхо” - повторение вводимых строк после нажатия “enter”. Теперь понятно - не уходил в порт “возврат каретки”.</p>
+</blockquote>
+<ul>
+<li>Отработал команды в соответствии со статьей:</li>
+</ul>
+<pre><code>----- Проверить связь:
+команда - AT
+---
+ответ   - OK
+
+----- Получить идентификатор прошивки:
+AT+GMR
+---
+Revision:1137B02SIM900M64_ST_ENHANCE
+OK
+
+----- Узнать IMEI?:
+AT+GSN
+---
+012207000000015
+OK
+
+----- Определить состояние:
+AT+CPAS
+---
++CPAS: 0     - готов к работе
+OK
+
+----- Получить список операторов, присутствующих в сети (получение списка делается не быстро. Нужно подождать)
+AT+COPS=?
+---
++COPS: (2,&quot;MTS RUS&quot;,&quot;MTS RUS&quot;,&quot;25001&quot;),(1,&quot;Beeline&quot;,&quot;Beeline&quot;,&quot;25099&quot;),(1,&quot;MegaFon RUS&quot;,&quot;MegaFon&quot;,&quot;25002&quot;),,(0,1,4),(0,1,2)
+OK
+
+----- Получить информацию об операторе:
+AT+COPS?
+---
++COPS: 0,0,&quot;MTS RUS&quot;
+OK
+
+----- Выполнить звонок:
+ATD+79214524295;
+OK
+
+----- Определить состояние:
+AT+CPAS
+---
++CPAS: 4    - голосовое соединение
+OK
+
+----- Завершить вызов:
+ATH0
+---
+OK
+
+----- Определить состояние:
+AT+CPAS
+---
++CPAS: 0
+OK
+
+----- Получить список поддерживаемых скоростей передачи данных:
+AT+IPR=?
+---
++IPR: (),(0,1200,2400,4800,9600,19200,38400,57600,115200)
+OK
+
+----- Получить отчёт о состоянии вставленной SIM-карты
+AT+CSMINS
+---
+ERROR
+
+AT+CSMINS=?
+---
++CSMINS: (0-1)
+OK
+
+----- Получить отчёт о качестве сигнала оператора сети
+
+Возвращает значение уровня сигнала &lt;rssi&gt; и 
+коэффициент битовых ошибок канала &lt;ber&gt;
+
+Команда: AT+CSQ
+Ответ: +CSQ: &lt;rssi&gt;,&lt;ber&gt;
+
+Значение    RSSI дБм    Состояние
+-----------------------------------
+2               -109            Маргинальный
+3               -107            Маргинальный
+4               -105            Маргинальный
+5               -103            Маргинальный
+6               -101            Маргинальный
+7               -99             Маргинальный
+8               -97             Маргинальный
+9               -95             Маргинальный
+10              -93             ОК
+11              -91             ОК
+12              -89             ОК
+13              -87             ОК
+14              -85             ОК
+15              -83             Хорошо
+16              -81             Хорошо
+17              -79             Хорошо
+18              -77             Хорошо
+19              -75             Хорошо
+20              -73             Превосходно
+21              -71             Превосходно
+22              -69             Превосходно
+23              -67             Превосходно
+24              -65             Превосходно
+25              -63             Превосходно
+26              -61             Превосходно
+27              -59             Превосходно
+28              -57             Превосходно
+29              -55             Превосходно
+30              -53             Превосходно
+
+AT+CSQ
+---
++CSQ: 28,0
+OK</code></pre>
+<p>Ссылки:</p>
+<p><a href="https://petterhj.no/notes/electronics/modules/sim900a/" class="uri">https://petterhj.no/notes/electronics/modules/sim900a/</a></p>
+<p><a href="https://www.espruino.com/datasheets/SIM900_AT.pdf" class="uri">https://www.espruino.com/datasheets/SIM900_AT.pdf</a></p>
+<p><a href="https://m2msupport.net/m2msupport/at-command/" class="uri">https://m2msupport.net/m2msupport/at-command/</a></p>
+<h3 id="basic-at-commands-for-sim900a-gsmgprs-module-command"><a href="https://gist.github.com/itoonx/c36d767594172d7c222447d7fc3614bf">Basic AT Commands for SIM900A GSM/GPRS Module command</a></h3>
+<pre><code>TO CHECK THE MODEM:
+---------------------------------------------------
+AT
+  OK
+
+TO CHANGE SMS SENDING MODE:
+---------------------------------------------------
+AT+CMGF=1
+         OK
+
+TO SEND NEW SMS:
+---------------------------------------------------
+AT+CMGS=&quot;MOBILE NO.&quot;
+&lt;MESSAGE
+{CTRL+Z}
+
+ПРЕДПОЧТИТЕЛЬНОЕ ХРАНЕНИЕ SMS-СООБЩЕНИЙ:
+---------------------------------------------------
+AT+CPMS=?
+         +CPMS: (&quot;SM&quot;),(&quot;SM&quot;),(&quot;SM&quot;)
+         OK
+
+AT+CPMS?
+        +CPMS: &quot;SM&quot;,19,30,&quot;SM&quot;,19,30,&quot;SM&quot;,19,30
+
+TO MAKE A VOICE CALL:
+---------------------------------------------------
+ATD9876543210;
+
+TO REDIAL LAST NO:
+---------------------------------------------------
+ATDL
+
+ДЛЯ ПРИЕМА ВХОДЯЩЕГО ВЫЗОВА:
+---------------------------------------------------
+ATA
+
+ЧТОБЫ ПОВЕСИТЬ ТРУБКУ ИЛИ ПРЕРВАТЬ ВЫЗОВ:
+---------------------------------------------------
+ATH
+
+ЧТОБЫ УСТАНОВИТЬ CКОРОСТЬ ПЕРЕДАЧИ ДАННЫХ В БОДАХ:
+---------------------------------------------------
+AT+IPR=?         {Просмотреть значения скорости передачи данных в бодах}
+
+AT+IPR=0         {Перевести модем в режим автоподачи звука}
+
+ВЫБОР ОПЕРАТОРА:
+---------------------------------------------------
+AT+COPS=?
+         OK
+
+AT+COPS?
+        +COPS: 0,0,&quot;AirTel&quot;
+        OK
+
+УСТАНОВИТЕ КОДЫ СОТОВОЙ СВЯЗИ ДЛЯ ИНДИКАЦИИ ВХОДЯЩИХ ВЫЗОВОВ:
+---------------------------------------------------
+AT+CRC=?
+        +CRC: (0-1)
+        OK
+
+AT+CRC?
+        +CRC: 0
+        OK
+
+AT+CRC=1
+        OK
+
+??? +CRING: VOICE
+
+READ OPERATOR NAMES:
+---------------------------------------------------
+AT+COPN=?
+        OK
+
+AT+COPN
+        +COPN: &quot;472001&quot;,&quot;DHIMOBILE&quot;
+        +COPN: &quot;60500
+        +COPN: &quot;502012&quot;,&quot;maxis mobile&quot;
+        +COPN:
+        +COPN: &quot;502013&quot;,&quot;TMTOUCH&quot;
+        +COPN
+        +COPN: &quot;502016&quot;,&quot;DiGi&quot;
+        +COPN: &quot;502017&quot;,&quot;TIMECel&quot;&quot;
+        +COPN: &quot;502019&quot;,&quot;CELCOM GSM&quot;
+
+GPRS COMMANDS:
+---------------------------------------------------
+Command               Description
+
+AT+CGATT              ПОДКЛЮЧЕНИЕ/ОТКЛЮЧЕНИЕ ОТ УСЛУГИ GPRS
+AT+CGDCONT            DEFINE PDP CONTEXT
+AT+CGQMIN             ПРОФИЛЬ КАЧЕСТВА ОБСЛУЖИВАНИЯ (МИНИМАЛЬНЫЙ)
+AT+CGQREQ             ПРОФИЛЬ КАЧЕСТВА ОБСЛУЖИВАНИЯ (ПО ЗАПРОСУ)
+AT+CGACT              PDP CONTEXT ACTIVATE OR DEACTIVATE
+AT+CGDATA             ENTER DATA STATE
+AT+CGPADDR            SHOW PDP ADDRESS
+AT+CGCLASS            GPRS MOBILE STATION CLASS
+AT+CGEREP             КОНТРОЛИРОВАТЬ НЕЖЕЛАТЕЛЬНЫЕ СОБЫТИЯ GPRS
+AT+CGREG              NETWORK REGISTRATION STATUS
+AT+CGSMS              SELECT SERVICE FOR MO SMS MESSAGES
+AT+CGCOUNT            СЧЕТЧИКИ GPRS-ПАКЕТОВ
+</code></pre>
+<h3 id="arduino-и-gsm-модуль-sim900a.-как-прошить-и-заставить-работать"><a href="https://voltiq.ru/arduino-and-sim900a/">Arduino и GSM-модуль SIM900A. Как прошить и заставить работать?</a></h3>
+<h3 id="gsm-sim900a-arduino-tutorial-easy-4-step"><a href="https://www.instructables.com/GSM-SIM900A-Arduino-Tutorial-Easy-4-Step/">GSM SIM900A Arduino Tutorial (Easy 4 Step)</a></h3>
+<p>2024-05-26 Поработал со статьей, sim900a живой, команды подтверждает, но звонок и смс на мой номер ушли “в никуда”.</p>
+<h3 id="sim900a-gsm-module"><a href="https://microcontrollerslab.com/sim900a-gsm-module-pinout-examples-applications-datasheet/">SIM900A GSM Module</a></h3>
+<p>2024-05-26 Просмотрел, ничего не делал</p>
+<h3 id="gsm-модуль-sim900a---как-заставить-работать"><a href="http://forums.kuban.ru/f1060/gsm_modul-_sim900a_-_kak_zastavit-_rabotat--5363026.html">GSM модуль SIM900A - как заставить работать?</a></h3>
+<p>Гость 1 - 07.02.2014 - 09:34 Разобрался. В общем, в результате экспериментов получилось его реанимировать и теперь он работает как полноценный SIM900 с прошивкой All-in-One (ENHANCE). Аппаратная версия моего модуля S2-1040V-Z095R (64Mb). Нужно в “SIM900 Series download Tools Develop 1.9” открыть файл прошивки, выбрать СОМ-порт, “Erase Type” установить в “Erase All Flash”, присоединится к модулю через интерфейс “DEBUG”, подать питание и нажать POWERKEY. По ссылка ниже можно найти программу для прошивки и сами прошивки (32Mb и 64Mb): http://gauthierlerouzic.blogspot.ru/…/label/SIM900A А здесь лежит прошивка ENHANCE: ftp://ftp.macrogroup.ru/Support/SimC…Sim900/Sim900/ Спасибо всем ответившим ))<br />
+Гость 2 - 09.02.2014 - 20:54 Хочешь сделать дело хорошо- делай сам!</p>
+<h3 id="guide-to-sim900-gsm-gprs-shield-with-arduino"><a href="https://randomnerdtutorials.com/sim900-gsm-gprs-shield-arduino/">Guide to SIM900 GSM GPRS Shield with Arduino</a></h3>
+<h3 id="gsm-и-gprs-модули-для-arduino"><a href="https://arduinomaster.ru/datchiki-arduino/gsm-gprs-modul-arduino/">GSM и GPRS модули для Arduino</a></h3>
+<h3 id="как-заставить-работать-sim900a-в-наших-сетях-1"><a href="https://habr.com/ru/articles/391555/">Как заставить работать sim900a в наших сетях</a></h3>
+</body>
+</html>
