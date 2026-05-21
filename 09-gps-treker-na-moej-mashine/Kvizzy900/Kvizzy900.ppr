@@ -34,12 +34,16 @@ Kvizzy900
 [Open project files]
 0=s16_Kvizzy900v3.h
 1=SIM900.h
+2=Kvizzy900.ino
 [Selected Project Files]
 Main=
-Selected=SIM900.h
+Selected=s16_Kvizzy900v3.h
 [s16_Kvizzy900v3.h]
-TopLine=25
-Caret=19,56
+TopLine=325
+Caret=60,337
 [SIM900.h]
-TopLine=289
+TopLine=228
 Caret=10,301
+[Kvizzy900.ino]
+TopLine=176
+Caret=15,190

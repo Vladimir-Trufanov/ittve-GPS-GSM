@@ -21,7 +21,7 @@ char answer[128];
 
 void setup() 
 {
-  Serial.begin(115200);
+  Serial.begin(9600);
   SIM900.begin(9600);
   Serial.println(" ");
   // AT - Рукопожатие с SIM900. "AT" – Это самая простая команда AT. Она также инициализирует передачу данных в бодах
